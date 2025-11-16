@@ -10,9 +10,42 @@
 		EA59C4812ECA643A00BA0496 /* KJOMindCare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KJOMindCare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		EA59C4F02ECA796E00BA0496 /* Exceptions for "KJOMindCare" folder in "KJOMindCare" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Core/Base/.gitkeep,
+				Core/DI/.gitkeep,
+				Core/Utlis/.gitkeep,
+				Data/Firebase/.gitkeep,
+				Data/Repositories/.gitkeep,
+				Domain/Entities/.gitkeep,
+				Domain/UseCases/.gitkeep,
+				Presentation/Components/.gitkeep,
+				Presentation/Modules/Auth/Coordinator/.gitkeep,
+				Presentation/Modules/Auth/ViewModels/.gitkeep,
+				Presentation/Modules/Auth/Views/.gitkeep,
+				Presentation/Modules/Home/Coordinator/.gitkeep,
+				Presentation/Modules/Home/ViewModels/.gitkeep,
+				Presentation/Modules/Home/Views/.gitkeep,
+				Presentation/Modules/Moods/Coordinator/.gitkeep,
+				Presentation/Modules/Moods/ViewModels/.gitkeep,
+				Presentation/Modules/Moods/Views/.gitkeep,
+				Presentation/Modules/Profile/Coordinator/.gitkeep,
+				Presentation/Modules/Profile/ViewModels/.gitkeep,
+				Presentation/Modules/Profile/Views/.gitkeep,
+				Presentation/Theme/.gitkeep,
+			);
+			target = EA59C4802ECA643A00BA0496 /* KJOMindCare */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		EA59C4832ECA643A00BA0496 /* KJOMindCare */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				EA59C4F02ECA796E00BA0496 /* Exceptions for "KJOMindCare" folder in "KJOMindCare" target */,
+			);
 			path = KJOMindCare;
 			sourceTree = "<group>";
 		};
