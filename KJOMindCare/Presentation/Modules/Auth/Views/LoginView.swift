@@ -2,7 +2,7 @@
 //  LoginView.swift
 //  KJOMindCare
 //
-//  Created by DAMII on 19/11/25.
+//  Created by Raydberg on 19/11/25.
 //
 
 import SwiftUI
@@ -75,13 +75,17 @@ struct LoginView: View {
 
                         }
 
-                        PrimaryButton(title: "Iniciar sesión") {
-                            viewModel.login()
-                        }
+                        PrimaryButton(title: viewModel.isLoading ? "Cargando...": "Iniciar Sesion") {
+                            Task{
+                                await viewModel.login()
+                            }
+
+                        }.disabled(!viewModel.isFormValid || viewModel.isLoading)
+                            .opacity(viewModel.isFormValid ? 1.0 : 0.6)
 
                     }
                     .padding(.horizontal)
-                    Spacer()
+                    Spacer().frame(height: 10)
 
                     HStack {
                         Text("¿No tienes una cuenta?")
