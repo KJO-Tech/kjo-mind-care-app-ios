@@ -6,6 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B76F97432ED0C196003340D6 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B76F97422ED0C196003340D6 /* FirebaseAnalytics */; };
+		B76F97452ED0C196003340D6 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B76F97442ED0C196003340D6 /* FirebaseAuth */; };
+		B76F97472ED0C196003340D6 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = B76F97462ED0C196003340D6 /* FirebaseCrashlytics */; };
+		B76F97492ED0C196003340D6 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B76F97482ED0C196003340D6 /* FirebaseFirestore */; };
+		B76F974B2ED0C196003340D6 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B76F974A2ED0C196003340D6 /* FirebaseMessaging */; };
+		B76F974E2ED0C3D8003340D6 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = B76F974D2ED0C3D8003340D6 /* Swinject */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		EA59C4812ECA643A00BA0496 /* KJOMindCare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KJOMindCare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -15,16 +24,11 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Core/Base/.gitkeep,
-				Core/DI/.gitkeep,
 				Core/Utlis/.gitkeep,
-				Data/Firebase/.gitkeep,
 				Data/Repositories/.gitkeep,
 				Domain/Entities/.gitkeep,
 				Domain/UseCases/.gitkeep,
-				Presentation/Components/.gitkeep,
 				Presentation/Modules/Auth/Coordinator/.gitkeep,
-				Presentation/Modules/Auth/ViewModels/.gitkeep,
-				Presentation/Modules/Auth/Views/.gitkeep,
 				Presentation/Modules/Home/Coordinator/.gitkeep,
 				Presentation/Modules/Home/ViewModels/.gitkeep,
 				Presentation/Modules/Home/Views/.gitkeep,
@@ -56,6 +60,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B76F97472ED0C196003340D6 /* FirebaseCrashlytics in Frameworks */,
+				B76F97492ED0C196003340D6 /* FirebaseFirestore in Frameworks */,
+				B76F974B2ED0C196003340D6 /* FirebaseMessaging in Frameworks */,
+				B76F97432ED0C196003340D6 /* FirebaseAnalytics in Frameworks */,
+				B76F97452ED0C196003340D6 /* FirebaseAuth in Frameworks */,
+				B76F974E2ED0C3D8003340D6 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +108,12 @@
 			);
 			name = KJOMindCare;
 			packageProductDependencies = (
+				B76F97422ED0C196003340D6 /* FirebaseAnalytics */,
+				B76F97442ED0C196003340D6 /* FirebaseAuth */,
+				B76F97462ED0C196003340D6 /* FirebaseCrashlytics */,
+				B76F97482ED0C196003340D6 /* FirebaseFirestore */,
+				B76F974A2ED0C196003340D6 /* FirebaseMessaging */,
+				B76F974D2ED0C3D8003340D6 /* Swinject */,
 			);
 			productName = KJOMindCare;
 			productReference = EA59C4812ECA643A00BA0496 /* KJOMindCare.app */;
@@ -127,6 +143,10 @@
 			);
 			mainGroup = EA59C4782ECA643A00BA0496;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B76F97412ED0C196003340D6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				B76F974C2ED0C3D8003340D6 /* XCRemoteSwiftPackageReference "Swinject" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EA59C4822ECA643A00BA0496 /* Products */;
 			projectDirPath = "";
@@ -355,6 +375,58 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B76F97412ED0C196003340D6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.6.0;
+			};
+		};
+		B76F974C2ED0C3D8003340D6 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B76F97422ED0C196003340D6 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B76F97412ED0C196003340D6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		B76F97442ED0C196003340D6 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B76F97412ED0C196003340D6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		B76F97462ED0C196003340D6 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B76F97412ED0C196003340D6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		B76F97482ED0C196003340D6 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B76F97412ED0C196003340D6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		B76F974A2ED0C196003340D6 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B76F97412ED0C196003340D6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		B76F974D2ED0C3D8003340D6 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B76F974C2ED0C3D8003340D6 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EA59C4792ECA643A00BA0496 /* Project object */;
 }
