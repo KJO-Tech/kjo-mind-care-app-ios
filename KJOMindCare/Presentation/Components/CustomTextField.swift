@@ -17,10 +17,10 @@ struct CustomTextField: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
-                .font(.caption)
-                //            color
-                .foregroundStyle(.primarySoft)
+                .font(.title3)
+                .foregroundStyle(.primaryDark)
                 .fontWeight(.medium)
+                
 
             ZStack(alignment: .trailing) {
                 if isSecure && !showPassword {
