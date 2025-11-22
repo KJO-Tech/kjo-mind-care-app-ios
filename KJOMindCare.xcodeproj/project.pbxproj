@@ -25,9 +25,6 @@
 			membershipExceptions = (
 				Core/Base/.gitkeep,
 				Core/Utlis/.gitkeep,
-				Data/Repositories/.gitkeep,
-				Domain/Entities/.gitkeep,
-				Domain/UseCases/.gitkeep,
 				Presentation/Modules/Auth/Coordinator/.gitkeep,
 				Presentation/Modules/Home/Coordinator/.gitkeep,
 				Presentation/Modules/Home/ViewModels/.gitkeep,
