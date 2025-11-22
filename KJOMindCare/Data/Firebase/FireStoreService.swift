@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-protocol FireStoreService {
+protocol FireStoreService: AnyObject {
     func save<T: Encodable & Identifiable>(_ entity: T, at path: String) async throws
     func get<T: Codable>(from path: String, id:String) async throws -> T?
     func getCollection<T: Codable>(from path: String) async throws -> [T]

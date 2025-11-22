@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseAuth
 
-protocol AuthFirebaseService {
+protocol AuthFirebaseService: AnyObject {
     func signIn(email: String, password: String) async throws -> User
     func signUp(email: String, password: String) async throws -> User
     func signOut() throws
