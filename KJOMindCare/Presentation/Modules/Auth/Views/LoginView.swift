@@ -9,7 +9,8 @@ import SwiftUI
 
 struct LoginView: View {
     @StateObject private var viewModel = LoginViewModel()
-   
+
+    @EnvironmentObject var coordinator: AppCoordinator
 
     var body: some View {
         ZStack {
@@ -76,6 +77,9 @@ struct LoginView: View {
                         }
 
                         PrimaryButton(title: viewModel.isLoading ? "Cargando...": "Iniciar Sesion") {
+                            withAnimation{
+                                coordinator.showSubscription()
+                            }
                             Task{
                                 await viewModel.login()
                             }
@@ -92,7 +96,7 @@ struct LoginView: View {
                             .foregroundColor(.textSecondary)
                         
                         Button(action:{
-//                            Navegadar a registro
+                            coordinator.showRegister()
                         }){
                             Text("Registrate")
                                 .fontWeight(.bold)

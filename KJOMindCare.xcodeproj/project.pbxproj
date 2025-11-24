@@ -26,15 +26,8 @@
 				Core/Base/.gitkeep,
 				Core/Utlis/.gitkeep,
 				Presentation/Modules/Auth/Coordinator/.gitkeep,
-				Presentation/Modules/Home/Coordinator/.gitkeep,
 				Presentation/Modules/Home/ViewModels/.gitkeep,
-				Presentation/Modules/Home/Views/.gitkeep,
-				Presentation/Modules/Moods/Coordinator/.gitkeep,
 				Presentation/Modules/Moods/ViewModels/.gitkeep,
-				Presentation/Modules/Moods/Views/.gitkeep,
-				Presentation/Modules/Profile/Coordinator/.gitkeep,
-				Presentation/Modules/Profile/ViewModels/.gitkeep,
-				Presentation/Modules/Profile/Views/.gitkeep,
 				Presentation/Theme/.gitkeep,
 			);
 			target = EA59C4802ECA643A00BA0496 /* KJOMindCare */;

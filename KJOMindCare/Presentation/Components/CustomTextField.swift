@@ -20,17 +20,16 @@ struct CustomTextField: View {
                 .font(.title3)
                 .foregroundStyle(.primaryDark)
                 .fontWeight(.medium)
-                
 
             ZStack(alignment: .trailing) {
                 if isSecure && !showPassword {
                     SecureField(placeholder, text: $text)
                         .textFieldStyle(PlainTextFieldStyle())
-                        .foregroundStyle(.white)
+                        .foregroundStyle(.text)
                 } else {
                     TextField(placeholder, text: $text)
                         .textFieldStyle(PlainTextFieldStyle())
-                        .foregroundStyle(.white)
+                        .foregroundStyle(.text)
                         .autocapitalization(.none)
                 }
                 if isSecure {

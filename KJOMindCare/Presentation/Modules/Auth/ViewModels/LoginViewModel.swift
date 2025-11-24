@@ -7,31 +7,30 @@
 
 import Foundation
 
-class LoginViewModel:ObservableObject{
-    @Published var email:String = ""
-    @Published var password:String = ""
-    @Published var isLoading:Bool = false
-    @Published var errorMessage:String?
-    
-    var isFormValid:Bool {
-        !email.isEmpty &&
-        password.count >= 6
+public class LoginViewModel: ObservableObject {
+    @Published var email: String = ""
+    @Published var password: String = ""
+    @Published var isLoading: Bool = false
+    @Published var errorMessage: String?
+
+    public init() {}
+
+    var isFormValid: Bool {
+        !email.isEmpty && password.count >= 6
     }
-    
-    
-    func login() async{
-        
+
+    func login() async {
+
         guard isFormValid else {
             errorMessage = "Error al logearse"
             return
         }
-        
+
         isLoading = true
-        
-        
-        defer {isLoading=false}
-        
+
+        defer { isLoading = false }
+
         print("Login con email \(email) y password \(password)")
     }
-    
+
 }
