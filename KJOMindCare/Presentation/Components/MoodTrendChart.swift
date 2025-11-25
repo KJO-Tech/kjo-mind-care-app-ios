@@ -24,7 +24,6 @@ struct MoodTrendChart: View {
             .foregroundStyle(Color.blue)
             .lineStyle(StrokeStyle(lineWidth: 2))
             
-            // 2. Los Puntos
             PointMark(
                 x: .value("Day", point.day),
                 y: .value("Value", point.value)
@@ -32,7 +31,6 @@ struct MoodTrendChart: View {
             .foregroundStyle(Color.gray)
             .symbolSize(100)
         }
-        // Configuración del Eje Y (Vertical)
         .chartYAxis {
             AxisMarks(position: .leading, values: [0, 1, 2, 3, 4]) { value in
                 AxisGridLine(stroke: StrokeStyle(lineWidth: 1, dash: [5]))
@@ -47,7 +45,6 @@ struct MoodTrendChart: View {
                 }
             }
         }
-        // Configuración del Eje X (Horizontal)
         .chartXAxis {
             AxisMarks(values: .automatic) { value in
                 AxisValueLabel {
@@ -63,10 +60,10 @@ struct MoodTrendChart: View {
     }
 }
 
-// MARK: - Preview para verificar que funciona
+
 #Preview {
     ZStack {
-        Color.black.ignoresSafeArea() // Fondo oscuro para ver los colores claros
+        Color.black.ignoresSafeArea()
         MoodTrendChart(data: [
             MoodChartPoint(day: "Lun", value: 1),
             MoodChartPoint(day: "Mar", value: 3),
@@ -77,6 +74,3 @@ struct MoodTrendChart: View {
         .padding()
     }
 }
-//#Preview {
-//    MoodTrendChart()
-//}

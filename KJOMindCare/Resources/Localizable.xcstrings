@@ -1,0 +1,181 @@
+{
+  "sourceLanguage" : "es-419",
+  "strings" : {
+    "%lld" : {
+
+    },
+    "Add a note (optional)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add note (optional)"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añade una nota (opcional)"
+          }
+        }
+      }
+    },
+    "Alegre" : {
+
+    },
+    "Ansioso" : {
+
+    },
+    "Cancel" : {
+
+    },
+    "Cansado" : {
+
+    },
+    "Contento" : {
+
+    },
+    "Day" : {
+
+    },
+    "Emocionado(a)" : {
+
+    },
+    "Enfermo(a)" : {
+
+    },
+    "Enojado" : {
+
+    },
+    "Entusiasta, ansioso" : {
+
+    },
+    "Fatigado, baja energía" : {
+
+    },
+    "Feliz" : {
+
+    },
+    "Hola Mundo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hello Word"
+          }
+        }
+      }
+    },
+    "How are you feeling today? What's on your mind?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How are you feeling today? What's on your mind?"
+          }
+        }
+      }
+    },
+    "How are you feeling?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How are you feeling?"
+          }
+        }
+      }
+    },
+    "Indispuesta(o)" : {
+
+    },
+    "Infeliz, abajo" : {
+
+    },
+    "Molesto, disgustado" : {
+
+    },
+    "Mood Distribution" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distribución del estado de ánimo"
+          }
+        }
+      }
+    },
+    "Mood Tracker" : {
+
+    },
+    "Mood Trends" : {
+
+    },
+    "Neutro" : {
+
+    },
+    "Ni buena ni mala(o)=" : {
+
+    },
+    "Preocupado(a)" : {
+
+    },
+    "Record Mood" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grabar estado"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar"
+          }
+        }
+      }
+    },
+    "Sentir gran alegría o deleite" : {
+
+    },
+    "Timeframe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Periodo"
+          }
+        }
+      }
+    },
+    "Triste" : {
+
+    },
+    "Value" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valor"
+          }
+        }
+      }
+    },
+    "Your Insights" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tus ideas"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
