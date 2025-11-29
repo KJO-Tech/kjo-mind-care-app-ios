@@ -10,7 +10,7 @@ import FirebaseAuth
 
 protocol AuthFirebaseService: AnyObject {
     func signIn(email: String, password: String) async throws -> User
-    func signUp(email: String, password: String) async throws -> User
+    func signUp(email: String, password: String) async throws -> FirebaseAuth.User
     func signOut() throws
     var currentUser: User? { get }
 }

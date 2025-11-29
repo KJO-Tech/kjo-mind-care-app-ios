@@ -14,7 +14,7 @@ final class RegisterUseCase {
         self.repository = repository
     }
     
-    func execute(email: String, password: String) async throws -> User {
-        return try await repository.register(email: email, password: password)
+    func execute(email: String, password: String, fullName: String) async throws -> User {
+        return try await repository.register(email: email, password: password, fullName: fullName)
     }
 }

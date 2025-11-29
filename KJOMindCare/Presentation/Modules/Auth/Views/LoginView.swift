@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject private var viewModel = LoginViewModel()
+    @StateObject var viewModel:LoginViewModel
 
     @EnvironmentObject var coordinator: AppCoordinator
 
@@ -75,13 +75,26 @@ struct LoginView: View {
                             }
 
                         }
+                        
+                        if let error = viewModel.errorMessage {
+                            Text(error)
+                                .foregroundColor(.red)
+                                .multilineTextAlignment(.center)
+                        }
 
                         PrimaryButton(title: viewModel.isLoading ? "Cargando...": "Iniciar Sesion") {
-                            withAnimation{
-                                coordinator.showSubscription()
-                            }
                             Task{
+                                viewModel.errorMessage = nil
+                                viewModel.isLoading = true
+                                defer { viewModel.isLoading = false }
+                                
                                 await viewModel.login()
+                                
+                                if let _ = viewModel.loggedUser {
+                                    withAnimation{
+                                        coordinator.showMain()
+                                    }
+                                }
                             }
 
                         }.disabled(!viewModel.isFormValid || viewModel.isLoading)
@@ -114,5 +127,6 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
+    let loginVM = DIContainer.shared.container.resolve(LoginViewModel.self)!
+    LoginView(viewModel: loginVM)
 }
