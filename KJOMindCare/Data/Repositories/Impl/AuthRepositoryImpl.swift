@@ -6,6 +6,7 @@
 //
 import Foundation
 import FirebaseAuth
+import FirebaseFirestore
 
 class AuthRepositoryImpl: AuthRepository {
     private let authService: AuthFirebaseService
@@ -18,14 +19,25 @@ class AuthRepositoryImpl: AuthRepository {
     
     func login(email: String, password: String) async throws -> User {
         let firebaseUser = try await authService.signIn(email: email, password: password)
-        let user = User(id: firebaseUser.id, name: firebaseUser.name, email: firebaseUser.email)
+        let user = User(uid: firebaseUser.id, fullName: firebaseUser.fullName, email: firebaseUser.email, role: "user")
         return user
     }
     
-    func register(email: String, password: String) async throws -> User {
+    func register(email: String, password: String, fullName: String) async throws -> User {
         let firebaseUser = try await authService.signUp(email: email, password: password)
-        let user = User(id: firebaseUser.id, name: firebaseUser.name, email: firebaseUser.email)
+
+        let user = User(
+            uid: firebaseUser.uid,
+            fullName: fullName,
+            email: firebaseUser.email ?? "",
+            role: "user",
+            profileImage: nil
+        )
+
         try await firestoreService.save(user, at: "users")
+
+        print("Usuario registrado: \(user.fullName) (\(user.email)) con ID: \(user.id ?? "nil")")
+        
         return user
     }
     
@@ -37,8 +49,7 @@ class AuthRepositoryImpl: AuthRepository {
         guard let user = authService.currentUser else {
             return nil
         }
-        return User(id: user.id, name: user.name, email: user.email)
+        return User(uid: user.id, fullName: user.fullName, email: user.email, role: "user")
     }
     
-
 }

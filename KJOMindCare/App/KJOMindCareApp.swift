@@ -41,9 +41,11 @@ struct KJOMindCareApp: App {
                     case .welcome:
                         WelcomeView()
                     case .login:
-                        LoginView()
+                        let loginVM = DIContainer.shared.container.resolve(LoginViewModel.self)!
+                        LoginView(viewModel: loginVM)
                     case .register:
-                        RegisterView()
+                        let registerVM = DIContainer.shared.container.resolve(RegisterViewModel.self)!
+                        RegisterView(viewModel: registerVM)
                     case .subscription:
                         SubscriptionView()
                     case .main:

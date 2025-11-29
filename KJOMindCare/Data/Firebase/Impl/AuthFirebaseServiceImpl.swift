@@ -11,7 +11,13 @@ final class AutAuthFirebaseServiceImpl: AuthFirebaseService {
     
     var currentUser: User? {
         guard let firebaseUser = Auth.auth().currentUser else { return nil }
-        return User(id: firebaseUser.uid, name: firebaseUser.displayName ?? "", email: firebaseUser.email ?? "")
+        return User(
+            uid: firebaseUser.uid,
+            fullName: firebaseUser.displayName ?? "",
+            email: firebaseUser.email ?? "",
+            role: "user",
+            profileImage: nil
+        )
     }
     
     func signIn(email: String, password: String) async throws -> User {
@@ -29,9 +35,10 @@ final class AutAuthFirebaseServiceImpl: AuthFirebaseService {
                 }
                 
                 let mappedUser = User(
-                    id: firebaseUser.uid,
-                    name: firebaseUser.displayName ?? "",
-                    email: firebaseUser.email ?? ""
+                    uid: firebaseUser.uid,
+                    fullName: firebaseUser.displayName ?? "",
+                    email: firebaseUser.email ?? "",
+                    role: "user"
                 )
                 
                 cont.resume(returning: mappedUser)
@@ -39,10 +46,9 @@ final class AutAuthFirebaseServiceImpl: AuthFirebaseService {
         }
     }
     
-    func signUp(email: String, password: String) async throws -> User {
+    func signUp(email: String, password: String) async throws -> FirebaseAuth.User {
         try await withUnsafeThrowingContinuation { cont in
             Auth.auth().createUser(withEmail: email, password: password) { result, error in
-                
                 if let err = error {
                     cont.resume(throwing: err)
                     return
@@ -53,16 +59,11 @@ final class AutAuthFirebaseServiceImpl: AuthFirebaseService {
                     return
                 }
                 
-                let mappedUser = User(
-                    id: firebaseUser.uid,
-                    name: firebaseUser.displayName ?? "",
-                    email: firebaseUser.email ?? ""
-                )
-                
-                cont.resume(returning: mappedUser)
+                cont.resume(returning: firebaseUser)
             }
         }
     }
+    
     
     func signOut() throws {
         try Auth.auth().signOut()

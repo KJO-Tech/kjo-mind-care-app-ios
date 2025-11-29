@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RegisterView: View {
-    @StateObject private var viewModel = RegisterViewModel()
+    @StateObject var viewModel:RegisterViewModel
 
     @EnvironmentObject var coordinator: AppCoordinator
 
@@ -84,10 +84,31 @@ struct RegisterView: View {
                             .foregroundColor(.red)
                             .frame(maxWidth: .infinity, alignment: .trailing)
                     }
+                    
+                    
+                    if let error = viewModel.errorMessage {
+                        Text(error)
+                            .foregroundColor(.red)
+                            .multilineTextAlignment(.center)
+                    }
+
 
                     PrimaryButton(title: viewModel.isLoading ? "Cargando..." : "Registrarse") {
                         Task {
+                            
+                            viewModel.errorMessage = nil
+                            
                             await viewModel.register()
+                            
+                            
+                            if let user = viewModel.registeredUser {
+                                print("Usuario registrado correctamente: \(user.fullName) (\(user.email))")
+                                withAnimation {
+                                    coordinator.showSubscription()
+                                }
+                            } else if let error = viewModel.errorMessage {
+                                print("Error al registrar usuario: \(error)")
+                            }
                         }
                     }
                     .padding(.top, 8)
@@ -133,5 +154,6 @@ extension UIApplication {
 }
 
 #Preview {
-    RegisterView()
+    let registerVM = DIContainer.shared.container.resolve(RegisterViewModel.self)!
+    RegisterView(viewModel: registerVM)
 }
