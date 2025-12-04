@@ -65,7 +65,10 @@ struct LoginView: View {
                             )
 
                             Button(action: {
-                                //                                olvidar contra
+                                withAnimation{
+                                    viewModel.recoveryEmail = viewModel.email
+                                    viewModel.showForgotPasswordModal = true
+                                }
                             }) {
 
                                 Text("¿Olvidaste tu contraseña?")
@@ -122,11 +125,26 @@ struct LoginView: View {
                 }
                 .padding()
             }
+            
+            .blur(radius: viewModel.showForgotPasswordModal ? 3 : 0)
+                        .disabled(viewModel.showForgotPasswordModal)
+            
+            if viewModel.showForgotPasswordModal {
+                ForgotPasswordModal(
+                    isActive: $viewModel.showForgotPasswordModal, email: $viewModel.recoveryEmail, onSend: {
+                        Task{
+                            await viewModel.sendPasswordReset()
+                        }
+                    }
+                )
+            }
         }
     }
 }
 
 #Preview {
     let loginVM = DIContainer.shared.container.resolve(LoginViewModel.self)!
+    let coordinator = AppCoordinator()
     LoginView(viewModel: loginVM)
+        .environmentObject(coordinator)
 }

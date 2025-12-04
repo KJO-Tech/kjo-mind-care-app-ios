@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RegisterView: View {
-    @StateObject var viewModel:RegisterViewModel
+    @StateObject var viewModel: RegisterViewModel
 
     @EnvironmentObject var coordinator: AppCoordinator
 
@@ -84,25 +84,27 @@ struct RegisterView: View {
                             .foregroundColor(.red)
                             .frame(maxWidth: .infinity, alignment: .trailing)
                     }
-                    
-                    
+
                     if let error = viewModel.errorMessage {
                         Text(error)
                             .foregroundColor(.red)
                             .multilineTextAlignment(.center)
                     }
 
-
-                    PrimaryButton(title: viewModel.isLoading ? "Cargando..." : "Registrarse") {
+                    PrimaryButton(
+                        title: viewModel.isLoading
+                            ? "Cargando..." : "Registrarse"
+                    ) {
                         Task {
-                            
+
                             viewModel.errorMessage = nil
-                            
+
                             await viewModel.register()
-                            
-                            
+
                             if let user = viewModel.registeredUser {
-                                print("Usuario registrado correctamente: \(user.fullName) (\(user.email))")
+                                print(
+                                    "Usuario registrado correctamente: \(user.fullName) (\(user.email))"
+                                )
                                 withAnimation {
                                     coordinator.showSubscription()
                                 }
@@ -116,8 +118,6 @@ struct RegisterView: View {
                     .opacity(viewModel.isFormValid ? 1.0 : 0.6)
                 }
                 .padding(.horizontal)
-
-                Spacer()
 
                 VStack(spacing: 15) {
 
@@ -134,11 +134,13 @@ struct RegisterView: View {
                         }
                     }
                     .font(.subheadline)
-
+                    Spacer().frame(height: 1)
                 }
                 .padding(.bottom, 10)
+
             }
             .padding()
+
         }
 
         .onTapGesture {
@@ -149,11 +151,14 @@ struct RegisterView: View {
 
 extension UIApplication {
     func endEditing() {
-        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        sendAction(
+            #selector(UIResponder.resignFirstResponder), to: nil, from: nil,
+            for: nil)
     }
 }
 
 #Preview {
-    let registerVM = DIContainer.shared.container.resolve(RegisterViewModel.self)!
+    let registerVM = DIContainer.shared.container.resolve(
+        RegisterViewModel.self)!
     RegisterView(viewModel: registerVM)
 }
