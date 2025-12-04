@@ -1,5 +1,7 @@
 *.GoogleService-Info.plist
-
+GoogleService-Info.plist
+KJOMindCare/GoogleService-Info.plist
+.vscode
 
 # Created by https://www.toptal.com/developers/gitignore/api/swiftpackagemanager,swift,xcode,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=swiftpackagemanager,swift,xcode,macos
