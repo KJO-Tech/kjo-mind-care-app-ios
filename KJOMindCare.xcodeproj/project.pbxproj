@@ -6,6 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B7F6B66F2EDB891100D0E52C /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = B7F6B66E2EDB891100D0E52C /* FirebaseCore */; };
+		B7F6B6712EDB891200D0E52C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B7F6B6702EDB891200D0E52C /* FirebaseFirestore */; };
+		B7F6B6732EDB89FD00D0E52C /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B7F6B6722EDB89FD00D0E52C /* FirebaseAnalytics */; };
+		B7F6B6752EDB89FD00D0E52C /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B7F6B6742EDB89FD00D0E52C /* FirebaseAuth */; };
+		B7F6B6772EDB89FD00D0E52C /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = B7F6B6762EDB89FD00D0E52C /* FirebaseCrashlytics */; };
+		B7F6B67A2EDB8B4500D0E52C /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = B7F6B6792EDB8B4500D0E52C /* Swinject */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		EA59C4812ECA643A00BA0496 /* KJOMindCare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KJOMindCare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -15,25 +24,10 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Core/Base/.gitkeep,
-				Core/DI/.gitkeep,
 				Core/Utlis/.gitkeep,
-				Data/Firebase/.gitkeep,
-				Data/Repositories/.gitkeep,
-				Domain/Entities/.gitkeep,
-				Domain/UseCases/.gitkeep,
-				Presentation/Components/.gitkeep,
 				Presentation/Modules/Auth/Coordinator/.gitkeep,
-				Presentation/Modules/Auth/ViewModels/.gitkeep,
-				Presentation/Modules/Auth/Views/.gitkeep,
-				Presentation/Modules/Home/Coordinator/.gitkeep,
 				Presentation/Modules/Home/ViewModels/.gitkeep,
-				Presentation/Modules/Home/Views/.gitkeep,
-				Presentation/Modules/Moods/Coordinator/.gitkeep,
 				Presentation/Modules/Moods/ViewModels/.gitkeep,
-				Presentation/Modules/Moods/Views/.gitkeep,
-				Presentation/Modules/Profile/Coordinator/.gitkeep,
-				Presentation/Modules/Profile/ViewModels/.gitkeep,
-				Presentation/Modules/Profile/Views/.gitkeep,
 				Presentation/Theme/.gitkeep,
 			);
 			target = EA59C4802ECA643A00BA0496 /* KJOMindCare */;
@@ -56,6 +50,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7F6B66F2EDB891100D0E52C /* FirebaseCore in Frameworks */,
+				B7F6B6712EDB891200D0E52C /* FirebaseFirestore in Frameworks */,
+				B7F6B6772EDB89FD00D0E52C /* FirebaseCrashlytics in Frameworks */,
+				B7F6B6732EDB89FD00D0E52C /* FirebaseAnalytics in Frameworks */,
+				B7F6B6752EDB89FD00D0E52C /* FirebaseAuth in Frameworks */,
+				B7F6B67A2EDB8B4500D0E52C /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +98,12 @@
 			);
 			name = KJOMindCare;
 			packageProductDependencies = (
+				B7F6B66E2EDB891100D0E52C /* FirebaseCore */,
+				B7F6B6702EDB891200D0E52C /* FirebaseFirestore */,
+				B7F6B6722EDB89FD00D0E52C /* FirebaseAnalytics */,
+				B7F6B6742EDB89FD00D0E52C /* FirebaseAuth */,
+				B7F6B6762EDB89FD00D0E52C /* FirebaseCrashlytics */,
+				B7F6B6792EDB8B4500D0E52C /* Swinject */,
 			);
 			productName = KJOMindCare;
 			productReference = EA59C4812ECA643A00BA0496 /* KJOMindCare.app */;
@@ -127,6 +133,10 @@
 			);
 			mainGroup = EA59C4782ECA643A00BA0496;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B7F6B66D2EDB891100D0E52C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				B7F6B6782EDB8B4500D0E52C /* XCRemoteSwiftPackageReference "Swinject" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EA59C4822ECA643A00BA0496 /* Products */;
 			projectDirPath = "";
@@ -355,6 +365,58 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B7F6B66D2EDB891100D0E52C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.6.0;
+			};
+		};
+		B7F6B6782EDB8B4500D0E52C /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B7F6B66E2EDB891100D0E52C /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7F6B66D2EDB891100D0E52C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		B7F6B6702EDB891200D0E52C /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7F6B66D2EDB891100D0E52C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		B7F6B6722EDB89FD00D0E52C /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7F6B66D2EDB891100D0E52C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		B7F6B6742EDB89FD00D0E52C /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7F6B66D2EDB891100D0E52C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		B7F6B6762EDB89FD00D0E52C /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7F6B66D2EDB891100D0E52C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		B7F6B6792EDB8B4500D0E52C /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7F6B6782EDB8B4500D0E52C /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EA59C4792ECA643A00BA0496 /* Project object */;
 }
