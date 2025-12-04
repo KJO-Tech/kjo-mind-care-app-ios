@@ -13,6 +13,8 @@ public class LoginViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     @Published var loggedUser: User?
+    @Published var showForgotPasswordModal: Bool = false
+    @Published var recoveryEmail: String = ""
 
     private let loginUseCase: LoginUseCase
 
@@ -34,13 +36,30 @@ public class LoginViewModel: ObservableObject {
         defer { isLoading = false }
 
         do {
-            let user = try await loginUseCase.execute(email: email, password: password)
+            let user = try await loginUseCase.execute(
+                email: email, password: password)
             self.loggedUser = user
-            print("Usuario \(user.fullName) (\(user.email)) inició sesión correctamente")
+            print(
+                "Usuario \(user.fullName) (\(user.email)) inició sesión correctamente"
+            )
         } catch {
             self.errorMessage = "Email o contraseña incorrectos"
             self.loggedUser = nil
-            print("Login fallido para email \(email): \(error.localizedDescription)")
+            print(
+                "Login fallido para email \(email): \(error.localizedDescription)"
+            )
+        }
+    }
+    func sendPasswordReset() async {
+        isLoading = true
+        defer{
+            isLoading = false
+        }
+        
+        print("Enviar correo de recuperacion a ; \(recoveryEmail)")
+        await MainActor.run{
+            self.showForgotPasswordModal = false
+            self.recoveryEmail = ""
         }
     }
 }
