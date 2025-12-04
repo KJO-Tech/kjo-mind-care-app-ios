@@ -112,7 +112,7 @@ class ActivitySubscriptionRepositoryImpl: ActivitySubscriptionRepository {
         
         let todayString = UserDailyAssignment.getTodayDateString()
         
-        firestore.collection("userDailyAssignments")
+        firestore.collection("dailyAssignments")
             .whereField("userId", isEqualTo: userId)
             .whereField("assignedDate", isEqualTo: todayString)
             .getDocuments { [weak self] snapshot, error in
@@ -147,7 +147,7 @@ class ActivitySubscriptionRepositoryImpl: ActivitySubscriptionRepository {
         let todayString = UserDailyAssignment.getTodayDateString()
         
         // Check if already assigned for today
-        let existingQuery = firestore.collection("userDailyAssignments")
+        let existingQuery = firestore.collection("dailyAssignments")
             .whereField("userId", isEqualTo: userId)
             .whereField("assignedDate", isEqualTo: todayString)
         
@@ -195,7 +195,7 @@ class ActivitySubscriptionRepositoryImpl: ActivitySubscriptionRepository {
         let batch = firestore.batch()
         
         for exercise in selectedExercises {
-            let assignmentRef = firestore.collection("userDailyAssignments").document()
+            let assignmentRef = firestore.collection("dailyAssignments").document()
             let assignment = UserDailyAssignment(
                 id: assignmentRef.documentID,
                 userId: userId,
@@ -217,7 +217,7 @@ class ActivitySubscriptionRepositoryImpl: ActivitySubscriptionRepository {
     func completeExercise(userId: String, exerciseId: String) async throws {
         let todayString = UserDailyAssignment.getTodayDateString()
         
-        let query = firestore.collection("userDailyAssignments")
+        let query = firestore.collection("dailyAssignments")
             .whereField("userId", isEqualTo: userId)
             .whereField("exerciseId", isEqualTo: exerciseId)
             .whereField("assignedDate", isEqualTo: todayString)
