@@ -17,7 +17,7 @@ struct MainView: View {
                 case .mood:
                     MoodListView()
                 case .community:
-                    BlogListView()
+                    BlogListView(vm: BlogListViewModel())
                 case .profile:
                     ProfileView()
                 }
