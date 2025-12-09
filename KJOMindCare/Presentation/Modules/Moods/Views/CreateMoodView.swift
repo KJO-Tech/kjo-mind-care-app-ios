@@ -8,11 +8,11 @@ struct CreateMoodView: View {
     public var body: some View {
         VStack(spacing: 20) {
             Text("How are you feeling?")
-                .font(.title)
+                .font(.theme.title)
                 .fontWeight(.bold)
 
-            Text(moodLabel(for: selectedMood))
-                .font(.largeTitle)
+            Text("Select a mood")
+                .font(.theme.largeTitle)
                 .padding()
 
             Slider(value: $selectedMood, in: 1...5, step: 1)
@@ -28,8 +28,8 @@ struct CreateMoodView: View {
                 coordinator.pop()
             }) {
                 Text("Save Mood")
-                    .font(.headline)
-                    .foregroundColor(.white)
+                    .font(.theme.headline)
+                    .foregroundColor(Color.theme.primaryContent)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(moodColor(for: selectedMood))
@@ -56,12 +56,12 @@ struct CreateMoodView: View {
 
     func moodColor(for value: Double) -> Color {
         switch Int(value) {
-        case 1: return .red
-        case 2: return .orange
+        case 1: return Color.theme.error
+        case 2: return Color.theme.warning
         case 3: return .yellow
-        case 4: return .green
-        case 5: return .blue
-        default: return .gray
+        case 4: return Color.theme.success
+        case 5: return Color.theme.primary
+        default: return Color.theme.textSecondary
         }
     }
 }

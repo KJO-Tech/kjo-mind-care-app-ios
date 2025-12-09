@@ -17,7 +17,7 @@ public struct MoodListView: View {
         NavigationStack(path: $coordinator.path) {
             VStack {
                 Text("Mood History")
-                    .font(.title2)
+                    .font(.theme.title2)
                     .fontWeight(.bold)
                     .padding()
 
@@ -28,7 +28,7 @@ public struct MoodListView: View {
                             x: .value("Day", item.day),
                             y: .value("Mood", item.value)
                         )
-                        .foregroundStyle(Color.blue.gradient)
+                        .foregroundStyle(Color.theme.primary.gradient)
                     }
                 }
                 .frame(height: 200)
@@ -40,25 +40,27 @@ public struct MoodListView: View {
                             Text(item.day)
                             Spacer()
                             Text("Mood Level: \(item.value)")
-                                .foregroundColor(.gray)
+                                .foregroundColor(Color.theme.textSecondary)
                         }
                     }
                 }
+                .scrollContentBackground(.hidden)
 
                 Button(action: {
                     coordinator.showCreateMood()
                 }) {
                     Text("Log Mood")
-                        .font(.headline)
-                        .foregroundColor(.white)
+                        .font(.theme.headline)
+                        .foregroundColor(Color.theme.primaryContent)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(Color.theme.primary)
                         .cornerRadius(10)
                 }
                 .padding()
             }
             .navigationTitle("Moods")
+            .background(Color.theme.background.ignoresSafeArea())
             .navigationDestination(for: MoodRoute.self) { route in
                 switch route {
                 case .createMood:

@@ -13,16 +13,19 @@ public struct ActivityCategoryView: View {
             }) {
                 HStack {
                     Image(systemName: "play.circle.fill")
-                        .foregroundColor(.blue)
+                        .foregroundColor(Color.theme.primary)
                     Text(exercise)
-                        .font(.body)
+                        .font(.theme.body)
+                        .foregroundStyle(Color.theme.text)
                     Spacer()
                     Image(systemName: "chevron.right")
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color.theme.textSecondary)
                 }
                 .padding(.vertical, 8)
             }
         }
         .navigationTitle(category)
+        .scrollContentBackground(.hidden)
+        .background(Color.theme.background.ignoresSafeArea())
     }
 }

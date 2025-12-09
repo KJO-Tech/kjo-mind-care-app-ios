@@ -18,7 +18,7 @@ struct EditProfileView: View {
                     coordinator.pop()
                 }) {
                     Text("Save Changes")
-                        .foregroundColor(.blue)
+                        .foregroundColor(Color.theme.primary)
                 }
             }
         }

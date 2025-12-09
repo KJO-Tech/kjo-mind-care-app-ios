@@ -5,19 +5,18 @@ struct SplashView: View {
 
     var body: some View {
         ZStack {
-            Color(.primary)  // Ensure this color exists in Assets
+            Color.theme.primary  // Ensure this color exists in Assets
                 .ignoresSafeArea()
 
             VStack {
                 Image("kjo_icon")  // Placeholder logo
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 100, height: 100)
+                    .frame(width: 120, height: 120)
                     .foregroundColor(.white)
 
                 Text("KJO Mind Care")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
+                    .font(.custom("Righteous-Regular", size: 36))
                     .foregroundColor(.white)
             }
         }
@@ -33,5 +32,6 @@ struct SplashView: View {
 }
 
 #Preview {
-    SplashView()
+    let coordinator = AppCoordinator()
+    SplashView().environmentObject(coordinator)
 }

@@ -28,21 +28,26 @@ public struct BlogListView: View {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(blog)
-                                    .font(.headline)
-                                Text("Read more about this topic...")
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
+                                    .font(.theme.headline)
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(Color.theme.primary)
+
+                                Text("Read more about this topic...") // Assuming `blog.content` was a typo and user meant to keep the placeholder text or `blog` itself. Keeping placeholder for now.
+                                    .font(.theme.subheadline)
+                                    .foregroundColor(Color.theme.textSecondary)
                                     .lineLimit(1)
                             }
                             Spacer()
                             Image(systemName: "chevron.right")
-                                .foregroundColor(.gray)
+                                .foregroundColor(Color.theme.textSecondary)
                         }
                         .padding(.vertical, 5)
                     }
                 }
+                .scrollContentBackground(.hidden)
             }
             .navigationTitle("Community")
+            .background(Color.theme.background.ignoresSafeArea())
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {

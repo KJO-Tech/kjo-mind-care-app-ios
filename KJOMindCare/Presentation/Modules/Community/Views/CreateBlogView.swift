@@ -13,12 +13,12 @@ public struct CreateBlogView: View {
 
             TextEditor(text: $content)
                 .padding(5)
-                .background(Color(uiColor: .systemGray6))
+                .background(Color.theme.surface)
                 .cornerRadius(8)
                 .padding(.horizontal)
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                        .stroke(Color.theme.textSecondary.opacity(0.2), lineWidth: 1)
                         .padding(.horizontal)
                 )
 
@@ -27,11 +27,11 @@ public struct CreateBlogView: View {
                 coordinator.pop()
             }) {
                 Text("Publish Blog")
-                    .font(.headline)
-                    .foregroundColor(.white)
+                    .font(.theme.headline)
+                    .foregroundColor(Color.theme.primaryContent)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue)
+                    .background(Color.theme.primary)
                     .cornerRadius(10)
             }
             .padding()
@@ -40,5 +40,6 @@ public struct CreateBlogView: View {
         }
         .padding(.top)
         .navigationTitle("Create Blog")
+        .background(Color.theme.background.ignoresSafeArea())
     }
 }

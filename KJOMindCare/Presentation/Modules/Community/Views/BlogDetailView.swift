@@ -11,18 +11,20 @@ struct BlogDetailView: View {
                     .scaledToFit()
                     .frame(height: 200)
                     .frame(maxWidth: .infinity)
-                    .foregroundColor(.blue)
-                    .background(Color.gray.opacity(0.1))
+                    .foregroundColor(Color.theme.primary)
+                    .background(Color.theme.surface)
 
                 Text(title)
-                    .font(.largeTitle)
+                    .font(.theme.largeTitle)
                     .fontWeight(.bold)
+                    .foregroundStyle(Color.theme.text)
                     .padding(.horizontal)
 
                 Text(
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
                 )
-                .font(.body)
+                .font(.theme.body)
+                .foregroundStyle(Color.theme.textSecondary)
                 .padding(.horizontal)
                 .lineSpacing(5)
 
@@ -31,5 +33,6 @@ struct BlogDetailView: View {
         }
         .navigationTitle("Blog")
         .navigationBarTitleDisplayMode(.inline)
+        .background(Color.theme.background.ignoresSafeArea())
     }
 }

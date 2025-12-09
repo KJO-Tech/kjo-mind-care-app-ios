@@ -17,19 +17,19 @@ struct CustomTextField: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
-                .font(.title3)
-                .foregroundStyle(.primaryDark)
+                .font(.theme.title3)
+                .foregroundStyle(Color.theme.primary.opacity(0.8))
                 .fontWeight(.medium)
 
             ZStack(alignment: .trailing) {
                 if isSecure && !showPassword {
                     SecureField(placeholder, text: $text)
                         .textFieldStyle(PlainTextFieldStyle())
-                        .foregroundStyle(.text)
+                        .foregroundStyle(Color.theme.text)
                 } else {
                     TextField(placeholder, text: $text)
                         .textFieldStyle(PlainTextFieldStyle())
-                        .foregroundStyle(.text)
+                        .foregroundStyle(Color.theme.text)
                         .autocapitalization(.none)
                 }
                 if isSecure {
@@ -37,7 +37,7 @@ struct CustomTextField: View {
                         showPassword.toggle()
                     }) {
                         Image(systemName: showPassword ? "eye" : "eye.slash")
-                            .foregroundStyle(Color.primaryDark)
+                            .foregroundStyle(Color.theme.primary.opacity(0.8))
                     }
                 }
             }
@@ -46,7 +46,7 @@ struct CustomTextField: View {
             .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color.primaryLight, lineWidth: 1)
+                    .stroke(Color.theme.primary, lineWidth: 1)
             )
 
         }

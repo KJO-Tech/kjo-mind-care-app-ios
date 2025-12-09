@@ -10,7 +10,7 @@ public struct HomeView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     Text("Daily Activities")
-                        .font(.title2)
+                        .font(.theme.title2)
                         .fontWeight(.bold)
                         .padding(.horizontal)
 
@@ -25,15 +25,15 @@ public struct HomeView: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(height: 50)
-                                        .foregroundColor(.white)
+                                        .foregroundColor(Color.theme.primaryContent)
 
                                     Text(category)
-                                        .font(.headline)
-                                        .foregroundColor(.white)
+                                        .font(.theme.headline)
+                                        .foregroundColor(Color.theme.primaryContent)
                                 }
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 120)
-                                .background(Color.blue.opacity(0.8))
+                                .background(Color.theme.primary.opacity(0.8))
                                 .cornerRadius(15)
                             }
                         }
@@ -42,6 +42,7 @@ public struct HomeView: View {
                 }
                 .padding(.top)
             }
+            .background(Color.theme.background.ignoresSafeArea())
             .navigationTitle("Home")
             .navigationDestination(for: HomeRoute.self) { route in
                 switch route {
