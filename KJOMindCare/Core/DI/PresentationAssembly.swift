@@ -17,5 +17,9 @@ final class PresentationAssembly: Assembly {
             RegisterViewModel(registerUseCase: r.resolve(RegisterUseCase.self)!)
         }
         
+        container.register(SplashViewModel.self) { r in
+            SplashViewModel(checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!)
+        }
+        
     }
 }

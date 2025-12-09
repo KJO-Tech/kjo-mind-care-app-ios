@@ -20,5 +20,11 @@ final class DomainAssembly: Assembly {
                 repository: r.resolve(AuthRepository.self)!
             )
         }
+        
+        container.register(CheckUserSessionUseCase.self){ r in
+            CheckUserSessionUseCase(
+                repository: r.resolve(AuthRepository.self)!
+            )
+        }
     }
 }
