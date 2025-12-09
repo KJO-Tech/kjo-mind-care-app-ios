@@ -23,6 +23,8 @@ struct MainView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.theme.background.ignoresSafeArea())
+            .font(Font.theme.body)
 
             // Custom Tab Bar
             HStack {
@@ -59,9 +61,9 @@ struct MainView: View {
                 Spacer()
             }
             .padding(.top, 10)
-            .padding(.bottom, 30)  // Adjust for safe area
-            .background(Color.white)  // Or your app's background color
-            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: -5)
+            .padding(.bottom, 5)  // Adjust for safe area
+            .background(Color.theme.surface)  // Or your app's background color
+            .shadow(color: Color.theme.shadow.opacity(0.3), radius: 5, x: 0, y: -5)
         }
         .ignoresSafeArea(.keyboard)  // Prevent tab bar from moving up with keyboard if needed
     }
@@ -78,11 +80,11 @@ struct TabBarItem: View {
             VStack(spacing: 4) {
                 Image(systemName: isSelected ? iconName + ".fill" : iconName)
                     .font(.system(size: 24))
-                    .foregroundColor(isSelected ? .primaryLight : .gray)  // Use custom color
+                    .foregroundColor(isSelected ? .theme.primary : .theme.textSecondary)  // Use custom color
 
                 Text(title)
-                    .font(.caption)
-                    .foregroundColor(isSelected ? .primaryLight : .gray)
+                    .font(.theme.caption)
+                    .foregroundColor(isSelected ? .theme.primary : .theme.textSecondary)
             }
         }
     }

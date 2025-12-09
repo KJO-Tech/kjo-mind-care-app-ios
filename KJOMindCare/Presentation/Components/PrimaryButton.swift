@@ -13,11 +13,11 @@ struct PrimaryButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.headline)
-                .foregroundStyle(.surface)
+                .font(.theme.headline)
+                .foregroundStyle(Color.theme.primaryContent)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(Color.primaryLight)
+                .background(Color.theme.primary)
                 .clipShape(
                     RoundedRectangle(cornerRadius: 12, style: .continuous))
         }

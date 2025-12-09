@@ -25,16 +25,16 @@ struct WelcomeView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(height: 200)
-                            .foregroundColor(.blue)
+                            .foregroundColor(Color.theme.primary)
 
                         Text(steps[index].title)
-                            .font(.title)
+                            .font(.theme.title)
                             .fontWeight(.bold)
 
                         Text(steps[index].description)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal)
-                            .foregroundColor(.gray)
+                            .foregroundColor(Color.theme.textSecondary)
                     }
                     .tag(index)
                 }
@@ -46,11 +46,11 @@ struct WelcomeView: View {
                 coordinator.showLogin()
             }) {
                 Text("Get Started")
-                    .font(.headline)
-                    .foregroundColor(.white)
+                    .font(.theme.headline)
+                    .foregroundColor(Color.theme.primaryContent)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue)
+                    .background(Color.theme.primary)
                     .cornerRadius(10)
             }
             .padding()

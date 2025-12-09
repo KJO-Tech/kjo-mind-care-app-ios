@@ -14,7 +14,7 @@ struct ForgotPasswordModal: View {
 
     var body: some View {
         ZStack {
-            Color.black.opacity(0.4)
+            Color.theme.shadow.opacity(0.4)
                 .ignoresSafeArea()
                 .onTapGesture {
                     withAnimation {
@@ -24,16 +24,16 @@ struct ForgotPasswordModal: View {
 
             VStack(spacing: 20) {
                 Text("Recuperar Contraseña")
-                    .font(.title3)
+                    .font(.theme.title3)
                     .fontWeight(.bold)
-                    .foregroundStyle(Color.primaryDark)
+                    .foregroundStyle(Color.theme.text)
 
                 Text(
                     "Ingresa tu correo electronico asociado a tu cuenta"
                 )
-                .font(.subheadline)
+                .font(.theme.subheadline)
                 .multilineTextAlignment(.center)
-                .foregroundStyle(Color.textSecondary)
+                .foregroundStyle(Color.theme.textSecondary)
                 .padding(.horizontal)
 
                 TextField(
@@ -41,13 +41,13 @@ struct ForgotPasswordModal: View {
                     text: $email
 
                 )
-                .foregroundStyle(Color.primaryDark)
+                .foregroundStyle(Color.theme.text)
                 .padding()
-                .background(Color.surface)
+                .background(Color.theme.surface)
                 .cornerRadius(10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.primaryLight, lineWidth: 1)
+                        .stroke(Color.theme.primary, lineWidth: 1)
                 )
                 .padding(.horizontal)
                 .keyboardType(.emailAddress)
@@ -61,10 +61,10 @@ struct ForgotPasswordModal: View {
                     }) {
                         Text("Cancelar")
                             .fontWeight(.semibold)
-                            .foregroundStyle(Color.textMuted)
+                            .foregroundStyle(Color.theme.textSecondary)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.backgroundAlt)
+                            .background(Color.theme.background)
                             .cornerRadius(10)
                     }
 
@@ -73,10 +73,10 @@ struct ForgotPasswordModal: View {
                     }) {
                         Text("Enviar")
                             .fontWeight(.bold)
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Color.theme.primaryContent)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.primaryLight)
+                            .background(Color.theme.primary)
                             .cornerRadius(10)
                     }
                     .disabled(email.isEmpty)
@@ -85,9 +85,9 @@ struct ForgotPasswordModal: View {
                 .padding(.horizontal)
             }
             .padding(.vertical, 25)
-            .background(Color.card)
+            .background(Color.theme.card)
             .cornerRadius(20)
-            .shadow(color: Color.shadow.opacity(0.2), radius: 10, x: 0, y: 5)
+            .shadow(color: Color.theme.shadow.opacity(0.1), radius: 10, x: 0, y: 5)
             .padding(30)
         }
     }

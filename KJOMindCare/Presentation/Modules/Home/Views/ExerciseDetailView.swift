@@ -8,10 +8,10 @@ public struct ExerciseDetailView: View {
             Image(systemName: "play.circle.fill")
                 .resizable()
                 .frame(width: 100, height: 100)
-                .foregroundColor(.blue)
+                .foregroundColor(Color.theme.primary)
 
             Text(exercise)
-                .font(.largeTitle)
+                .font(.theme.largeTitle)
                 .fontWeight(.bold)
 
             Text(
@@ -19,7 +19,7 @@ public struct ExerciseDetailView: View {
             )
             .multilineTextAlignment(.center)
             .padding()
-            .foregroundColor(.gray)
+            .foregroundColor(Color.theme.textSecondary)
 
             Spacer()
         }
@@ -28,5 +28,6 @@ public struct ExerciseDetailView: View {
         #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
         #endif
+        .background(Color.theme.background.ignoresSafeArea())
     }
 }

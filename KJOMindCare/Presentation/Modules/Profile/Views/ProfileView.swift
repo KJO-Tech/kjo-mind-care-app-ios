@@ -9,34 +9,34 @@ public struct ProfileView: View {
                 Image(systemName: "person.circle.fill")
                     .resizable()
                     .frame(width: 100, height: 100)
-                    .foregroundColor(.gray)
+                    .foregroundColor(Color.theme.textSecondary)
                     .padding(.top)
 
                 Text("John Doe")
-                    .font(.title)
+                    .font(.theme.title)
                     .fontWeight(.bold)
 
                 Text("john.doe@example.com")
-                    .foregroundColor(.gray)
+                    .foregroundColor(Color.theme.textSecondary)
 
                 HStack(spacing: 40) {
                     VStack {
                         Text("12")
-                            .font(.headline)
+                            .font(.theme.headline)
                         Text("Moods")
-                            .font(.caption)
+                            .font(.theme.caption)
                     }
                     VStack {
                         Text("5")
-                            .font(.headline)
+                            .font(.theme.headline)
                         Text("Blogs")
-                            .font(.caption)
+                            .font(.theme.caption)
                     }
                     VStack {
                         Text("3")
-                            .font(.headline)
+                            .font(.theme.headline)
                         Text("Streak")
-                            .font(.caption)
+                            .font(.theme.caption)
                     }
                 }
                 .padding()
@@ -68,12 +68,14 @@ public struct ProfileView: View {
                             // Logout logic
                         }) {
                             Text("Logout")
-                                .foregroundColor(.red)
+                                .foregroundColor(Color.theme.error)
                         }
                     }
                 }
+                .scrollContentBackground(.hidden)
             }
             .navigationTitle("Profile")
+            .background(Color.theme.background.ignoresSafeArea())
             .navigationDestination(for: ProfileRoute.self) { route in
                 switch route {
                 case .editProfile:

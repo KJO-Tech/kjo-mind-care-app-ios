@@ -8,13 +8,13 @@ struct SubscriptionView: View {
 
     var body: some View {
         VStack {
-            Text("Choose Your Focus")
-                .font(.title)
+            Text("Choose Your Plan")
+                .font(.theme.title)
                 .fontWeight(.bold)
                 .padding()
 
             Text("Select categories you are interested in.")
-                .foregroundColor(.gray)
+                .foregroundColor(Color.theme.textSecondary)
                 .padding(.bottom)
 
             ScrollView {
@@ -29,18 +29,18 @@ struct SubscriptionView: View {
                         }) {
                             HStack {
                                 Text(category)
-                                    .foregroundColor(.primary)
+                                    .foregroundColor(Color.theme.text)
                                 Spacer()
                                 if selectedCategories.contains(category) {
                                     Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(.blue)
+                                        .foregroundColor(Color.theme.primary)
                                 } else {
                                     Image(systemName: "circle")
-                                        .foregroundColor(.gray)
+                                        .foregroundColor(Color.theme.textSecondary)
                                 }
                             }
                             .padding()
-                            .background(Color(.systemGray6))
+                            .background(Color.theme.surface)
                             .cornerRadius(10)
                         }
                     }
@@ -54,21 +54,22 @@ struct SubscriptionView: View {
                 Button("Skip") {
                     coordinator.showMain()
                 }
-                .foregroundColor(.gray)
+                .foregroundColor(Color.theme.textSecondary)
 
                 Spacer()
 
                 Button("Continue") {
                     coordinator.showMain()
                 }
-                .foregroundColor(.white)
+                .foregroundColor(Color.theme.primaryContent)
                 .padding(.horizontal, 30)
                 .padding(.vertical, 10)
-                .background(Color.blue)
+                .background(Color.theme.primary)
                 .cornerRadius(20)
             }
             .padding()
         }
+        .background(Color.theme.background.ignoresSafeArea())
     }
 }
 
