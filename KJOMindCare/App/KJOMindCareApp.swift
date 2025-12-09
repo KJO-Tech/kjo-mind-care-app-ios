@@ -22,7 +22,8 @@ struct KJOMindCareApp: App {
                 Group {
                     switch coordinator.currentRoute {
                     case .splash:
-                        SplashView()
+                        let splashVM = DIContainer.shared.container.resolve(SplashViewModel.self)!
+                        SplashView(viewModel: splashVM)
                     case .welcome:
                         WelcomeView()
                     case .subscription:
@@ -37,7 +38,8 @@ struct KJOMindCareApp: App {
                 .navigationDestination(for: AppRoute.self) { route in
                     switch route {
                     case .splash:
-                        SplashView()
+                        let splashVM = DIContainer.shared.container.resolve(SplashViewModel.self)!
+                        SplashView(viewModel: splashVM)
                     case .welcome:
                         WelcomeView()
                     case .login:
