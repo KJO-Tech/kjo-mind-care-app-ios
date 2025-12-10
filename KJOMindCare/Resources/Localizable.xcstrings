@@ -1,7 +1,25 @@
 {
   "sourceLanguage" : "es-419",
   "strings" : {
+    "¿No tienes una cuenta?" : {
+
+    },
+    "¿Olvidaste tu contraseña?" : {
+
+    },
+    "¿Ya tienes una cuenta?" : {
+
+    },
     "%lld" : {
+
+    },
+    "3" : {
+
+    },
+    "5" : {
+
+    },
+    "12" : {
 
     },
     "Add a note (optional)" : {
@@ -20,43 +38,105 @@
         }
       }
     },
+    "Add a note..." : {
+
+    },
     "Alegre" : {
 
     },
-    "Ansioso" : {
+    "Bienestar mental a su alcance" : {
+
+    },
+    "Bienvenidos de nuevo" : {
+
+    },
+    "Bio" : {
+
+    },
+    "Blog" : {
+
+    },
+    "Blogs" : {
+
+    },
+    "Bueno" : {
 
     },
     "Cancel" : {
 
     },
+    "Cancelar" : {
+
+    },
     "Cansado" : {
 
     },
-    "Contento" : {
+    "Choose Your Plan" : {
+
+    },
+    "Community Blog" : {
+
+    },
+    "Continue" : {
+
+    },
+    "Crear una cuenta" : {
+
+    },
+    "Create Blog" : {
+
+    },
+    "Daily Activities" : {
 
     },
     "Day" : {
 
     },
-    "Emocionado(a)" : {
+    "Edit Profile" : {
 
     },
-    "Enfermo(a)" : {
+    "Enviar" : {
 
     },
-    "Enojado" : {
+    "Error loading moods" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error loading moods"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error al cargar los estados de ánimo"
+          }
+        }
+      }
+    },
+    "Estado general" : {
 
     },
-    "Entusiasta, ansioso" : {
+    "Estresado" : {
 
     },
-    "Fatigado, baja energía" : {
+    "Exercise" : {
 
     },
     "Feliz" : {
 
     },
+    "Get Started" : {
+
+    },
+    "Guardar" : {
+
+    },
+    "Hello, world!" : {
+
+    },
     "Hola Mundo" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -83,16 +163,62 @@
             "state" : "translated",
             "value" : "How are you feeling?"
           }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Cómo te sientes ahora?"
+          }
         }
       }
     },
-    "Indispuesta(o)" : {
+    "Ingresa tu correo electronico asociado a tu cuenta" : {
 
     },
-    "Infeliz, abajo" : {
+    "Inicia Sesión" : {
 
     },
-    "Molesto, disgustado" : {
+    "Inicie sesión para continuar con su cuenta" : {
+
+    },
+    "John Doe" : {
+
+    },
+    "john.doe@example.com" : {
+
+    },
+    "KJO Mind Care" : {
+
+    },
+    "Las contraseñas no coinciden" : {
+
+    },
+    "Log Mood" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log Mood"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrar estado de ánimo"
+          }
+        }
+      }
+    },
+    "Logout" : {
+
+    },
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." : {
+
+    },
+    "Mas frecuente" : {
+
+    },
+    "Mood" : {
 
     },
     "Mood Distribution" : {
@@ -100,10 +226,22 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Mood Distribution"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Distribución del estado de ánimo"
           }
         }
       }
+    },
+    "Mood History" : {
+
+    },
+    "Mood Level: %lld" : {
+
     },
     "Mood Tracker" : {
 
@@ -111,18 +249,56 @@
     "Mood Trends" : {
 
     },
+    "Moods" : {
+
+    },
+    "Name" : {
+
+    },
     "Neutro" : {
 
     },
-    "Ni buena ni mala(o)=" : {
+    "No moods available" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No moods available"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay estados de ánimo disponibles"
+          }
+        }
+      }
+    },
+    "Notifications" : {
 
     },
-    "Preocupado(a)" : {
+    "Personal Information" : {
+
+    },
+    "Privacy Policy" : {
+
+    },
+    "Profile" : {
+
+    },
+    "Publish Blog" : {
 
     },
     "Record Mood" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record Mood"
+          }
+        },
+        "es-419" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Grabar estado"
@@ -130,9 +306,47 @@
         }
       }
     },
-    "Save" : {
+    "Recuperar Contraseña" : {
+
+    },
+    "Registrar Estado" : {
+
+    },
+    "Registrate" : {
+
+    },
+    "Regístrese para comenzar" : {
+
+    },
+    "Regular" : {
+
+    },
+    "Retry" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retry"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reintentar"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "es-419" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Guardar"
@@ -140,7 +354,31 @@
         }
       }
     },
-    "Sentir gran alegría o deleite" : {
+    "Save Changes" : {
+
+    },
+    "Save Mood" : {
+
+    },
+    "Search blogs..." : {
+
+    },
+    "Select a mood" : {
+
+    },
+    "Select categories you are interested in." : {
+
+    },
+    "Settings" : {
+
+    },
+    "Skip" : {
+
+    },
+    "Streak" : {
+
+    },
+    "This is a placeholder for the exercise content. Imagine a video player or audio controls here." : {
 
     },
     "Timeframe" : {
@@ -148,12 +386,24 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Timeframe"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Periodo"
           }
         }
       }
     },
+    "Title" : {
+
+    },
     "Triste" : {
+
+    },
+    "Tu correo" : {
 
     },
     "Value" : {
@@ -161,7 +411,29 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Value"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Valor"
+          }
+        }
+      }
+    },
+    "Welcome %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome %@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenido %@"
           }
         }
       }
@@ -169,6 +441,12 @@
     "Your Insights" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your Insights"
+          }
+        },
+        "es-419" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tus ideas"

@@ -5,13 +5,13 @@ class BlogListViewModel: ObservableObject {
     
     @Published var searchText: String = ""
     @Published var selectedFilter: BlogFilter = .all
-    @Published var blogs: [Blog] = Blog.mockList
+    @Published var blogs: [Blog] = []
     
     init() {}
     
     func refresh() async {
         try? await Task.sleep(nanoseconds: 1_000_000_000)
-        blogs = Blog.mockList
+        blogs = []
     }
     
     var filteredBlogs: [Blog] {

@@ -28,6 +28,12 @@ final class DomainAssembly: Assembly {
             )
         }
 
+        container.register(GetUserProfileUseCase.self) { r in
+            GetUserProfileUseCase(
+                repository: r.resolve(AuthRepository.self)!
+            )
+        }
+
         // Blog Use Cases
         container.register(GetBlogPostsUseCase.self) { r in
             GetBlogPostsUseCase(
@@ -199,6 +205,11 @@ final class DomainAssembly: Assembly {
             AddReplyUseCase(
                 repository: r.resolve(CommentRepository.self)!
             )
+        }
+
+        // Mood Use Cases
+        container.register(GetMoodsUseCase.self) { r in
+            GetMoodsUseCase(repository: r.resolve(MoodRepository.self)!)
         }
     }
 }

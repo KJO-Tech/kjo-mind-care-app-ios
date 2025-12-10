@@ -2,6 +2,7 @@ import SwiftUI
 
 public struct HomeView: View {
     @StateObject private var coordinator = HomeCoordinator()
+    @StateObject private var viewModel = DIContainer.shared.container.resolve(HomeViewModel.self)!
 
     let categories = ["Meditation", "Yoga", "Breathing", "Sleep Stories"]
 
@@ -9,6 +10,21 @@ public struct HomeView: View {
         NavigationStack(path: $coordinator.path) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
+
+                    // Welcome Header
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text(String(format: String(localized: "Welcome %@"), viewModel.userName))
+                            .font(.theme.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundColor(.theme.text)
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 10)
+
+                    // Mood Selector Component
+                    MoodSelectorView(viewModel: viewModel, coordinator: coordinator)
+                        .padding(.horizontal)
+
                     Text("Daily Activities")
                         .font(.theme.title2)
                         .fontWeight(.bold)
@@ -43,7 +59,8 @@ public struct HomeView: View {
                 .padding(.top)
             }
             .background(Color.theme.background.ignoresSafeArea())
-            .navigationTitle("Home")
+            // .navigationTitle("Home") // Removing default title to use custom welcome
+            .navigationBarHidden(true)
             .navigationDestination(for: HomeRoute.self) { route in
                 switch route {
                 case .categoryDetail(let category):
@@ -52,8 +69,14 @@ public struct HomeView: View {
                 case .exerciseDetail(let exercise):
                     ExerciseDetailView(exercise: exercise)
                         .environmentObject(coordinator)
+                case .recordMood(let moodId):
+                    // Passing Mood ID to RecordMoodView (Need to update RecordMoodView to handle it)
+                    RecordMoodView()  // Placeholder, ideally passing moodId
+                        .environmentObject(coordinator)
+                        .navigationBarBackButtonHidden(true)  // Should use custom back button if custom nav
                 }
             }
         }
     }
+
 }
