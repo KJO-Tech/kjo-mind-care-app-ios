@@ -10,7 +10,7 @@ struct MoodSelectorView: View {
             // Header
             HStack(spacing: 12) {
                 Text(String(localized: "How are you feeling?"))
-                    .font(.theme.title3)
+                    .font(.theme.title2)
                     .fontWeight(.bold)
                     .foregroundStyle(
                         LinearGradient(
