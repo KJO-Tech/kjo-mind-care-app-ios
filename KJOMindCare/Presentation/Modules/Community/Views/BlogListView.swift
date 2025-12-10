@@ -1,59 +1,54 @@
 import SwiftUI
 
 struct BlogListView: View {
-    
     @StateObject var vm: BlogListViewModel
-    
-    
+
     init(vm: BlogListViewModel) {
         _vm = StateObject(wrappedValue: vm)
     }
-    
+
     var body: some View {
         VStack(spacing: 0) {
-            
             Text("Community Blog")
                 .font(.largeTitle.bold())
-                .foregroundColor(.white)
+                .foregroundColor(Color.text)
                 .padding(.top, 10)
             
             searchBar
             filterTabs
             blogList
         }
-        .background(Color.black.edgesIgnoringSafeArea(.all))
+        .background(Color.background.edgesIgnoringSafeArea(.all))
         .overlay(alignment: .bottomTrailing) {
             floatingButton
         }
     }
 }
 
-
 extension BlogListView {
     var searchBar: some View {
         HStack {
             HStack {
                 Image(systemName: "magnifyingglass")
-                    .foregroundColor(.gray)
+                    .foregroundColor(Color.textSecondary)
                 
                 TextField("Search blogs...", text: $vm.searchText)
-                    .foregroundColor(.white)
+                    .foregroundColor(Color.text)
             }
             .padding(12)
-            .background(Color.white.opacity(0.08))
+            .background(Color.backgroundAlt)
             .cornerRadius(14)
             
             Button {} label: {
                 Image(systemName: "slider.horizontal.3")
                     .font(.title3)
-                    .foregroundColor(.white)
+                    .foregroundColor(Color.text)
             }
         }
         .padding(.horizontal)
         .padding(.top, 5)
     }
 }
-
 
 extension BlogListView {
     var filterTabs: some View {
@@ -64,11 +59,11 @@ extension BlogListView {
                         vm.selectedFilter = filter
                     } label: {
                         Text(filter.rawValue)
-                            .foregroundColor(vm.selectedFilter == filter ? .purple : .gray)
+                            .foregroundColor(vm.selectedFilter == filter ? Color.primary : Color.textSecondary)
                     }
                     
                     Rectangle()
-                        .fill(vm.selectedFilter == filter ? Color.purple : .clear)
+                        .fill(vm.selectedFilter == filter ? Color.primary : Color.clear)
                         .frame(height: 3)
                 }
                 .frame(maxWidth: .infinity)
@@ -78,7 +73,6 @@ extension BlogListView {
         .padding(.top, 5)
     }
 }
-
 
 extension BlogListView {
     var blogList: some View {
@@ -97,20 +91,19 @@ extension BlogListView {
     }
 }
 
-
 extension BlogListView {
     var floatingButton: some View {
         Button {
-            
+            // Acción del botón
         } label: {
             ZStack {
                 Circle()
-                    .fill(.ultraThinMaterial)
+                    .fill(Color.primarySoft)
                     .frame(width: 65, height: 65)
-                    .shadow(color: .purple.opacity(0.7), radius: 8)
+                    .shadow(color: Color.primary.opacity(0.7), radius: 8)
                 
                 Image(systemName: "plus")
-                    .foregroundColor(.purple)
+                    .foregroundColor(Color.primary)
                     .font(.title)
             }
             .padding()
@@ -120,7 +113,6 @@ extension BlogListView {
 
 
 #Preview {
-    let vm = BlogListViewModel()
-    BlogListView(vm: vm)
-        .preferredColorScheme(.dark)
+    let listBlogsVM = DIContainer.shared.container.resolve(BlogListViewModel.self)!
+    BlogListView(vm: listBlogsVM)
 }

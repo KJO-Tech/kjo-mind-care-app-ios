@@ -11,7 +11,7 @@ struct User: Codable, Identifiable {
     var uid: String
     var fullName: String
     var email: String
-    var role: String
+    var role: String?
     var profileImage: String?
     var createdAt: Timestamp?
 

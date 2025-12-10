@@ -1,19 +1,37 @@
 import SwiftUI
+import Combine
 
-@MainActor
 class BlogListViewModel: ObservableObject {
-    
     @Published var searchText: String = ""
     @Published var selectedFilter: BlogFilter = .all
-    @Published var blogs: [Blog] = Blog.mockList
+    @Published var blogs: [Blog] = []
     
-    init() {}
+    private let getBlogPostsUseCase: GetBlogPostsUseCase
+    private var cancellables = Set<AnyCancellable>()
     
-    func refresh() async {
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
-        blogs = Blog.mockList
+    init(getBlogPostsUseCase: GetBlogPostsUseCase) {
+        self.getBlogPostsUseCase = getBlogPostsUseCase
+        loadBlogs()
     }
     
+    func loadBlogs() {
+        getBlogPostsUseCase.execute()
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                if case .failure(let error) = completion {
+                    print("Error loading blogs: \(error)")
+                }
+            } receiveValue: { [weak self] blogs in
+                self?.blogs = blogs
+            }
+            .store(in: &cancellables)
+    }
+    
+
+    func refresh() async {
+        loadBlogs()
+    }
+
     var filteredBlogs: [Blog] {
         blogs.filter { blog in
             searchText.isEmpty ||

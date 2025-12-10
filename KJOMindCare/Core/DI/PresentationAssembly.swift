@@ -17,5 +17,8 @@ final class PresentationAssembly: Assembly {
             RegisterViewModel(registerUseCase: r.resolve(RegisterUseCase.self)!)
         }
         
+        container.register(BlogListViewModel.self) { r in
+            BlogListViewModel(getBlogPostsUseCase: r.resolve(GetBlogPostsUseCase.self)!)
+        }
     }
 }

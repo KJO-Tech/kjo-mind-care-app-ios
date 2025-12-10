@@ -19,7 +19,7 @@ class ReactionRepositoryImpl: ReactionRepository {
     }
     
     func toggleLike(blogId: String, userId: String) async throws -> Bool {
-        return try await firestore.runTransaction({ (transaction, errorPointer) -> Bool in
+        return ((try await firestore.runTransaction({ (transaction, errorPointer) -> Bool in
             let blogRef = self.firestore.collection("blogs").document(blogId)
             let likeRef = blogRef.collection("reaction").document(userId)
             
@@ -56,7 +56,7 @@ class ReactionRepositoryImpl: ReactionRepository {
                 errorPointer?.pointee = error as NSError
                 return false
             }
-        })
+        })) != nil)
     }
     
     func hasUserLikedBlog(blogId: String, userId: String) async throws -> Bool {

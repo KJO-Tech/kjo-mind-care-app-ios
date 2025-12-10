@@ -42,3 +42,8 @@ public struct CreateBlogView: View {
         .navigationTitle("Create Blog")
     }
 }
+
+
+#Preview {
+    CreateBlogView()
+}

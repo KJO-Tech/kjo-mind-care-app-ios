@@ -17,7 +17,8 @@ struct MainView: View {
                 case .mood:
                     MoodListView()
                 case .community:
-                    BlogListView(vm: BlogListViewModel())
+                    let listBlogsVM = DIContainer.shared.container.resolve(BlogListViewModel.self)!
+                    BlogListView(vm: listBlogsVM)
                 case .profile:
                     ProfileView()
                 }
