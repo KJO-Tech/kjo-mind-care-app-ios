@@ -3,6 +3,7 @@ import SwiftUI
 public enum HomeRoute: Hashable {
     case categoryDetail(String)  // Passing category name for now
     case exerciseDetail(String)  // Passing exercise name for now
+    case recordMood(String?)  // Passing selected mood ID (optional)
 }
 
 public class HomeCoordinator: Coordinator {
@@ -20,5 +21,9 @@ public class HomeCoordinator: Coordinator {
 
     public func showExerciseDetail(exercise: String) {
         path.append(HomeRoute.exerciseDetail(exercise))
+    }
+
+    public func showRecordMood(moodId: String?) {
+        path.append(HomeRoute.recordMood(moodId))
     }
 }

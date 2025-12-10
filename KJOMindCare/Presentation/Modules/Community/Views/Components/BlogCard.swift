@@ -1,4 +1,5 @@
 import SwiftUI
+import FirebaseCore
 
 struct BlogCard: View {
     let blog: Blog
@@ -11,15 +12,15 @@ struct BlogCard: View {
                     .fill(Color.blue.opacity(0.3))
                     .frame(width: 40, height: 40)
                     .overlay(
-                        Text(String(blog.authorName.prefix(1)))
+                        Text(String(blog.author.fullName.prefix(1)))
                             .font(.headline)
                             .foregroundColor(.white)
                     )
                 
                 VStack(alignment: .leading) {
-                    Text(blog.authorName)
+                    Text(blog.author.fullName)
                         .foregroundColor(.white)
-                    Text(blog.createdAt.timeAgo)
+                    Text(blog.getTimeAgo())
                         .font(.caption)
                         .foregroundColor(.gray)
                 }
@@ -34,7 +35,7 @@ struct BlogCard: View {
                 .foregroundColor(.white)
                 .font(.title3.bold())
             
-            Text(blog.category)
+            Text(blog.categoryId ?? "Unknow")
                 .font(.caption)
                 .foregroundColor(.purple)
             
@@ -55,7 +56,23 @@ struct BlogCard: View {
 }
 
 #Preview {
-    BlogCard(blog: Blog.mockList.first!)
+    let blog = Blog(
+        id: "1",
+        title: "Blog Title",
+        content: "Blog Content",
+        author: User(
+            uid: "1",
+            fullName: "John Doe", 
+            email: "john.doe@example.com",
+            role: "user", 
+            profileImage: "https://example.com/profile.jpg"
+        ),
+        createdAt: Timestamp(date: Date()),
+        likes: 10,
+        comments: 5,
+        categoryId: "category1"
+    )
+    BlogCard(blog: blog)
         .preferredColorScheme(.dark)
         .padding()
         .background(.black)
