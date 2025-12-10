@@ -25,6 +25,9 @@ public struct HomeView: View {
                     MoodSelectorView(viewModel: viewModel, coordinator: coordinator)
                         .padding(.horizontal)
 
+                    WeeklyHistoryView()
+                        .padding(.horizontal)
+
                     Text("Daily Activities")
                         .font(.theme.title2)
                         .fontWeight(.bold)
