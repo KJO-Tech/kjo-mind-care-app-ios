@@ -1,5 +1,6 @@
 import AVKit
 import SwiftUI
+import YouTubePlayerKit
 
 struct ExerciseDetailView: View {
     @StateObject var viewModel: ExerciseDetailViewModel
@@ -76,28 +77,69 @@ struct ExerciseDetailView: View {
                                 .font(.theme.headline)
                                 .foregroundColor(Color.theme.text)
 
-                            if exercise.contentType == .TEXT {
-                                Text(exercise.getContentText())
-                                    .font(.theme.body)
-                                    .foregroundColor(Color.theme.textSecondary)
-                                    .lineSpacing(6)
-                            } else {
-                                // Placeholder for multimedia
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .fill(Color.black.opacity(0.8))
-                                        .aspectRatio(16 / 9, contentMode: .fit)
+                            // Content Switch
+                            switch exercise.contentType {
+                            case .TEXT, .AUDIO:
+                                VStack(alignment: .leading, spacing: 16) {
+                                    // Thumbnail for Text/Audio if available
+                                    if let thumbUrl = exercise.thumbnailUrl,
+                                        let url = URL(string: thumbUrl)
+                                    {
+                                        AsyncImage(url: url) { image in
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(maxHeight: 200)
+                                                .cornerRadius(12)
+                                                .clipped()
+                                        } placeholder: {
+                                            ProgressView()
+                                                .frame(maxWidth: .infinity, minHeight: 150)
+                                                .background(Color.theme.surface)
+                                                .cornerRadius(12)
+                                        }
+                                    }
 
-                                    VStack(spacing: 12) {
-                                        Image(systemName: "play.circle.fill")
-                                            .font(.system(size: 48))
-                                            .foregroundColor(.white)
+                                    Text(exercise.getContentText())
+                                        .font(.theme.body)
+                                        .foregroundColor(Color.theme.textSecondary)
+                                        .lineSpacing(6)
+                                }
 
-                                        Text("Multimedia Content Placeholder")
-                                            .foregroundColor(.white)
-                                            .font(.theme.caption)
+                            case .VIDEO:
+                                VStack(spacing: 16) {
+                                    if exercise.contentUrl.contains("youtube.com")
+                                        || exercise.contentUrl.contains("youtu.be")
+                                    {
+                                        // YouTube Player
+                                        YouTubePlayerView(
+                                            YouTubePlayer(urlString: exercise.contentUrl)
+                                        )
+                                        .frame(height: 220)
+                                        .cornerRadius(12)
+                                    } else if let url = URL(string: exercise.contentUrl) {
+                                        // Native Video Player
+                                        VideoPlayer(player: AVPlayer(url: url))
+                                            .frame(height: 220)
+                                            .cornerRadius(12)
+                                    } else {
+                                        Text("Invalid Video URL")
+                                            .foregroundColor(.red)
+                                    }
+
+                                    // Instructions for video context if any
+                                    if !exercise.getContentText().isEmpty {
+                                        Text(exercise.getContentText())
+                                            .font(.theme.body)
+                                            .foregroundColor(Color.theme.textSecondary)
+                                            .lineSpacing(6)
                                     }
                                 }
+
+                            default:
+                                Text("Content type not supported yet.")
+                                    .font(.theme.caption)
+                                    .foregroundColor(Color.theme.textSecondary)
                             }
                         }
                         .padding(24)
