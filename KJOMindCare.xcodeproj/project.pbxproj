@@ -13,6 +13,7 @@
 		B7F6B6752EDB89FD00D0E52C /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B7F6B6742EDB89FD00D0E52C /* FirebaseAuth */; };
 		B7F6B6772EDB89FD00D0E52C /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = B7F6B6762EDB89FD00D0E52C /* FirebaseCrashlytics */; };
 		B7F6B67A2EDB8B4500D0E52C /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = B7F6B6792EDB8B4500D0E52C /* Swinject */; };
+		EAB068A62EEA4A0E006B2CBE /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = EAB068A52EEA4A0E006B2CBE /* YouTubePlayerKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAB068A62EEA4A0E006B2CBE /* YouTubePlayerKit in Frameworks */,
 				B7F6B66F2EDB891100D0E52C /* FirebaseCore in Frameworks */,
 				B7F6B6712EDB891200D0E52C /* FirebaseFirestore in Frameworks */,
 				B7F6B6772EDB89FD00D0E52C /* FirebaseCrashlytics in Frameworks */,
@@ -104,6 +106,7 @@
 				B7F6B6742EDB89FD00D0E52C /* FirebaseAuth */,
 				B7F6B6762EDB89FD00D0E52C /* FirebaseCrashlytics */,
 				B7F6B6792EDB8B4500D0E52C /* Swinject */,
+				EAB068A52EEA4A0E006B2CBE /* YouTubePlayerKit */,
 			);
 			productName = KJOMindCare;
 			productReference = EA59C4812ECA643A00BA0496 /* KJOMindCare.app */;
@@ -136,6 +139,7 @@
 			packageReferences = (
 				B7F6B66D2EDB891100D0E52C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B7F6B6782EDB8B4500D0E52C /* XCRemoteSwiftPackageReference "Swinject" */,
+				EAB068A42EEA4A0E006B2CBE /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EA59C4822ECA643A00BA0496 /* Products */;
@@ -383,6 +387,14 @@
 				minimumVersion = 2.10.0;
 			};
 		};
+		EAB068A42EEA4A0E006B2CBE /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SvenTiigi/YouTubePlayerKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.5;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -415,6 +427,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B7F6B6782EDB8B4500D0E52C /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
+		};
+		EAB068A52EEA4A0E006B2CBE /* YouTubePlayerKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EAB068A42EEA4A0E006B2CBE /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */;
+			productName = YouTubePlayerKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

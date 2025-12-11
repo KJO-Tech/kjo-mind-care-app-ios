@@ -92,6 +92,9 @@
     "Completed" : {
 
     },
+    "Content type not supported yet." : {
+
+    },
     "Continue" : {
 
     },
@@ -211,6 +214,9 @@
     "Instructions" : {
 
     },
+    "Invalid Video URL" : {
+
+    },
     "John Doe" : {
 
     },
@@ -283,9 +289,6 @@
 
     },
     "Moods" : {
-
-    },
-    "Multimedia Content Placeholder" : {
 
     },
     "Name" : {

@@ -55,25 +55,22 @@ struct DailyExercise: Codable, Identifiable {
 
     func getTitle(languageCode: String? = nil) -> String {
         let code = languageCode ?? getCurrentLanguageCode()
-        return
-            ((localizedTitle[code] ?? localizedTitle["en"] ?? localizedTitle.values.first)
-            ?? "Untitled Exercise")!
+        return ((localizedTitle[code] ?? localizedTitle["en"] ?? localizedTitle.values.first)
+                ?? "Untitled Exercise") ?? ""
     }
 
     func getDescription(languageCode: String? = nil) -> String {
         let code = languageCode ?? getCurrentLanguageCode()
-        return
-            ((localizedDescription[code] ?? localizedDescription["en"]
-            ?? localizedDescription.values.first)
-            ?? "")!
+        return ((localizedDescription[code] ?? localizedDescription["en"]
+          ?? localizedDescription.values.first)
+         ?? "") ?? ""
     }
 
     func getContentText(languageCode: String? = nil) -> String {
         let code = languageCode ?? getCurrentLanguageCode()
-        return
-            ((localizedContentText[code] ?? localizedContentText["en"]
-            ?? localizedContentText.values.first)
-            ?? "")!
+        return ((localizedContentText[code] ?? localizedContentText["en"]
+          ?? localizedContentText.values.first)
+         ?? "") ?? ""
     }
 
     private func getCurrentLanguageCode() -> String {
