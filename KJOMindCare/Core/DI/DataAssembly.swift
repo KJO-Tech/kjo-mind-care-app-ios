@@ -54,7 +54,8 @@ final class DataAssembly: Assembly {
         // Activity Subscription Repository
         container.register(ActivitySubscriptionRepository.self) { r in
             ActivitySubscriptionRepositoryImpl(
-                firestoreService: r.resolve(FireStoreService.self)!
+                firestoreService: r.resolve(FireStoreService.self)!,
+                dailyActivityRepository: r.resolve(DailyActivityRepository.self)!
             )
         }
 

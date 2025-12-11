@@ -14,7 +14,7 @@ final class AssignDailyExercisesUseCase {
         self.repository = repository
     }
     
-    func execute(userId: String) async throws -> [DailyExercise] {
+    func execute(userId: String) async throws -> [AssignedExerciseDetail] {
         return try await repository.assignDailyExercises(userId: userId)
     }
 }

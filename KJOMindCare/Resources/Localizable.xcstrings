@@ -13,6 +13,9 @@
     "%lld" : {
 
     },
+    "%lld min" : {
+
+    },
     "3" : {
 
     },
@@ -71,10 +74,22 @@
     "Cansado" : {
 
     },
+    "Categories" : {
+
+    },
+    "Check your subscriptions if you want daily exercises." : {
+
+    },
     "Choose Your Plan" : {
 
     },
     "Community Blog" : {
+
+    },
+    "Complete Exercise" : {
+
+    },
+    "Completed" : {
 
     },
     "Continue" : {
@@ -86,9 +101,6 @@
     "Create Blog" : {
 
     },
-    "Daily Activities" : {
-
-    },
     "Day" : {
 
     },
@@ -96,6 +108,18 @@
 
     },
     "Enviar" : {
+
+    },
+    "Error loading categories" : {
+
+    },
+    "Error loading category" : {
+
+    },
+    "Error loading exercise" : {
+
+    },
+    "Error loading history" : {
 
     },
     "Error loading moods" : {
@@ -114,13 +138,16 @@
         }
       }
     },
+    "Error: %@" : {
+
+    },
     "Estado general" : {
 
     },
     "Estresado" : {
 
     },
-    "Exercise" : {
+    "Exercise not found" : {
 
     },
     "Feliz" : {
@@ -181,6 +208,9 @@
     "Inicie sesión para continuar con su cuenta" : {
 
     },
+    "Instructions" : {
+
+    },
     "John Doe" : {
 
     },
@@ -191,6 +221,9 @@
 
     },
     "Las contraseñas no coinciden" : {
+
+    },
+    "Loading activities..." : {
 
     },
     "Log Mood" : {
@@ -252,10 +285,19 @@
     "Moods" : {
 
     },
+    "Multimedia Content Placeholder" : {
+
+    },
     "Name" : {
 
     },
     "Neutro" : {
+
+    },
+    "No activities for today" : {
+
+    },
+    "No categories found." : {
 
     },
     "No moods available" : {
@@ -363,6 +405,9 @@
     "Search blogs..." : {
 
     },
+    "See all" : {
+
+    },
     "Select a mood" : {
 
     },
@@ -376,9 +421,6 @@
 
     },
     "Streak" : {
-
-    },
-    "This is a placeholder for the exercise content. Imagine a video player or audio controls here." : {
 
     },
     "Timeframe" : {
@@ -398,6 +440,9 @@
       }
     },
     "Title" : {
+
+    },
+    "Today's Activities" : {
 
     },
     "Triste" : {
@@ -453,6 +498,9 @@
           }
         }
       }
+    },
+    "Your Week" : {
+
     }
   },
   "version" : "1.0"

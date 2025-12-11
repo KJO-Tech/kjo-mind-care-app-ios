@@ -25,7 +25,9 @@ final class PresentationAssembly: Assembly {
             HomeViewModel(
                 getMoodsUseCase: r.resolve(GetMoodsUseCase.self)!,
                 checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!,
-                getUserProfileUseCase: r.resolve(GetUserProfileUseCase.self)!
+                getUserProfileUseCase: r.resolve(GetUserProfileUseCase.self)!,
+                getTodayAssignedExercisesUseCase: r.resolve(GetTodayAssignedExercisesUseCase.self)!,
+                getActivityCategoriesUseCase: r.resolve(GetActivityCategoriesUseCase.self)!
             )
         }
 
@@ -33,5 +35,28 @@ final class PresentationAssembly: Assembly {
             RecordMoodViewModel(getMoodsUseCase: r.resolve(GetMoodsUseCase.self)!)
         }
 
+        container.register(CategoryListViewModel.self) { r in
+            CategoryListViewModel(
+                getActivityCategoriesUseCase: r.resolve(GetActivityCategoriesUseCase.self)!
+            )
+        }
+
+        container.register(ExerciseDetailViewModel.self) { (r, exerciseId: String) in
+            ExerciseDetailViewModel(
+                exerciseId: exerciseId,
+                getExerciseByIdUseCase: r.resolve(GetExerciseByIdUseCase.self)!,
+                completeExerciseUseCase: r.resolve(CompleteExerciseUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!,
+                getTodayAssignedExercisesUseCase: r.resolve(GetTodayAssignedExercisesUseCase.self)!
+            )
+        }
+
+        container.register(CategoryDetailViewModel.self) { (r, categoryId: String) in
+            CategoryDetailViewModel(
+                categoryId: categoryId,
+                getActivityCategoriesUseCase: r.resolve(GetActivityCategoriesUseCase.self)!,
+                getExercisesByCategoryUseCase: r.resolve(GetExercisesByCategoryUseCase.self)!
+            )
+        }
     }
 }
