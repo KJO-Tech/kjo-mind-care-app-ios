@@ -25,6 +25,12 @@ struct BlogListView: View {
         .overlay(alignment: .bottomTrailing) {
             floatingButton
         }
+        .sheet(isPresented: $vm.showCategoryFilter) {
+            CategoryFilterSheet(viewModel: vm)
+                .presentationDetents([.medium])
+                .presentationDragIndicator(.hidden)
+                .presentationBackground(.clear)
+        }
     }
 }
 
@@ -43,7 +49,9 @@ extension BlogListView {
             .background(Color.white.opacity(0.08))
             .cornerRadius(14)
             
-            Button {} label: {
+            Button {
+                vm.openCategoryFilter()
+            } label: {
                 Image(systemName: "slider.horizontal.3")
                     .font(.title3)
                     .foregroundColor(.white)
@@ -85,7 +93,10 @@ extension BlogListView {
         ScrollView {
             LazyVStack(spacing: 18) {
                 ForEach(vm.filteredBlogs) { blog in
-                    BlogCard(blog: blog)
+                    NavigationLink(destination: BlogDetailView(blog: blog)) {
+                        BlogCard(blog: blog)
+                    }
+                    .buttonStyle(PlainButtonStyle())
                 }
             }
             .padding(.horizontal)

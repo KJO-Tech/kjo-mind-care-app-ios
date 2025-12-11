@@ -2,43 +2,193 @@ import SwiftUI
 
 public struct CreateBlogView: View {
     @EnvironmentObject var coordinator: CommunityCoordinator
-    @State private var title = ""
-    @State private var content = ""
+    @StateObject private var vm: CreateBlogViewModel
+    
+    public init(vm: CreateBlogViewModel) {
+        _vm = StateObject(wrappedValue: vm)
+    }
+    
+    public init() {
+        self.init(vm: CreateBlogViewModel())
+    }
 
     public var body: some View {
-        VStack(spacing: 20) {
-            TextField("Title", text: $title)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+        ScrollView {
+            VStack(spacing: 24) {
+            
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Title")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    
+                    TextField("Blog title", text: $vm.title)
+                        .padding(12)
+                        .background(Color.white.opacity(0.08))
+                        .cornerRadius(12)
+                        .foregroundColor(.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(vm.titleError ? Color.red : Color.clear, lineWidth: 2)
+                        )
+                    
+                    if vm.titleError {
+                        Text("El título no puede estar vacío")
+                            .font(.caption)
+                            .foregroundColor(.red)
+                    }
+                }
+                .padding(.horizontal)
+       
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Category")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    
+                    Menu {
+                        ForEach(BlogCategory.allCases) { category in
+                            Button(action: {
+                                vm.selectedCategory = category
+                            }) {
+                                HStack {
+                                    Image(systemName: category.icon)
+                                    Text(category.title)
+                                    if vm.selectedCategory == category {
+                                        Image(systemName: "checkmark")
+                                    }
+                                }
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            Image(systemName: vm.selectedCategory.icon)
+                                .foregroundColor(.purple)
+                            Text(vm.selectedCategory.title)
+                                .foregroundColor(.white)
+                            Spacer()
+                            Image(systemName: "chevron.down")
+                                .foregroundColor(.gray)
+                        }
+                        .padding(12)
+                        .background(Color.white.opacity(0.08))
+                        .cornerRadius(12)
+                    }
+                }
+                .padding(.horizontal)
+      
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Content")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    
+                    TextEditor(text: $vm.content)
+                        .padding(8)
+                        .background(Color.white.opacity(0.08))
+                        .cornerRadius(12)
+                        .foregroundColor(.white)
+                        .frame(minHeight: 150)
+                        .scrollContentBackground(.hidden)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(vm.contentError ? Color.red : Color.clear, lineWidth: 2)
+                        )
+                    
+                    if vm.contentError {
+                        Text("El contenido no puede estar vacío")
+                            .font(.caption)
+                            .foregroundColor(.red)
+                    }
+                }
                 .padding(.horizontal)
 
-            TextEditor(text: $content)
-                .padding(5)
-                .background(Color(uiColor: .systemGray6))
-                .cornerRadius(8)
-                .padding(.horizontal)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("Image/Video (Optional)")
+                        .font(.headline)
+                        .foregroundColor(.white)
                         .padding(.horizontal)
-                )
+                    
+                    if let selectedImage = vm.selectedImage {
+                        VStack(spacing: 12) {
+                            MediaPreviewView(image: selectedImage)
+                                .padding(.horizontal)
+                            
+                            Button {
+                                vm.clearMedia()
+                            } label: {
+                                HStack {
+                                    Image(systemName: "xmark.circle.fill")
+                                    Text("Clear Media")
+                                }
+                                .font(.subheadline)
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 12)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(Color.white.opacity(0.1))
+                                )
+                            }
+                            .padding(.horizontal)
+                        }
+                    }
+                    
+                    Button {
+                        vm.showImagePicker = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "camera.fill")
+                            Text(vm.selectedImage == nil ? "Select Image or Video" : "Change Image or Video")
+                        }
+                        .font(.subheadline)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.purple.opacity(0.6))
+                        )
+                    }
+                    .padding(.horizontal)
+                }
 
-            Button(action: {
-                // Save logic
-                coordinator.pop()
-            }) {
-                Text("Publish Blog")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .cornerRadius(10)
+                Button(action: {
+                    if vm.validateForm() {
+                        _ = vm.publishBlog()
+                        coordinator.pop()
+                    }
+                }) {
+                    Text("Publish Blog")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.purple)
+                        )
+                }
+                .padding(.horizontal)
+                .padding(.top, 10)
+
+                Spacer()
             }
-            .padding()
-
-            Spacer()
+            .padding(.top)
         }
-        .padding(.top)
+        .background(Color.black.edgesIgnoringSafeArea(.all))
         .navigationTitle("Create Blog")
+        .navigationBarTitleDisplayMode(.inline)
+        .preferredColorScheme(.dark)
+        .sheet(isPresented: $vm.showImagePicker) {
+            ImagePickerView(
+                selectedImage: $vm.selectedImage,
+                isPresented: $vm.showImagePicker
+            )
+        }
     }
+}
+
+#Preview {
+    NavigationView {
+        CreateBlogView()
+    }
+    .preferredColorScheme(.dark)
 }

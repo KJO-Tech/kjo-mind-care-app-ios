@@ -34,7 +34,7 @@ struct BlogCard: View {
                 .foregroundColor(.white)
                 .font(.title3.bold())
             
-            Text(blog.category)
+            Text(blog.category.title)
                 .font(.caption)
                 .foregroundColor(.purple)
             
