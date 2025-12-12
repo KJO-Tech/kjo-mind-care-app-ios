@@ -22,6 +22,25 @@ final class DomainAssembly: Assembly {
             )
         }
         
+        container.register(LoginWithGoogleUseCase.self){ r in
+            LoginWithGoogleUseCase(
+                repository: r.resolve(AuthRepository.self)!
+            )
+        }
+        
+        container.register(GetCurrentUserUseCase.self){ r in
+            GetCurrentUserUseCase(
+                repository: r.resolve(AuthRepository.self)!
+            )
+        }
+        
+        container.register(SignOutUseCase.self){ r in
+            SignOutUseCase(
+                repository: r.resolve(AuthRepository.self)!
+            )
+        }
+                           
+        
         // Blog Use Cases
         container.register(GetBlogPostsUseCase.self) { r in
             GetBlogPostsUseCase(

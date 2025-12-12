@@ -82,23 +82,19 @@ struct LoginView: View {
                                 .multilineTextAlignment(.center)
                         }
 
-                        PrimaryButton(title: viewModel.isLoading ? "Cargando...": "Iniciar Sesion") {
-                            Task{
-                                viewModel.errorMessage = nil
-                                viewModel.isLoading = true
-                                defer { viewModel.isLoading = false }
-                                
+                        PrimaryButton(title: viewModel.isLoading ? "Cargando..." : "Iniciar Sesion") {
+                            Task {
                                 await viewModel.login()
                                 
                                 if let _ = viewModel.loggedUser {
-                                    withAnimation{
+                                    withAnimation {
                                         coordinator.showMain()
                                     }
                                 }
                             }
-
-                        }.disabled(!viewModel.isFormValid || viewModel.isLoading)
-                            .opacity(viewModel.isFormValid ? 1.0 : 0.6)
+                        }
+                        .disabled(!viewModel.isFormValid || viewModel.isLoading)
+                        .opacity(viewModel.isFormValid ? 1.0 : 0.6)
 
                     }
                     .padding(.horizontal)
