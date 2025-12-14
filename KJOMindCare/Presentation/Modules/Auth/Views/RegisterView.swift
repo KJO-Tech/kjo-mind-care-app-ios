@@ -18,7 +18,7 @@ struct RegisterView: View {
 
             ScrollView {
                 VStack(spacing: 20) {
-                    
+
                     VStack(spacing: 10) {
                         ZStack {
                             RoundedRectangle(cornerRadius: 20)
@@ -29,79 +29,79 @@ struct RegisterView: View {
                                 .scaledToFit()
                                 .frame(width: 60, height: 60)
                         }
-                        
-                        Text("KJO Mind Care")
+
+                        Text("auth.login.appName")
                             .font(.theme.logo)
                             .fontWeight(.bold)
                             .foregroundStyle(Color.theme.primary)
-                        
+
                     }
-                    
+
                     VStack(spacing: 15) {
                         VStack(alignment: .leading, spacing: 5) {
-                            Text("Crear una cuenta")
+                            Text("auth.register.title")
                                 .font(.theme.title)
                                 .fontWeight(.bold)
                                 .foregroundStyle(Color.theme.primary.opacity(0.8))
-                            Text("Regístrese para comenzar")
+                            Text("auth.register.subtitle")
                                 .font(.theme.subheadline)
                                 .foregroundColor(Color.theme.textSecondary)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        
+
                         CustomTextField(
-                            title: "Nombre Completo",
-                            placeholder: "Ingrese su nombre completo",
+                            title: "auth.register.fullName.title",
+                            placeholder: "auth.register.fullName.placeholder",
                             text: $viewModel.fullName
                         )
-                        
+
                         CustomTextField(
-                            title: "Email",
-                            placeholder: "Ingrese su correo",
+                            title: "auth.register.email.title",
+                            placeholder: "auth.register.email.placeholder",
                             text: $viewModel.email
                         )
                         .keyboardType(.emailAddress)
                         .textInputAutocapitalization(.never)
-                        
+
                         CustomTextField(
-                            title: "Contraseña",
-                            placeholder: "Ingrese su contraseña",
+                            title: "auth.register.password.title",
+                            placeholder: "auth.register.password.placeholder",
                             text: $viewModel.password,
                             isSecure: true
                         )
-                        
+
                         CustomTextField(
-                            title: "Confirmar Contraseña",
-                            placeholder: "Repita su contraseña",
+                            title: "auth.register.confirmPassword.title",
+                            placeholder: "auth.register.confirmPassword.placeholder",
                             text: $viewModel.confirmPassword,
                             isSecure: true
                         )
-                        
+
                         if !viewModel.confirmPassword.isEmpty
                             && viewModel.password != viewModel.confirmPassword
                         {
-                            Text("Las contraseñas no coinciden")
+                            Text("auth.register.passwordMismatch")
                                 .font(.theme.caption)
                                 .foregroundColor(.red)
                                 .frame(maxWidth: .infinity, alignment: .trailing)
                         }
-                        
+
                         if let error = viewModel.errorMessage {
                             Text(error)
                                 .foregroundColor(.red)
                                 .multilineTextAlignment(.center)
                         }
-                        
+
                         PrimaryButton(
                             title: viewModel.isLoading
-                            ? "Cargando..." : "Registrarse"
+                                ? "auth.register.loading" : "auth.register.signUpButton"
                         ) {
                             Task {
-                                
+
                                 viewModel.errorMessage = nil
-                                
+
                                 await viewModel.register()
-                                
+
                                 if let user = viewModel.registeredUser {
                                     print(
                                         "Usuario registrado correctamente: \(user.fullName) (\(user.email))"
@@ -119,17 +119,17 @@ struct RegisterView: View {
                         .opacity(viewModel.isFormValid ? 1.0 : 0.6)
                     }
                     .padding(.horizontal)
-                    
+
                     VStack(spacing: 15) {
-                        
+
                         HStack(spacing: 5) {
-                            Text("¿Ya tienes una cuenta?")
+                            Text("auth.register.haveAccount")
                                 .foregroundColor(Color.theme.textSecondary)
-                            
+
                             Button(action: {
                                 coordinator.pop()
                             }) {
-                                Text("Inicia Sesión")
+                                Text("auth.register.login")
                                     .fontWeight(.bold)
                                     .foregroundStyle(Color.theme.primary)
                             }
@@ -138,7 +138,7 @@ struct RegisterView: View {
                         Spacer().frame(height: 1)
                     }
                     .padding(.bottom, 10)
-                    
+
                 }
                 .padding()
             }
