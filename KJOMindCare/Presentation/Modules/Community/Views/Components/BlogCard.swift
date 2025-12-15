@@ -9,35 +9,35 @@ struct BlogCard: View {
             
             HStack(spacing: 12) {
                 Circle()
-                    .fill(Color.primarySoft)
+                    .fill(Color.theme.primary)
                     .frame(width: 40, height: 40)
                     .overlay(
                         Text(String(blog.author.fullName.prefix(1)))
                             .font(.headline)
-                            .foregroundColor(Color.text)
+                            .foregroundColor(Color.theme.text)
                     )
                 
                 VStack(alignment: .leading) {
                     Text(blog.author.fullName)
-                        .foregroundColor(Color.text)
+                        .foregroundColor(Color.theme.text)
                     Text(blog.getLocalDateTime().formatted(date: .abbreviated, time: .shortened))
                         .font(.caption)
-                        .foregroundColor(Color.textSecondary)
+                        .foregroundColor(Color.theme.textSecondary)
                 }
                 
                 Spacer()
                 
                 Image(systemName: "arrow.2.squarepath")
-                    .foregroundColor(Color.textSecondary)
+                    .foregroundColor(Color.theme.textSecondary)
             }
             
             Text(blog.title)
-                .foregroundColor(Color.text)
+                .foregroundColor(Color.theme.text)
                 .font(.title3.bold())
             
             Text(blog.categoryId ?? "")
                 .font(.caption)
-                .foregroundColor(Color.secondary)
+                .foregroundColor(Color.theme.secondary)
             
             HStack(spacing: 20) {
                 Label("\(blog.likes)", systemImage: "heart")
@@ -47,10 +47,10 @@ struct BlogCard: View {
                 
                 Image(systemName: "square.and.arrow.up")
             }
-            .foregroundColor(Color.textSecondary)
+            .foregroundColor(Color.theme.textSecondary)
         }
         .padding()
-        .background(Color.card)
+        .background(Color.theme.card)
         .cornerRadius(18)
     }
 }

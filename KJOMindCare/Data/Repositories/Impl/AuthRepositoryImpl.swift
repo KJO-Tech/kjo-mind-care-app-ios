@@ -38,7 +38,7 @@ class AuthRepositoryImpl: AuthRepository {
 
         try await firestoreService.save(user, at: "users")
 
-        print("Usuario registrado: \(user.fullName) (\(user.email)) con ID: \(user.id ?? "nil")")
+        print("Usuario registrado: \(user.fullName) (\(user.email)) con ID: \(user.id)")
 
         return user
     }
@@ -49,11 +49,6 @@ class AuthRepositoryImpl: AuthRepository {
                 domain: "AuthRepository", code: 404,
                 userInfo: [NSLocalizedDescriptionKey: "User not found"])
         }
-        return user
-    }
-
-        print("Usuario registrado: \(user.fullName) (\(user.email)) con ID: \(user.id)")
-        
         return user
     }
     

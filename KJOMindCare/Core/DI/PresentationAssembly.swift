@@ -61,6 +61,7 @@ final class PresentationAssembly: Assembly {
                 getActivityCategoriesUseCase: r.resolve(GetActivityCategoriesUseCase.self)!,
                 getExercisesByCategoryUseCase: r.resolve(GetExercisesByCategoryUseCase.self)!
             )
+        }
         
         container.register(BlogListViewModel.self) { r in
             BlogListViewModel(getBlogPostsUseCase: r.resolve(GetBlogPostsUseCase.self)!)

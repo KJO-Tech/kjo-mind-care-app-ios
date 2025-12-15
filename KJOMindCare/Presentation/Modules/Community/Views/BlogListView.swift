@@ -2,16 +2,16 @@ import SwiftUI
 
 struct BlogListView: View {
     @StateObject var vm: BlogListViewModel
-
+    
     init(vm: BlogListViewModel) {
         _vm = StateObject(wrappedValue: vm)
     }
-
+    
     var body: some View {
         VStack(spacing: 0) {
             Text("Community Blog")
-                .font(.largeTitle.bold())
-                .foregroundColor(Color.text)
+                .font(.theme.largeTitle.bold())
+                .foregroundColor(Color.theme.primary)
                 .padding(.top, 10)
             
             searchBar
@@ -30,19 +30,19 @@ extension BlogListView {
         HStack {
             HStack {
                 Image(systemName: "magnifyingglass")
-                    .foregroundColor(Color.textSecondary)
+                    .foregroundColor(Color.theme.textSecondary)
                 
                 TextField("Search blogs...", text: $vm.searchText)
-                    .foregroundColor(Color.text)
+                    .foregroundColor(Color.theme.text)
             }
             .padding(12)
-            .background(Color.backgroundAlt)
+            .background(Color.theme.card)
             .cornerRadius(14)
             
             Button {} label: {
                 Image(systemName: "slider.horizontal.3")
-                    .font(.title3)
-                    .foregroundColor(Color.text)
+                    .font(.theme.title3)
+                    .foregroundColor(Color.theme.text)
             }
         }
         .padding(.horizontal)
@@ -59,11 +59,11 @@ extension BlogListView {
                         vm.selectedFilter = filter
                     } label: {
                         Text(filter.rawValue)
-                            .foregroundColor(vm.selectedFilter == filter ? Color.primary : Color.textSecondary)
+                            .foregroundColor(vm.selectedFilter == filter ? Color.theme.primary : Color.theme.textSecondary)
                     }
                     
                     Rectangle()
-                        .fill(vm.selectedFilter == filter ? Color.primary : Color.clear)
+                        .fill(vm.selectedFilter == filter ? Color.theme.primary : Color.clear)
                         .frame(height: 3)
                 }
                 .frame(maxWidth: .infinity)
@@ -98,13 +98,13 @@ extension BlogListView {
         } label: {
             ZStack {
                 Circle()
-                    .fill(Color.primarySoft)
+                    .fill(Color.theme.primary)
                     .frame(width: 65, height: 65)
                     .shadow(color: Color.primary.opacity(0.7), radius: 8)
                 
                 Image(systemName: "plus")
-                    .foregroundColor(Color.primary)
-                    .font(.title)
+                    .foregroundColor(Color.theme.primaryContent)
+                    .font(.theme.title)
             }
             .padding()
         }
