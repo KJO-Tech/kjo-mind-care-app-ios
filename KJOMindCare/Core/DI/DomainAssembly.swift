@@ -34,6 +34,12 @@ final class DomainAssembly: Assembly {
             )
         }
 
+        container.register(SignOutUseCase.self) { r in
+            SignOutUseCase(
+                repository: r.resolve(AuthRepository.self)!
+            )
+        }
+
         // Blog Use Cases
         container.register(GetBlogPostsUseCase.self) { r in
             GetBlogPostsUseCase(

@@ -71,6 +71,11 @@ public class AppCoordinator: Coordinator {
         self.currentRoute = .main
     }
 
+    public func logout() {
+        self.path = NavigationPath()
+        self.currentRoute = .login
+    }
+
     public func navigateTo(_ route: AppRoute) {
         path.append(route)
     }

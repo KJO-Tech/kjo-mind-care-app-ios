@@ -5,8 +5,8 @@
 //  Created by Yisus on 16/11/25.
 //
 
-import SwiftUI
 import FirebaseCore
+import SwiftUI
 
 @main
 struct KJOMindCareApp: App {
@@ -30,9 +30,13 @@ struct KJOMindCareApp: App {
                         SubscriptionView()
                     case .main:
                         MainView()
-                    case .login, .register:
-                        // These are typically pushed, but if we land here as root (unlikely with current logic), show empty or fallback
-                        EmptyView()
+                    case .login:
+                        let loginVM = DIContainer.shared.container.resolve(LoginViewModel.self)!
+                        LoginView(viewModel: loginVM)
+                    case .register:
+                        let registerVM = DIContainer.shared.container.resolve(
+                            RegisterViewModel.self)!
+                        RegisterView(viewModel: registerVM)
                     }
                 }
                 .navigationDestination(for: AppRoute.self) { route in
@@ -46,7 +50,8 @@ struct KJOMindCareApp: App {
                         let loginVM = DIContainer.shared.container.resolve(LoginViewModel.self)!
                         LoginView(viewModel: loginVM)
                     case .register:
-                        let registerVM = DIContainer.shared.container.resolve(RegisterViewModel.self)!
+                        let registerVM = DIContainer.shared.container.resolve(
+                            RegisterViewModel.self)!
                         RegisterView(viewModel: registerVM)
                     case .subscription:
                         SubscriptionView()
