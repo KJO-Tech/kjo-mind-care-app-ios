@@ -108,7 +108,7 @@ struct DailyActivityRow: View {
                 // Icon/Image
                 ZStack {
                     RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.theme.surface)
+                        .fill(.clear)
                         .frame(width: 56, height: 56)
 
                     if let urlString = categoryImageUrl, let url = URL(string: urlString),
@@ -123,7 +123,7 @@ struct DailyActivityRow: View {
                                 .font(.system(size: 24))
                                 .foregroundColor(Color.theme.primary)
                         }
-                        .frame(width: 32, height: 32)
+                        .frame(width: 48, height: 48)
                     } else {
                         Image(systemName: "figure.mind.and.body")
                             .font(.system(size: 24))
@@ -170,8 +170,17 @@ struct DailyActivityRow: View {
                 }
             }
             .padding(16)
-            .background(Color.theme.card)
+            .background(
+                assignment.completed ? Color.theme.success.opacity(0.05) : Color.theme.background
+            )
             .cornerRadius(20)
+            .overlay(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(
+                        assignment.completed ? Color.theme.success : Color.theme.border,
+                        lineWidth: 2
+                    )
+            )
             .shadow(
                 color: assignment.completed
                     ? Color.theme.success.opacity(0.1) : Color.theme.shadow.opacity(0.02),

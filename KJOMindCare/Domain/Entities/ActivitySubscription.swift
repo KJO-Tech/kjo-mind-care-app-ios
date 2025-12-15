@@ -5,20 +5,20 @@
 //  Created by DAMII on 4/12/25.
 //
 
-import Foundation
 import FirebaseFirestore
+import Foundation
 
 struct ActivitySubscription: Codable, Identifiable {
-    var id: String
+    @DocumentID var id: String?
     var userId: String
     var categoryIds: [String]
-    var subscribedAt: Timestamp
-    
+    var subscribedAt: Timestamp?
+
     init(
-        id: String = "",
+        id: String? = nil,
         userId: String = "",
         categoryIds: [String] = [],
-        subscribedAt: Timestamp = Timestamp()
+        subscribedAt: Timestamp? = nil
     ) {
         self.id = id
         self.userId = userId
