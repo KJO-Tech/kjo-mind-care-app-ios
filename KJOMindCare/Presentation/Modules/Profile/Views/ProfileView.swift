@@ -2,6 +2,9 @@ import SwiftUI
 
 public struct ProfileView: View {
     @StateObject private var coordinator = ProfileCoordinator()
+    @StateObject private var viewModel = DIContainer.shared.container.resolve(
+        ProfileViewModel.self)!
+    @EnvironmentObject var appCoordinator: AppCoordinator
 
     public var body: some View {
         NavigationStack(path: $coordinator.path) {
@@ -65,7 +68,7 @@ public struct ProfileView: View {
 
                     Section {
                         Button(action: {
-                            // Logout logic
+                            viewModel.signOut()
                         }) {
                             Text("Logout")
                                 .foregroundColor(Color.theme.error)
@@ -82,6 +85,21 @@ public struct ProfileView: View {
                     EditProfileView()
                         .environmentObject(coordinator)
                 }
+            }
+            .onChange(of: viewModel.isSignedOut) { signedOut in
+                if signedOut {
+                    appCoordinator.logout()
+                }
+            }
+            .alert(
+                isPresented: Binding<Bool>(
+                    get: { viewModel.errorMessage != nil },
+                    set: { _ in viewModel.errorMessage = nil }
+                )
+            ) {
+                Alert(
+                    title: Text("Error"), message: Text(viewModel.errorMessage ?? "Unknown error"),
+                    dismissButton: .default(Text("OK")))
             }
         }
     }

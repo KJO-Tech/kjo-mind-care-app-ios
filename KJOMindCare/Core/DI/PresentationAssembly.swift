@@ -58,5 +58,11 @@ final class PresentationAssembly: Assembly {
                 getExercisesByCategoryUseCase: r.resolve(GetExercisesByCategoryUseCase.self)!
             )
         }
+
+        container.register(ProfileViewModel.self) { r in
+            ProfileViewModel(
+                signOutUseCase: r.resolve(SignOutUseCase.self)!
+            )
+        }
     }
 }

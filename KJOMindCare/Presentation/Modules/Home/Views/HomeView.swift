@@ -4,8 +4,6 @@ public struct HomeView: View {
     @StateObject private var coordinator = HomeCoordinator()
     @StateObject private var viewModel = DIContainer.shared.container.resolve(HomeViewModel.self)!
 
-    let categories = ["Meditation", "Yoga", "Breathing", "Sleep Stories"]
-
     public var body: some View {
         NavigationStack(path: $coordinator.path) {
             ScrollView {
@@ -16,7 +14,7 @@ public struct HomeView: View {
                         Text(String(format: String(localized: "Welcome %@"), viewModel.userName))
                             .font(.theme.largeTitle)
                             .fontWeight(.bold)
-                            .foregroundColor(.theme.text)
+                            .foregroundColor(.theme.primary)
                     }
                     .padding(.horizontal)
                     .padding(.top, 10)
