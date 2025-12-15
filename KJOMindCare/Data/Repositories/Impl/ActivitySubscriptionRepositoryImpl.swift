@@ -108,6 +108,32 @@ class ActivitySubscriptionRepositoryImpl: ActivitySubscriptionRepository {
         )
     }
 
+    func updateSubscriptions(userId: String, categoryIds: [String]) async throws {
+        let query = firestore.collection("activitySubscriptions")
+            .whereField("userId", isEqualTo: userId)
+            .limit(to: 1)
+
+        let snapshot = try await query.getDocuments()
+
+        if let document = snapshot.documents.first {
+            // Update existing
+            try await firestoreService.update(
+                at: "activitySubscriptions",
+                id: document.documentID,
+                with: ["categoryIds": categoryIds]
+            )
+        } else {
+            // Create new
+            let newSubscription = ActivitySubscription(
+                userId: userId,
+                categoryIds: categoryIds,
+                subscribedAt: Timestamp()
+            )
+            let docRef = firestore.collection("activitySubscriptions").document()
+            try docRef.setData(from: newSubscription)
+        }
+    }
+
     func getTodayAssignedExercises(userId: String) -> AnyPublisher<
         Resource<[AssignedExerciseDetail]>, Never
     > {

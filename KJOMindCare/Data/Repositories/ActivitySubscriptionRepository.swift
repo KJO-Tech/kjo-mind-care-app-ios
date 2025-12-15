@@ -17,4 +17,5 @@ protocol ActivitySubscriptionRepository {
     >
     func assignDailyExercises(userId: String) async throws -> [AssignedExerciseDetail]
     func completeExercise(userId: String, exerciseId: String) async throws
+    func updateSubscriptions(userId: String, categoryIds: [String]) async throws
 }

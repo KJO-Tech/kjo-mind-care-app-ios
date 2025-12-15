@@ -145,6 +145,12 @@ final class DomainAssembly: Assembly {
             )
         }
 
+        container.register(UpdateUserSubscriptionsUseCase.self) { r in
+            UpdateUserSubscriptionsUseCase(
+                repository: r.resolve(ActivitySubscriptionRepository.self)!
+            )
+        }
+
         container.register(GetTodayAssignedExercisesUseCase.self) { r in
             GetTodayAssignedExercisesUseCase(
                 repository: r.resolve(ActivitySubscriptionRepository.self)!
