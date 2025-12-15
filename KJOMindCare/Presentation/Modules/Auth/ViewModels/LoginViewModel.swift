@@ -17,9 +17,12 @@ public class LoginViewModel: ObservableObject {
     @Published var recoveryEmail: String = ""
 
     private let loginUseCase: LoginUseCase
+    private let getCurrentUserUseCase: GetCurrentUserUseCase
 
-    init(loginUseCase: LoginUseCase) {
+    init(loginUseCase: LoginUseCase, getCurrentUserUseCase: GetCurrentUserUseCase) {
         self.loginUseCase = loginUseCase
+        self.getCurrentUserUseCase = getCurrentUserUseCase
+        self.loggedUser = getCurrentUserUseCase.execute()
     }
 
     var isFormValid: Bool {

@@ -9,8 +9,12 @@ import Swinject
 
 final class PresentationAssembly: Assembly {
     func assemble(container: Container) {
+        
         container.register(LoginViewModel.self) { r in
-            LoginViewModel(loginUseCase: r.resolve(LoginUseCase.self)!)
+            LoginViewModel(
+                loginUseCase: r.resolve(LoginUseCase.self)!,
+                getCurrentUserUseCase: r.resolve(GetCurrentUserUseCase.self)!
+            )
         }
 
         container.register(RegisterViewModel.self) { r in
@@ -57,6 +61,9 @@ final class PresentationAssembly: Assembly {
                 getActivityCategoriesUseCase: r.resolve(GetActivityCategoriesUseCase.self)!,
                 getExercisesByCategoryUseCase: r.resolve(GetExercisesByCategoryUseCase.self)!
             )
+        
+        container.register(BlogListViewModel.self) { r in
+            BlogListViewModel(getBlogPostsUseCase: r.resolve(GetBlogPostsUseCase.self)!)
         }
     }
 }

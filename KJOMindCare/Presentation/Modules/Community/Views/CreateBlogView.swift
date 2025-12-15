@@ -43,3 +43,8 @@ public struct CreateBlogView: View {
         .background(Color.theme.background.ignoresSafeArea())
     }
 }
+
+
+#Preview {
+    CreateBlogView()
+}

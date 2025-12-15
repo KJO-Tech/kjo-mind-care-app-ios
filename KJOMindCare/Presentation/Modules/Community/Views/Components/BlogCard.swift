@@ -9,35 +9,35 @@ struct BlogCard: View {
             
             HStack(spacing: 12) {
                 Circle()
-                    .fill(Color.blue.opacity(0.3))
+                    .fill(Color.primarySoft)
                     .frame(width: 40, height: 40)
                     .overlay(
                         Text(String(blog.author.fullName.prefix(1)))
                             .font(.headline)
-                            .foregroundColor(.white)
+                            .foregroundColor(Color.text)
                     )
                 
                 VStack(alignment: .leading) {
                     Text(blog.author.fullName)
-                        .foregroundColor(.white)
-                    Text(blog.getTimeAgo())
+                        .foregroundColor(Color.text)
+                    Text(blog.getLocalDateTime().formatted(date: .abbreviated, time: .shortened))
                         .font(.caption)
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color.textSecondary)
                 }
                 
                 Spacer()
                 
                 Image(systemName: "arrow.2.squarepath")
-                    .foregroundColor(.gray)
+                    .foregroundColor(Color.textSecondary)
             }
             
             Text(blog.title)
-                .foregroundColor(.white)
+                .foregroundColor(Color.text)
                 .font(.title3.bold())
             
-            Text(blog.categoryId ?? "Unknow")
+            Text(blog.categoryId ?? "")
                 .font(.caption)
-                .foregroundColor(.purple)
+                .foregroundColor(Color.secondary)
             
             HStack(spacing: 20) {
                 Label("\(blog.likes)", systemImage: "heart")
@@ -47,33 +47,27 @@ struct BlogCard: View {
                 
                 Image(systemName: "square.and.arrow.up")
             }
-            .foregroundColor(.gray)
+            .foregroundColor(Color.textSecondary)
         }
         .padding()
-        .background(Color.white.opacity(0.06))
+        .background(Color.card)
         .cornerRadius(18)
     }
 }
 
 #Preview {
-    let blog = Blog(
+    BlogCard(blog: Blog(
         id: "1",
-        title: "Blog Title",
-        content: "Blog Content",
-        author: User(
-            uid: "1",
-            fullName: "John Doe", 
-            email: "john.doe@example.com",
-            role: "user", 
-            profileImage: "https://example.com/profile.jpg"
-        ),
+        title: "Preview Blog",
+        content: "",
+        author: User(uid: "1", fullName: "John Doe", email: "", role: ""),
         createdAt: Timestamp(date: Date()),
+        updatedAt: Timestamp(date: Date()),
         likes: 10,
-        comments: 5,
-        categoryId: "category1"
-    )
-    BlogCard(blog: blog)
-        .preferredColorScheme(.dark)
-        .padding()
-        .background(.black)
+        reaction: 2,
+        comments: 3,
+        status: BlogStatus.PUBLISHED
+    )).preferredColorScheme(.light)
+    .padding()
+    .background(.black)
 }

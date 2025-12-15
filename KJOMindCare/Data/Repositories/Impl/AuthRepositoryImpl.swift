@@ -52,6 +52,26 @@ class AuthRepositoryImpl: AuthRepository {
         return user
     }
 
+        print("Usuario registrado: \(user.fullName) (\(user.email)) con ID: \(user.id)")
+        
+        return user
+    }
+    
+    func loginWithGoogle() async throws -> User {
+        let user = try await authService.signInWithGoogle()
+
+        let savedUser: User? = try await firestoreService.get(
+            from: "users",
+            id: user.uid
+        )
+        
+        if savedUser == nil {
+            try await firestoreService.save(user, at: "users")
+        }
+
+        return user
+    }
+    
     func signOut() throws {
         try authService.signOut()
     }
