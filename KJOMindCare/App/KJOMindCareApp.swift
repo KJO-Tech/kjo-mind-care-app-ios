@@ -27,7 +27,9 @@ struct KJOMindCareApp: App {
                     case .welcome:
                         WelcomeView()
                     case .subscription:
-                        SubscriptionView()
+                        let subVM = DIContainer.shared.container.resolve(
+                            SubscriptionViewModel.self, arguments: false, coordinator)!
+                        SubscriptionView(viewModel: subVM)
                     case .main:
                         MainView()
                     case .login:
@@ -54,7 +56,9 @@ struct KJOMindCareApp: App {
                             RegisterViewModel.self)!
                         RegisterView(viewModel: registerVM)
                     case .subscription:
-                        SubscriptionView()
+                        let subVM = DIContainer.shared.container.resolve(
+                            SubscriptionViewModel.self, arguments: false, coordinator)!
+                        SubscriptionView(viewModel: subVM)
                     case .main:
                         MainView()
                     }

@@ -64,5 +64,17 @@ final class PresentationAssembly: Assembly {
                 signOutUseCase: r.resolve(SignOutUseCase.self)!
             )
         }
+
+        container.register(SubscriptionViewModel.self) {
+            (r, isEditMode: Bool, coordinator: AppCoordinator) in
+            SubscriptionViewModel(
+                getActivityCategoriesUseCase: r.resolve(GetActivityCategoriesUseCase.self)!,
+                getUserSubscriptionsUseCase: r.resolve(GetUserSubscriptionsUseCase.self)!,
+                updateUserSubscriptionsUseCase: r.resolve(UpdateUserSubscriptionsUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!,
+                coordinator: coordinator,
+                isEditMode: isEditMode
+            )
+        }
     }
 }

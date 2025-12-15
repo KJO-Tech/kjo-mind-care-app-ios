@@ -55,6 +55,15 @@ public struct ProfileView: View {
                             }
                         }
 
+                        Button(action: {
+                            coordinator.showSubscriptions()
+                        }) {
+                            HStack {
+                                Image(systemName: "checklist")
+                                Text("Edit Subscriptions")
+                            }
+                        }
+
                         HStack {
                             Image(systemName: "bell")
                             Toggle("Notifications", isOn: .constant(true))
@@ -84,6 +93,19 @@ public struct ProfileView: View {
                 case .editProfile:
                     EditProfileView()
                         .environmentObject(coordinator)
+                case .subscriptions:
+                    if let subscriptionVM = DIContainer.shared.container.resolve(
+                        SubscriptionViewModel.self, arguments: true, appCoordinator)
+                    {
+                        // Handle back navigation for Profile flow
+                        let _ =
+                            subscriptionVM.onDismiss = {
+                                coordinator.pop()
+                            }
+                        SubscriptionView(viewModel: subscriptionVM)
+                    } else {
+                        Text("Error resolving SubscriptionViewModel")
+                    }
                 }
             }
             .onChange(of: viewModel.isSignedOut) { signedOut in

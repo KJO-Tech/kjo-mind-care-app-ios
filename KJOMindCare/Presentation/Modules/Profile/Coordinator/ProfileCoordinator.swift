@@ -2,6 +2,7 @@ import SwiftUI
 
 public enum ProfileRoute: Hashable {
     case editProfile
+    case subscriptions
 }
 
 public class ProfileCoordinator: Coordinator {
@@ -15,5 +16,9 @@ public class ProfileCoordinator: Coordinator {
 
     public func showEditProfile() {
         path.append(ProfileRoute.editProfile)
+    }
+
+    public func showSubscriptions() {
+        path.append(ProfileRoute.subscriptions)
     }
 }
