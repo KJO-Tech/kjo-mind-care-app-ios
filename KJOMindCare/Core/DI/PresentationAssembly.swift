@@ -36,7 +36,11 @@ final class PresentationAssembly: Assembly {
         }
 
         container.register(RecordMoodViewModel.self) { r in
-            RecordMoodViewModel(getMoodsUseCase: r.resolve(GetMoodsUseCase.self)!)
+            RecordMoodViewModel(
+                getMoodsUseCase: r.resolve(GetMoodsUseCase.self)!,
+                saveMoodEntryUseCase: r.resolve(SaveMoodEntryUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!
+            )
         }
 
         container.register(CategoryListViewModel.self) { r in
@@ -65,6 +69,13 @@ final class PresentationAssembly: Assembly {
         
         container.register(BlogListViewModel.self) { r in
             BlogListViewModel(getBlogPostsUseCase: r.resolve(GetBlogPostsUseCase.self)!)
+        }
+        
+        container.register(MoodsViewModel.self) { r in
+            MoodsViewModel(
+                getMoodEntriesUseCase: r.resolve(GetMoodEntriesByDateRangeUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!
+            )
         }
     }
 }
