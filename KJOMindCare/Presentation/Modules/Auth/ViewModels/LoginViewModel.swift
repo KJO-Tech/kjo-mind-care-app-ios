@@ -52,14 +52,27 @@ public class LoginViewModel: ObservableObject {
     }
     func sendPasswordReset() async {
         isLoading = true
-        defer{
+        defer {
             isLoading = false
         }
-        
+
         print("Enviar correo de recuperacion a ; \(recoveryEmail)")
-        await MainActor.run{
+        await MainActor.run {
             self.showForgotPasswordModal = false
             self.recoveryEmail = ""
         }
     }
+
+    func signInWithGoogle() async {
+        isLoading = true
+        defer { isLoading = false }
+
+        // TODO: Implement Google Sign-In Logic
+        print("Iniciando sesión con Google (Maquetado)")
+        try? await Task.sleep(nanoseconds: 1_000_000_000)  // Simular delay
+
+        // Simular éxito (opcional, por ahora solo print)
+        print("Google Sign-In simulado completado")
+    }
+
 }

@@ -1,8 +1,10 @@
 import SwiftUI
 
-public enum HomeRoute: Hashable {
-    case categoryDetail(String)  // Passing category name for now
-    case exerciseDetail(String)  // Passing exercise name for now
+enum HomeRoute: Hashable {
+    case categoryList
+    case categoryDetail(String)
+    case exerciseDetail(String)
+    case recordMood(String?)  // Passing selected mood ID (optional)
 }
 
 public class HomeCoordinator: Coordinator {
@@ -14,11 +16,19 @@ public class HomeCoordinator: Coordinator {
         // Home is the root, no action needed for start usually unless deep linking
     }
 
-    public func showCategoryDetail(category: String) {
-        path.append(HomeRoute.categoryDetail(category))
+    public func showCategoryList() {
+        path.append(HomeRoute.categoryList)
     }
 
-    public func showExerciseDetail(exercise: String) {
-        path.append(HomeRoute.exerciseDetail(exercise))
+    public func showCategoryDetail(categoryId: String) {
+        path.append(HomeRoute.categoryDetail(categoryId))
+    }
+
+    public func showExerciseDetail(exerciseId: String) {
+        path.append(HomeRoute.exerciseDetail(exerciseId))
+    }
+
+    public func showRecordMood(moodId: String?) {
+        path.append(HomeRoute.recordMood(moodId))
     }
 }

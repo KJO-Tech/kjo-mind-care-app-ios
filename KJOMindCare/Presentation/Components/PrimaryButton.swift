@@ -12,7 +12,7 @@ struct PrimaryButton: View {
     var action: () -> Void
     var body: some View {
         Button(action: action) {
-            Text(title)
+            Text(LocalizedStringKey(title))
                 .font(.theme.headline)
                 .foregroundStyle(Color.theme.primaryContent)
                 .frame(maxWidth: .infinity)

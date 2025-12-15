@@ -2,14 +2,15 @@ import SwiftUI
 
 struct SplashView: View {
     @EnvironmentObject var coordinator: AppCoordinator
+    @ObservedObject var viewModel: SplashViewModel
 
     var body: some View {
         ZStack {
-            Color.theme.primary  // Ensure this color exists in Assets
+            Color.theme.primary
                 .ignoresSafeArea()
 
             VStack {
-                Image("kjo_icon")  // Placeholder logo
+                Image("kjo_icon")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 120, height: 120)
@@ -21,10 +22,15 @@ struct SplashView: View {
             }
         }
         .onAppear {
-            // Simulate loading delay
+            viewModel.checkUserSession()
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 withAnimation {
-                    coordinator.showWelcome()
+                    if viewModel.isAuthenticated {
+                        coordinator.showMain()
+                    } else {
+                        coordinator.showWelcome()
+                    }
                 }
             }
         }
@@ -33,5 +39,8 @@ struct SplashView: View {
 
 #Preview {
     let coordinator = AppCoordinator()
-    SplashView().environmentObject(coordinator)
+    let splashVM = DIContainer.shared.container.resolve(SplashViewModel.self)!
+    
+    SplashView(viewModel: splashVM)
+        .environmentObject(coordinator)
 }

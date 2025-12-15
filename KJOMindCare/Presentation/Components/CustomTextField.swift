@@ -16,18 +16,18 @@ struct CustomTextField: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(title)
+            Text(LocalizedStringKey(title))
                 .font(.theme.title3)
                 .foregroundStyle(Color.theme.primary.opacity(0.8))
                 .fontWeight(.medium)
 
             ZStack(alignment: .trailing) {
                 if isSecure && !showPassword {
-                    SecureField(placeholder, text: $text)
+                    SecureField(LocalizedStringKey(placeholder), text: $text)
                         .textFieldStyle(PlainTextFieldStyle())
                         .foregroundStyle(Color.theme.text)
                 } else {
-                    TextField(placeholder, text: $text)
+                    TextField(LocalizedStringKey(placeholder), text: $text)
                         .textFieldStyle(PlainTextFieldStyle())
                         .foregroundStyle(Color.theme.text)
                         .autocapitalization(.none)
