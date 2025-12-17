@@ -79,5 +79,10 @@ final class DataAssembly: Assembly {
                 firestoreService: r.resolve(FireStoreService.self)!
             )
         }
+        
+        // Media Upload Repository
+        container.register(MediaUploadRepository.self) { _ in
+            MediaUploadRepositoryImpl()
+        }
     }
 }

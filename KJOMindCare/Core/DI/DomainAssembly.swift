@@ -69,13 +69,15 @@ final class DomainAssembly: Assembly {
 
         container.register(CreateBlogUseCase.self) { r in
             CreateBlogUseCase(
-                repository: r.resolve(BlogRepository.self)!
+                repository: r.resolve(BlogRepository.self)!,
+                uploadMediaUseCase: r.resolve(UploadMediaUseCase.self)!
             )
         }
 
         container.register(UpdateBlogUseCase.self) { r in
             UpdateBlogUseCase(
-                repository: r.resolve(BlogRepository.self)!
+                repository: r.resolve(BlogRepository.self)!,
+                uploadMediaUseCase: r.resolve(UploadMediaUseCase.self)!
             )
         }
 
@@ -243,6 +245,11 @@ final class DomainAssembly: Assembly {
         
         container.register(GetMoodEntriesByDateRangeUseCase.self) { r in
             GetMoodEntriesByDateRangeUseCase(repository: r.resolve(MoodEntryRepository.self)!)
+        }
+        
+        // Media Use Cases
+        container.register(UploadMediaUseCase.self) { r in
+            UploadMediaUseCase(mediaUploadRepository: r.resolve(MediaUploadRepository.self)!)
         }
     }
 }

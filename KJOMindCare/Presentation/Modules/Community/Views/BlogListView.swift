@@ -2,6 +2,7 @@ import SwiftUI
 
 struct BlogListView: View {
     @StateObject var vm: BlogListViewModel
+    @EnvironmentObject var coordinator: CommunityCoordinator
     
     init(vm: BlogListViewModel) {
         _vm = StateObject(wrappedValue: vm)
@@ -94,7 +95,7 @@ extension BlogListView {
 extension BlogListView {
     var floatingButton: some View {
         Button {
-            // Acción del botón
+            coordinator.showCreateBlog()
         } label: {
             ZStack {
                 Circle()
@@ -114,5 +115,8 @@ extension BlogListView {
 
 #Preview {
     let listBlogsVM = DIContainer.shared.container.resolve(BlogListViewModel.self)!
+    let coordinator = CommunityCoordinator()
+    
     BlogListView(vm: listBlogsVM)
+        .environmentObject(coordinator)
 }

@@ -13,7 +13,8 @@ final class PresentationAssembly: Assembly {
         container.register(LoginViewModel.self) { r in
             LoginViewModel(
                 loginUseCase: r.resolve(LoginUseCase.self)!,
-                getCurrentUserUseCase: r.resolve(GetCurrentUserUseCase.self)!
+                getCurrentUserUseCase: r.resolve(GetCurrentUserUseCase.self)!,
+                loginWithGoogleUseCase: r.resolve(LoginWithGoogleUseCase.self)!
             )
         }
 
@@ -69,6 +70,13 @@ final class PresentationAssembly: Assembly {
         
         container.register(BlogListViewModel.self) { r in
             BlogListViewModel(getBlogPostsUseCase: r.resolve(GetBlogPostsUseCase.self)!)
+        }
+        
+        container.register(CreateBlogViewModel.self) { r in
+            CreateBlogViewModel(
+                createBlogUseCase: r.resolve(CreateBlogUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!
+            )
         }
         
         container.register(MoodsViewModel.self) { r in
