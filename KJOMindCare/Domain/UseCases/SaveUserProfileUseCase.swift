@@ -5,4 +5,10 @@
 //  Created by DAMII on 12/12/25.
 //
 
-import Foundation
+class SaveUserProfileUseCase {
+    private let repo = UserProfileRepository()
+    
+    func execute(_ profile: UserProfile) async throws {
+        try repo.saveProfile(profile)
+    }
+}

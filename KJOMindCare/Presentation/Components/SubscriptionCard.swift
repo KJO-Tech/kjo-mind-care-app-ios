@@ -1,18 +1,41 @@
-//
-//  SubscriptionCard.swift
-//  KJOMindCare
-//
-//  Created by DAMII on 16/12/25.
-//
-
 import SwiftUI
 
 struct SubscriptionCard: View {
+
+    let item: SubscriptionType
+    let isSelected: Bool
+    let onTap: () -> Void
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(action: onTap) {
+            HStack {
+                Image(systemName: item.icon)
+                    .font(.title2)
+
+                Text(item.title)
+                    .font(.headline)
+
+                Spacer()
+
+                if isSelected {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.green)
+                }
+            }
+            .padding(.horizontal)
+            .frame(height: 130)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(isSelected ? Color.green : Color.gray)
+            )
+        }
     }
 }
 
 #Preview {
-    SubscriptionCard()
+    SubscriptionCard(
+        item: SubscriptionType.meditation,
+        isSelected: true,
+        onTap: {}
+    ).padding()
 }

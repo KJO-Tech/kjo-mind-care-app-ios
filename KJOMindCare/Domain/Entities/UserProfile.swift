@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+struct UserProfile: Codable {
+    var id: String = UUID().uuidString
+    var name: String
+    var email: String
+    var photoData: Data?      // FOTO EN LOCAL
+    var notificationsEnabled: Bool
+    var notificationHour: Date
+    var darkModeEnabled: Bool
+    var subscriptions: [SubscriptionType]
+}

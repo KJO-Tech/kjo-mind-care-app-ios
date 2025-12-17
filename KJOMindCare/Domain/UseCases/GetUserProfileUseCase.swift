@@ -5,4 +5,10 @@
 //  Created by DAMII on 12/12/25.
 //
 
-import Foundation
+class GetUserProfileUseCase {
+    private let repo = UserProfileRepository()
+    
+    func execute() async throws -> UserProfile {
+        try await repo.getProfile()
+    }
+}

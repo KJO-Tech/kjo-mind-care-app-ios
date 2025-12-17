@@ -4,6 +4,9 @@
     "%lld" : {
 
     },
+    "Account" : {
+
+    },
     "Add a note (optional)" : {
       "localizations" : {
         "en" : {
@@ -26,6 +29,9 @@
     "Ansioso" : {
 
     },
+    "Bueno" : {
+
+    },
     "Cancel" : {
 
     },
@@ -35,7 +41,13 @@
     "Contento" : {
 
     },
+    "Correo" : {
+
+    },
     "Day" : {
+
+    },
+    "Edit Profile" : {
 
     },
     "Emocionado(a)" : {
@@ -50,13 +62,29 @@
     "Entusiasta, ansioso" : {
 
     },
+    "Estado general" : {
+
+    },
+    "Estresado" : {
+
+    },
     "Fatigado, baja energía" : {
 
     },
     "Feliz" : {
 
     },
+    "Guardar" : {
+
+    },
+    "Guardar Cambios" : {
+
+    },
+    "Hello, world!" : {
+
+    },
     "Hola Mundo" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -92,6 +120,12 @@
     "Infeliz, abajo" : {
 
     },
+    "Mas frecuente" : {
+
+    },
+    "Modo Oscuro" : {
+
+    },
     "Molesto, disgustado" : {
 
     },
@@ -117,10 +151,20 @@
     "Ni buena ni mala(o)=" : {
 
     },
+    "Nombre" : {
+
+    },
+    "Notificaciones Diarias" : {
+
+    },
     "Preocupado(a)" : {
 
     },
+    "Profile" : {
+
+    },
     "Record Mood" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -130,7 +174,14 @@
         }
       }
     },
+    "Registrar Estado" : {
+
+    },
+    "Regular" : {
+
+    },
     "Save" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -140,7 +191,13 @@
         }
       }
     },
+    "Seleccionar imagen" : {
+
+    },
     "Sentir gran alegría o deleite" : {
+
+    },
+    "Support" : {
 
     },
     "Timeframe" : {
