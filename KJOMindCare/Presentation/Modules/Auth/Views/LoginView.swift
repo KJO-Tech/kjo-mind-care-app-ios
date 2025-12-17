@@ -120,7 +120,14 @@ struct LoginView: View {
 
                             Button(action: {
                                 Task {
+                                    viewModel.errorMessage = nil
                                     await viewModel.signInWithGoogle()
+                                    
+                                    if viewModel.loggedUser != nil {
+                                        withAnimation {
+                                            coordinator.showMain()
+                                        }
+                                    }
                                 }
                             }) {
                                 HStack(spacing: 12) {
