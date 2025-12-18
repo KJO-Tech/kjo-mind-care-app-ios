@@ -1,7 +1,25 @@
 {
   "sourceLanguage" : "es-419",
   "strings" : {
+    "¿No tienes una cuenta?" : {
+
+    },
+    "¿Olvidaste tu contraseña?" : {
+
+    },
+    "¿Ya tienes una cuenta?" : {
+
+    },
     "%lld" : {
+
+    },
+    "3" : {
+
+    },
+    "5" : {
+
+    },
+    "12" : {
 
     },
     "Add a note (optional)" : {
@@ -26,16 +44,58 @@
     "Ansioso" : {
 
     },
+    "Bienestar mental a su alcance" : {
+
+    },
+    "Bienvenidos de nuevo" : {
+
+    },
+    "Bio" : {
+
+    },
+    "Blog" : {
+
+    },
+    "Blogs" : {
+
+    },
+    "Bueno" : {
+
+    },
     "Cancel" : {
+
+    },
+    "Cancelar" : {
 
     },
     "Cansado" : {
 
     },
+    "Choose Your Plan" : {
+
+    },
+    "Community" : {
+
+    },
     "Contento" : {
 
     },
+    "Continue" : {
+
+    },
+    "Crear una cuenta" : {
+
+    },
+    "Create Blog" : {
+
+    },
+    "Daily Activities" : {
+
+    },
     "Day" : {
+
+    },
+    "Edit Profile" : {
 
     },
     "Emocionado(a)" : {
@@ -50,13 +110,38 @@
     "Entusiasta, ansioso" : {
 
     },
+    "Enviar" : {
+
+    },
+    "Estado general" : {
+
+    },
+    "Estresado" : {
+
+    },
+    "Exercise" : {
+
+    },
     "Fatigado, baja energía" : {
 
     },
     "Feliz" : {
 
     },
+    "Filter" : {
+
+    },
+    "Get Started" : {
+
+    },
+    "Guardar" : {
+
+    },
+    "Hello, world!" : {
+
+    },
     "Hola Mundo" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -65,6 +150,9 @@
           }
         }
       }
+    },
+    "Home" : {
+
     },
     "How are you feeling today? What's on your mind?" : {
       "localizations" : {
@@ -92,6 +180,36 @@
     "Infeliz, abajo" : {
 
     },
+    "Ingresa tu correo electronico asociado a tu cuenta" : {
+
+    },
+    "Inicia Sesión" : {
+
+    },
+    "Inicie sesión para continuar con su cuenta" : {
+
+    },
+    "John Doe" : {
+
+    },
+    "john.doe@example.com" : {
+
+    },
+    "KJO Mind Care" : {
+
+    },
+    "Las contraseñas no coinciden" : {
+
+    },
+    "Logout" : {
+
+    },
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." : {
+
+    },
+    "Mas frecuente" : {
+
+    },
     "Molesto, disgustado" : {
 
     },
@@ -111,16 +229,41 @@
     "Mood Trends" : {
 
     },
+    "Moods" : {
+
+    },
+    "Name" : {
+
+    },
     "Neutro" : {
 
     },
     "Ni buena ni mala(o)=" : {
 
     },
+    "Notifications" : {
+
+    },
+    "Personal Information" : {
+
+    },
     "Preocupado(a)" : {
 
     },
+    "Privacy Policy" : {
+
+    },
+    "Profile" : {
+
+    },
+    "Publish Blog" : {
+
+    },
+    "Read more about this topic..." : {
+
+    },
     "Record Mood" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -130,7 +273,23 @@
         }
       }
     },
+    "Recuperar Contraseña" : {
+
+    },
+    "Registrar Estado" : {
+
+    },
+    "Registrate" : {
+
+    },
+    "Regístrese para comenzar" : {
+
+    },
+    "Regular" : {
+
+    },
     "Save" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -140,7 +299,25 @@
         }
       }
     },
+    "Save Changes" : {
+
+    },
+    "Select categories you are interested in." : {
+
+    },
     "Sentir gran alegría o deleite" : {
+
+    },
+    "Settings" : {
+
+    },
+    "Skip" : {
+
+    },
+    "Streak" : {
+
+    },
+    "This is a placeholder for the exercise content. Imagine a video player or audio controls here." : {
 
     },
     "Timeframe" : {
@@ -153,7 +330,13 @@
         }
       }
     },
+    "Title" : {
+
+    },
     "Triste" : {
+
+    },
+    "Tu correo" : {
 
     },
     "Value" : {
