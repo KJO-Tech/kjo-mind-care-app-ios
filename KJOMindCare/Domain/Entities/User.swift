@@ -11,13 +11,16 @@ struct User: Codable, Identifiable {
     var uid: String
     var fullName: String
     var email: String
-    var role: String
+    var role: String?
     var profileImage: String?
     var createdAt: Timestamp?
 
     var id: String { uid }
 
-    init(uid: String, fullName: String, email: String, role: String, profileImage: String? = nil) {
+    init(
+        uid: String, fullName: String, email: String, role: String? = nil,
+        profileImage: String? = nil
+    ) {
         self.uid = uid
         self.fullName = fullName
         self.email = email
@@ -25,5 +28,5 @@ struct User: Codable, Identifiable {
         self.profileImage = profileImage
         self.createdAt = Timestamp()
     }
-    
+
 }

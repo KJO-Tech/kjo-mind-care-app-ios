@@ -2,15 +2,31 @@
   "sourceLanguage" : "es-419",
   "strings" : {
     "¿No tienes una cuenta?" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't have an account?"
+          }
+        }
+      }
     },
     "¿Olvidaste tu contraseña?" : {
-
-    },
-    "¿Ya tienes una cuenta?" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forgot your password?"
+          }
+        }
+      }
     },
     "%lld" : {
+
+    },
+    "%lld min" : {
 
     },
     "3" : {
@@ -41,14 +57,523 @@
     "Alegre" : {
 
     },
-    "Ansioso" : {
-
+    "auth.login.appName" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KJO Mind Care"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KJO Mind Care"
+          }
+        }
+      }
+    },
+    "auth.login.email.placeholder" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your email"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingrese su correo"
+          }
+        }
+      }
+    },
+    "auth.login.email.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        }
+      }
+    },
+    "auth.login.forgotPassword" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forgot your password?"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Olvidaste tu contraseña?"
+          }
+        }
+      }
+    },
+    "auth.login.googleSignIn" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in with Google"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar sesión con Google"
+          }
+        }
+      }
+    },
+    "auth.login.loading" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading..."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando..."
+          }
+        }
+      }
+    },
+    "auth.login.noAccount" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't have an account?"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿No tienes una cuenta?"
+          }
+        }
+      }
+    },
+    "auth.login.orSeparator" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OR"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O"
+          }
+        }
+      }
+    },
+    "auth.login.password.placeholder" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your password"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingrese su contraseña"
+          }
+        }
+      }
+    },
+    "auth.login.password.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contraseña"
+          }
+        }
+      }
+    },
+    "auth.login.register" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign up"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrarse"
+          }
+        }
+      }
+    },
+    "auth.login.signInButton" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Login"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar Sesion"
+          }
+        }
+      }
+    },
+    "auth.login.slogan" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mental wellness within reach"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienestar mental a su alcance"
+          }
+        }
+      }
+    },
+    "auth.login.welcomeSubtitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log in to continue with your account"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicie sesión para continuar con su cuenta"
+          }
+        }
+      }
+    },
+    "auth.login.welcomeTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome back"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenidos de nuevo"
+          }
+        }
+      }
+    },
+    "auth.register.confirmPassword.placeholder" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repeat your password"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repita su contraseña"
+          }
+        }
+      }
+    },
+    "auth.register.confirmPassword.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm Password"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirmar Contraseña"
+          }
+        }
+      }
+    },
+    "auth.register.email.placeholder" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your email"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingrese su correo"
+          }
+        }
+      }
+    },
+    "auth.register.email.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        }
+      }
+    },
+    "auth.register.fullName.placeholder" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your full name"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingrese su nombre completo"
+          }
+        }
+      }
+    },
+    "auth.register.fullName.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full Name"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre Completo"
+          }
+        }
+      }
+    },
+    "auth.register.haveAccount" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Already have an account?"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Ya tienes una cuenta?"
+          }
+        }
+      }
+    },
+    "auth.register.loading" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading..."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando..."
+          }
+        }
+      }
+    },
+    "auth.register.login" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Login"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicia Sesión"
+          }
+        }
+      }
+    },
+    "auth.register.password.placeholder" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your password"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingrese su contraseña"
+          }
+        }
+      }
+    },
+    "auth.register.password.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contraseña"
+          }
+        }
+      }
+    },
+    "auth.register.passwordMismatch" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passwords do not match"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las contraseñas no coinciden"
+          }
+        }
+      }
+    },
+    "auth.register.signUpButton" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign Up"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrarse"
+          }
+        }
+      }
+    },
+    "auth.register.subtitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign up to get started"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regístrese para comenzar"
+          }
+        }
+      }
+    },
+    "auth.register.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create an account"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crear una cuenta"
+          }
+        }
+      }
     },
     "Bienestar mental a su alcance" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mental wellness within reach"
+          }
+        }
+      }
     },
     "Bienvenidos de nuevo" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome back"
+          }
+        }
+      }
     },
     "Bio" : {
 
@@ -71,25 +596,53 @@
     "Cansado" : {
 
     },
+    "Cargando..." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading..."
+          }
+        }
+      }
+    },
+    "Categories" : {
+
+    },
+    "Check your subscriptions if you want daily exercises." : {
+
+    },
     "Choose Your Plan" : {
 
     },
-    "Community" : {
+    "Community Blog" : {
 
     },
-    "Contento" : {
+    "Complete Exercise" : {
+
+    },
+    "Completed" : {
+
+    },
+    "Content type not supported yet." : {
 
     },
     "Continue" : {
 
     },
-    "Crear una cuenta" : {
-
+    "Contraseña" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password"
+          }
+        }
+      }
     },
     "Create Blog" : {
-
-    },
-    "Daily Activities" : {
 
     },
     "Day" : {
@@ -98,19 +651,49 @@
     "Edit Profile" : {
 
     },
-    "Emocionado(a)" : {
-
-    },
-    "Enfermo(a)" : {
-
-    },
-    "Enojado" : {
-
-    },
-    "Entusiasta, ansioso" : {
-
+    "Email" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        }
+      }
     },
     "Enviar" : {
+
+    },
+    "Error loading categories" : {
+
+    },
+    "Error loading category" : {
+
+    },
+    "Error loading exercise" : {
+
+    },
+    "Error loading history" : {
+
+    },
+    "Error loading moods" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error loading moods"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error al cargar los estados de ánimo"
+          }
+        }
+      }
+    },
+    "Error: %@" : {
 
     },
     "Estado general" : {
@@ -119,16 +702,10 @@
     "Estresado" : {
 
     },
-    "Exercise" : {
-
-    },
-    "Fatigado, baja energía" : {
+    "Exercise not found" : {
 
     },
     "Feliz" : {
-
-    },
-    "Filter" : {
 
     },
     "Get Started" : {
@@ -151,9 +728,6 @@
         }
       }
     },
-    "Home" : {
-
-    },
     "How are you feeling today? What's on your mind?" : {
       "localizations" : {
         "en" : {
@@ -171,22 +745,77 @@
             "state" : "translated",
             "value" : "How are you feeling?"
           }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Cómo te sientes ahora?"
+          }
         }
       }
-    },
-    "Indispuesta(o)" : {
-
-    },
-    "Infeliz, abajo" : {
-
     },
     "Ingresa tu correo electronico asociado a tu cuenta" : {
 
     },
-    "Inicia Sesión" : {
-
+    "Ingrese su contraseña" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your password"
+          }
+        }
+      }
+    },
+    "Ingrese su correo" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your email"
+          }
+        }
+      }
+    },
+    "Iniciar Sesion" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Login"
+          }
+        }
+      }
+    },
+    "Iniciar sesión con Google" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in with Google"
+          }
+        }
+      }
     },
     "Inicie sesión para continuar con su cuenta" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log in to continue with your account"
+          }
+        }
+      }
+    },
+    "Instructions" : {
+
+    },
+    "Invalid Video URL" : {
 
     },
     "John Doe" : {
@@ -198,8 +827,24 @@
     "KJO Mind Care" : {
 
     },
-    "Las contraseñas no coinciden" : {
+    "Loading activities..." : {
 
+    },
+    "Log Mood" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log Mood"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrar estado de ánimo"
+          }
+        }
+      }
     },
     "Logout" : {
 
@@ -210,12 +855,15 @@
     "Mas frecuente" : {
 
     },
-    "Molesto, disgustado" : {
-
-    },
     "Mood Distribution" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mood Distribution"
+          }
+        },
+        "es-419" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Distribución del estado de ánimo"
@@ -238,16 +886,43 @@
     "Neutro" : {
 
     },
-    "Ni buena ni mala(o)=" : {
+    "No activities for today" : {
 
+    },
+    "No categories found." : {
+
+    },
+    "No moods available" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No moods available"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay estados de ánimo disponibles"
+          }
+        }
+      }
     },
     "Notifications" : {
 
     },
-    "Personal Information" : {
-
+    "O" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OR"
+          }
+        }
+      }
     },
-    "Preocupado(a)" : {
+    "Personal Information" : {
 
     },
     "Privacy Policy" : {
@@ -259,13 +934,16 @@
     "Publish Blog" : {
 
     },
-    "Read more about this topic..." : {
-
-    },
     "Record Mood" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record Mood"
+          }
+        },
+        "es-419" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Grabar estado"
@@ -280,18 +958,45 @@
 
     },
     "Registrate" : {
-
-    },
-    "Regístrese para comenzar" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign up"
+          }
+        }
+      }
     },
     "Regular" : {
 
+    },
+    "Retry" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retry"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reintentar"
+          }
+        }
+      }
     },
     "Save" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "es-419" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Guardar"
@@ -302,10 +1007,13 @@
     "Save Changes" : {
 
     },
-    "Select categories you are interested in." : {
+    "Search blogs..." : {
 
     },
-    "Sentir gran alegría o deleite" : {
+    "See all" : {
+
+    },
+    "Select categories you are interested in." : {
 
     },
     "Settings" : {
@@ -317,12 +1025,15 @@
     "Streak" : {
 
     },
-    "This is a placeholder for the exercise content. Imagine a video player or audio controls here." : {
-
-    },
     "Timeframe" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timeframe"
+          }
+        },
+        "es-419" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Periodo"
@@ -331,6 +1042,9 @@
       }
     },
     "Title" : {
+
+    },
+    "Today's Activities" : {
 
     },
     "Triste" : {
@@ -344,7 +1058,29 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Value"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Valor"
+          }
+        }
+      }
+    },
+    "Welcome %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome %@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenido %@"
           }
         }
       }
@@ -354,10 +1090,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Your Insights"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Tus ideas"
           }
         }
       }
+    },
+    "Your Week" : {
+
     }
   },
   "version" : "1.0"

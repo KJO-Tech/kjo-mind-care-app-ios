@@ -9,7 +9,7 @@ public struct ActivityCategoryView: View {
     public var body: some View {
         List(exercises, id: \.self) { exercise in
             Button(action: {
-                coordinator.showExerciseDetail(exercise: exercise)
+                coordinator.showExerciseDetail(exerciseId: exercise)
             }) {
                 HStack {
                     Image(systemName: "play.circle.fill")
