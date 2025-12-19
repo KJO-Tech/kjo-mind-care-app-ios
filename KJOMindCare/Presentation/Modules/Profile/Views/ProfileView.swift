@@ -1,26 +1,30 @@
 import SwiftUI
 
 struct ProfileView: View {
-    
-    @StateObject private var viewModel = SettingsViewModel()
+
     @State private var showEdit = false
-    
+
+    @StateObject private var coordinator = ProfileCoordinator()
+    @StateObject private var viewModel = DIContainer.shared.container.resolve(
+        SettingsViewModel.self)!
+    @EnvironmentObject var appCoordinator: AppCoordinator
+
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
-                    
+
                     // ---------- TITULO PRINCIPAL ----------
                     VStack(alignment: .leading, spacing: 6) {
                         Text("Profile")
                             .font(.largeTitle)
                             .fontWeight(.bold)
-                        
+
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
                     .padding(.top, 6)
-                    
+
                     // ---------- FOTO Y DATOS ----------
                     VStack(spacing: 12) {
                         if let img = viewModel.profileImage {
@@ -40,7 +44,7 @@ struct ProfileView: View {
                                         .foregroundColor(.gray)
                                 )
                         }
-                        
+
                         if let p = viewModel.profile {
                             Text(p.name)
                                 .font(.title2)
@@ -54,8 +58,6 @@ struct ProfileView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.top, 6)
-                    
-                    
 
                     // ---------- ESTADÍSTICAS ----------
                     HStack(spacing: 16) {
@@ -65,39 +67,48 @@ struct ProfileView: View {
                     }
                     .padding(.horizontal)
                     .padding(.top, 6)
-                    
-                    
-                    
-                  
-                    
+
                     // ---------- SUBTITULO SETTINGS ----------
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Settings")
                             .font(.headline)
                             .padding(.horizontal)
-                        
+
                         VStack(spacing: 0) {
 
                             accountNavigationRow(
                                 icon: "pencil",
                                 title: "Edit Profile",
                                 destination: EditProfileView(viewModel: viewModel)
+                                    .environmentObject(coordinator)
                             )
                             Divider()
 
-                            
-                           
-                            accountNavigationRow(
-                                icon: "checklist",
-                                title: "Edit subscription",
-                                destination: EditSubsView(viewModel: viewModel)
-                            )
+                            if let subscriptionVM = DIContainer.shared.container.resolve(
+                                SubscriptionViewModel.self, arguments: true, appCoordinator)
+                            {
+                                // Handle back navigation for Profile flow
+                                let _ =
+                                    subscriptionVM.onDismiss = {
+                                        coordinator.pop()
+                                    }
+                                accountNavigationRow(
+                                    icon: "checklist",
+                                    title: "Edit subscription",
+                                    destination: SubscriptionView(viewModel: subscriptionVM)
+                                )
+                            } else {
+                                accountNavigationRow(
+                                    icon: "checklist",
+                                    title: "Edit subscription",
+                                    destination: Text("Error resolving SubscriptionViewModel")
+                                )
+
+                            }
+
                             Divider()
 
                             Divider()
-                            
-                            
-                            
 
                             // --- TOGGLE NOTIFICACIONES DIARIAS ---
                             VStack(alignment: .leading, spacing: 12) {
@@ -107,17 +118,22 @@ struct ProfileView: View {
                                         .foregroundColor(.blue)
                                         .frame(width: 24)
 
-                                    Toggle(isOn: Binding(
-                                        get: { viewModel.profile?.notificationsEnabled ?? false },
-                                        set: { newValue in
-                                            Task {
-                                                await viewModel.updateNotifications(
-                                                    enabled: newValue,
-                                                    hour: viewModel.profile?.notificationHour ?? Date()
-                                                )
+                                    Toggle(
+                                        isOn: Binding(
+                                            get: {
+                                                viewModel.profile?.notificationsEnabled ?? false
+                                            },
+                                            set: { newValue in
+                                                Task {
+                                                    await viewModel.updateNotifications(
+                                                        enabled: newValue,
+                                                        hour: viewModel.profile?.notificationHour
+                                                            ?? Date()
+                                                    )
+                                                }
                                             }
-                                        }
-                                    )) {
+                                        )
+                                    ) {
                                         Text("Notification")
                                     }
                                 }
@@ -137,7 +153,9 @@ struct ProfileView: View {
                                         DatePicker(
                                             "",
                                             selection: Binding(
-                                                get: { viewModel.profile?.notificationHour ?? Date() },
+                                                get: {
+                                                    viewModel.profile?.notificationHour ?? Date()
+                                                },
                                                 set: { newHour in
                                                     Task {
                                                         await viewModel.updateNotifications(
@@ -163,7 +181,6 @@ struct ProfileView: View {
                             }
                             .animation(.easeInOut, value: viewModel.profile?.notificationsEnabled)
 
-
                             Divider()
 
                             // --- TOGGLE MODO OSCURO ---
@@ -172,14 +189,16 @@ struct ProfileView: View {
                                     .foregroundColor(.purple)
                                     .frame(width: 24)
 
-                                Toggle(isOn: Binding(
-                                    get: { viewModel.profile?.darkModeEnabled ?? false },
-                                    set: { newValue in
-                                        Task {
-                                            await viewModel.updateDarkMode(newValue)
+                                Toggle(
+                                    isOn: Binding(
+                                        get: { viewModel.profile?.darkModeEnabled ?? false },
+                                        set: { newValue in
+                                            Task {
+                                                await viewModel.updateDarkMode(newValue)
+                                            }
                                         }
-                                    }
-                                )) {
+                                    )
+                                ) {
                                     Text("Modo Oscuro")
                                 }
                             }
@@ -192,14 +211,12 @@ struct ProfileView: View {
                     }
                     .padding(.top, 6)
 
-                    
-                    
                     // ---------- LOG OUT BUTTON FULL WIDTH + CENTERED ----------
                     Button(action: {
-                        print("Cerrando sesión...")
+                        viewModel.signOut()
                     }) {
                         HStack {
-                            Spacer() // centro
+                            Spacer()  // centro
 
                             Image(systemName: "arrow.uturn.left.circle.fill")
                                 .font(.system(size: 22))
@@ -209,7 +226,7 @@ struct ProfileView: View {
                                 .font(.headline)
                                 .foregroundColor(.red)
 
-                            Spacer() // centro
+                            Spacer()  // centro
                         }
                         .padding(.vertical, 14)
                         .background(Color(UIColor.secondarySystemBackground))
@@ -220,8 +237,6 @@ struct ProfileView: View {
                     .padding(.bottom, 30)
                     .shadow(radius: 1)
 
-                    
-                    
                 }
                 .padding(.vertical)
             }
@@ -234,10 +249,9 @@ struct ProfileView: View {
             }
         }
     }
-    
-    
+
     // MARK: - COMPONENTES AUXILIARES
-    
+
     private func statBox(title: String, value: String, systemIcon: String) -> some View {
         VStack(spacing: 8) {
             Image(systemName: systemIcon)
@@ -254,8 +268,9 @@ struct ProfileView: View {
         .background(Color(UIColor.secondarySystemBackground))
         .cornerRadius(14)
     }
-    
-    private func accountRow(icon: String, title: String, action: @escaping () -> Void) -> some View {
+
+    private func accountRow(icon: String, title: String, action: @escaping () -> Void) -> some View
+    {
         Button(action: action) {
             HStack(spacing: 14) {
                 Image(systemName: icon)
@@ -263,20 +278,21 @@ struct ProfileView: View {
                     .background(Color(UIColor.systemBackground))
                     .cornerRadius(8)
                     .foregroundColor(.blue)
-                
+
                 Text(title)
                     .foregroundColor(.primary)
-                
+
                 Spacer()
-                
+
                 Image(systemName: "chevron.right")
                     .foregroundColor(.gray)
             }
             .padding()
         }
     }
-    
-    private func supportRow(icon: String, title: String, action: @escaping () -> Void) -> some View {
+
+    private func supportRow(icon: String, title: String, action: @escaping () -> Void) -> some View
+    {
         Button(action: action) {
             HStack(spacing: 14) {
                 Image(systemName: icon)
@@ -284,25 +300,20 @@ struct ProfileView: View {
                     .background(Color(UIColor.systemBackground))
                     .cornerRadius(8)
                     .foregroundColor(.green)
-                
+
                 Text(title)
                     .foregroundColor(.primary)
-                
+
                 Spacer()
-                
+
                 Image(systemName: "chevron.right")
                     .foregroundColor(.gray)
             }
             .padding()
         }
-        
-        
-        
+
     }
-    
-    
-    
-    
+
     private func accountNavigationRow(
         icon: String,
         title: String,
@@ -328,10 +339,10 @@ struct ProfileView: View {
         }
     }
 
-
 }
 
 #Preview {
+    let coordinator = ProfileCoordinator()
     ProfileView()
+        .environmentObject(coordinator)
 }
-
