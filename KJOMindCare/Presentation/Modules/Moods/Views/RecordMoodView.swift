@@ -9,7 +9,10 @@ import SwiftUI
 
 struct RecordMoodView: View {
     @Environment(\.presentationMode) var presentationMode
-    @StateObject private var viewModel = RecordMoodViewModel()
+    @StateObject private var viewModel = DIContainer.shared.container.resolve(
+        RecordMoodViewModel.self)!
+
+    var selectedMoodId: String?  // Pre-selected mood ID
 
     let columns = [
         GridItem(.flexible()),
@@ -30,7 +33,7 @@ struct RecordMoodView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 25) {
 
-                        Text("How are you feeling?")
+                        Text(String(localized: "How are you feeling?"))
                             .font(.title2)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
@@ -46,6 +49,11 @@ struct RecordMoodView: View {
 
             actionButtonsSection
         }
+        .onAppear {
+            if let moodId = selectedMoodId {
+                viewModel.selectMood(byId: moodId)
+            }
+        }
     }
 }
 
@@ -53,7 +61,7 @@ extension RecordMoodView {
 
     fileprivate var headerSection: some View {
         HStack {
-            Text("Mood Tracker")
+            Text(String(localized: "Mood Tracker"))
                 .font(.headline)
                 .foregroundColor(.white)
             Spacer()
@@ -63,7 +71,7 @@ extension RecordMoodView {
 
     fileprivate var moodGridSection: some View {
         LazyVGrid(columns: columns, spacing: 15) {
-            ForEach(viewModel.moodOptions) { mood in
+            ForEach(viewModel.moods) { mood in
                 MoodCardItem(
                     mood: mood,
                     isSelected: viewModel.selectedMood == mood
@@ -141,21 +149,36 @@ extension RecordMoodView {
 }
 
 struct MoodCardItem: View {
-    let mood: MoodOption
+    let mood: Mood
     let isSelected: Bool
 
     var body: some View {
         VStack(spacing: 8) {
-            Image(mood.iconName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 50, height: 50)
-                .shadow(radius: isSelected ? 5 : 0)
-            Text(mood.name)
+            AsyncImage(url: URL(string: mood.image)) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                case .success(let image):
+                    image.resizable()
+                        .scaledToFit()
+                case .failure:
+                    Image(systemName: "face.smiling")  // Fallback
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.gray)
+                @unknown default:
+                    EmptyView()
+                }
+            }
+            .frame(width: 50, height: 50)
+            .shadow(radius: isSelected ? 5 : 0)
+
+            Text(mood.name["es"] ?? mood.name["en"] ?? "")
                 .font(.headline)
                 .foregroundColor(.white)
+                .multilineTextAlignment(.center)
 
-            Text(mood.description)
+            Text(mood.description["es"] ?? mood.description["en"] ?? "")
                 .font(.caption2)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
@@ -170,7 +193,7 @@ struct MoodCardItem: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .stroke(isSelected ? mood.color : Color.clear, lineWidth: 2)
+                .stroke(isSelected ? Color(hex: mood.color) : Color.clear, lineWidth: 2)
         )
         .scaleEffect(isSelected ? 1.02 : 1.0)
         .opacity(isSelected ? 1.0 : 0.6)
