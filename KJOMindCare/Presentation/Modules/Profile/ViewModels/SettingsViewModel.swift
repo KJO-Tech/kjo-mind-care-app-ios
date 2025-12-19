@@ -1,29 +1,34 @@
-//
-//  SettingsViewModel.swift
-//  KJOMindCare
-//
-//  Created by DAMII on 10/12/25.
-//
-
 import Combine
+import FirebaseCore
 import SwiftUI
+import UIKit
 
 class SettingsViewModel: ObservableObject {
 
-    @Published var profile: UserProfile?
-    @Published var user: User?
+    // MARK: - Display Properties (from User)
+    @Published var userName: String = ""
+    @Published var userEmail: String = ""
     @Published var profileImage: UIImage?
+    @Published var profileImageURL: URL?
+
+    // MARK: - Configuration Properties (Local State)
+    @Published var notificationsEnabled: Bool = false
+    @Published var notificationHour: Date = Date()
+    @AppStorage("darkModeEnabled") var systemDarkMode: Bool = false
+    @Published var darkModeEnabled: Bool = false  // Local sync
+
     @Published var isSignedOut: Bool = false
     @Published var errorMessage: String? = nil
 
-    @AppStorage("darkModeEnabled") var systemDarkMode: Bool = false
-
-    private let getProfileUseCase: GetUserProfileUseCase
+    private let getProfileUC: GetUserProfileUseCase
     private let saveProfileUC = SaveUserProfileUseCase()
     private let updateNotifsUC = UpdateNotificationScheduleUseCase()
     private let notificationUC = NotificationUseCase()
     private let signOutUseCase: SignOutUseCase
     private let checkUserSessionUseCase: CheckUserSessionUseCase
+
+    // Keep track of the full profile internally for saving updates, but don't expose it
+    private var internalProfile: UserProfile?
 
     init(
         signOutUseCase: SignOutUseCase, getProfileUC: GetUserProfileUseCase,
@@ -37,14 +42,49 @@ class SettingsViewModel: ObservableObject {
     @MainActor
     func loadProfile() async {
         guard let user = checkUserSessionUseCase.execute() else { return }
-        do {
-            let p = try await getProfileUC.execute(userId: user.id)
-            // self.profile = p
-            self.user = user
 
-            if let data = user.profileImage {
-                self.profileImage = UIImage(named: data)
+        // 1. Set Display Info from User (Fastest)
+        self.userName = user.fullName
+        self.userEmail = user.email
+
+        Task {
+            do {
+                let fullUser = try await getProfileUC.execute(userId: user.id)
+                await MainActor.run {
+                    self.userName = fullUser.fullName
+
+                    if let data = fullUser.profileImage {
+                        // Check if it's a remote URL
+                        if data.hasPrefix("http") || data.hasPrefix("https"),
+                            let url = URL(string: data)
+                        {
+                            self.profileImageURL = url
+                            self.profileImage = nil
+                        } else {
+                            // Assume local asset name
+                            self.profileImage = UIImage(named: data)
+                            self.profileImageURL = nil
+                        }
+                    }
+                }
+            } catch {
+                print("Error fetching user profile: \(error)")
+                // Keep the fallback name
             }
+        }
+
+        // 2. Load Configuration from UserProfile
+        do {
+            let p = try await UserProfileRepository().getProfile()
+            self.internalProfile = p
+
+            // Sync local config properties
+            self.notificationsEnabled = p.notificationsEnabled
+            self.notificationHour = p.notificationHour
+            self.darkModeEnabled = p.darkModeEnabled
+
+            // If User model didn't have name/image (e.g. slight sync delay), fallback or update?
+            // User request: "use primarily user... for name and image" -> Done above.
 
         } catch {
             print("❌ Error loading profile:", error)
@@ -53,7 +93,13 @@ class SettingsViewModel: ObservableObject {
 
     @MainActor
     func saveProfile(name: String, email: String, image: UIImage?) async {
-        guard var p = profile else { return }
+        guard var p = internalProfile else { return }
+
+        // Update local display immediately
+        self.userName = name
+        self.userEmail = email
+        self.profileImage = image
+
         p.name = name
         p.email = email
 
@@ -63,8 +109,7 @@ class SettingsViewModel: ObservableObject {
 
         do {
             try await saveProfileUC.execute(p)
-            self.profile = p
-            self.profileImage = image
+            self.internalProfile = p
         } catch {
             print("❌ Error saving profile:", error)
         }
@@ -72,14 +117,18 @@ class SettingsViewModel: ObservableObject {
 
     @MainActor
     func updateNotifications(enabled: Bool, hour: Date) async {
-        guard var p = profile else { return }
+        guard var p = internalProfile else { return }
+
+        // Update local state
+        self.notificationsEnabled = enabled
+        self.notificationHour = hour
 
         p.notificationsEnabled = enabled
         p.notificationHour = hour
 
         do {
             try await updateNotifsUC.execute(p)
-            self.profile = p
+            self.internalProfile = p
 
         } catch {
             print("❌ Error updating notif:", error)
@@ -88,21 +137,19 @@ class SettingsViewModel: ObservableObject {
 
     @MainActor
     func updateDarkMode(_ enabled: Bool) async {
-        systemDarkMode = enabled  // ← cambia el modo oscuro real
-        guard var p = profile else { return }
+        self.systemDarkMode = enabled
+        self.darkModeEnabled = enabled
+
+        guard var p = internalProfile else { return }
         p.darkModeEnabled = enabled
 
         do {
             try await saveProfileUC.execute(p)
-            self.profile = p
+            self.internalProfile = p
         } catch {
             print("❌ Error updating dark mode:", error)
         }
     }
-
-    // Accesos rápidos
-    var name: String { profile?.name ?? "" }
-    var email: String { profile?.email ?? "" }
 
     func signOut() {
         do {

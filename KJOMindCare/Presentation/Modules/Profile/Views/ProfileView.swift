@@ -10,20 +10,9 @@ struct ProfileView: View {
     @EnvironmentObject var appCoordinator: AppCoordinator
 
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $coordinator.path) {
             ScrollView {
                 VStack(spacing: 20) {
-
-                    // ---------- TITULO PRINCIPAL ----------
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text("Profile")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
-                    .padding(.top, 6)
 
                     // ---------- FOTO Y DATOS ----------
                     VStack(spacing: 12) {
@@ -34,26 +23,57 @@ struct ProfileView: View {
                                 .frame(width: 140, height: 140)
                                 .clipShape(Circle())
                                 .shadow(radius: 6)
+                        } else if let url = viewModel.profileImageURL {
+                            AsyncImage(url: url) { phase in
+                                switch phase {
+                                case .empty:
+                                    ProgressView()
+                                        .frame(width: 140, height: 140)
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 140, height: 140)
+                                        .clipShape(Circle())
+                                        .shadow(radius: 6)
+                                case .failure:
+                                    Image(systemName: "person.fill")
+                                        .resizable()
+                                        .padding(40)
+                                        .frame(width: 140, height: 140)
+                                        .background(Color.theme.card)
+                                        .clipShape(Circle())
+                                        .foregroundColor(Color.theme.textSecondary)
+                                @unknown default:
+                                    EmptyView()
+                                }
+                            }
                         } else {
                             Circle()
-                                .fill(Color.gray.opacity(0.25))
+                                .fill(Color.theme.card)
                                 .frame(width: 140, height: 140)
                                 .overlay(
                                     Image(systemName: "person.fill")
                                         .font(.system(size: 60))
-                                        .foregroundColor(.gray)
+                                        .foregroundColor(Color.theme.textSecondary)
                                 )
                         }
 
-                        if let p = viewModel.profile {
-                            Text(p.name)
-                                .font(.title2)
+                        // Updated to use local published properties
+                        if !viewModel.userName.isEmpty {
+                            Text(viewModel.userName)
+                                .font(.theme.title2)
                                 .fontWeight(.semibold)
-                            Text(p.email)
-                                .foregroundColor(.gray)
-                                .font(.subheadline)
+                                .foregroundColor(Color.theme.text)
+                            Text(viewModel.userEmail)
+                                .foregroundColor(Color.theme.textSecondary)
+                                .font(.theme.subheadline)
                         } else {
-                            ProgressView()
+                            // Minimal loading state if needed, or just standard fields
+                            // Often if empty, just show nothing or placeholder
+                            Text("Loading...")
+                                .font(.theme.caption)
+                                .foregroundColor(Color.theme.textSecondary)
                         }
                     }
                     .frame(maxWidth: .infinity)
@@ -70,41 +90,30 @@ struct ProfileView: View {
 
                     // ---------- SUBTITULO SETTINGS ----------
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Settings")
-                            .font(.headline)
+                        Text(String(localized: "profile.settings.header"))
+                            .font(.theme.headline)
                             .padding(.horizontal)
+                            .foregroundColor(Color.theme.text)
 
                         VStack(spacing: 0) {
 
                             accountNavigationRow(
                                 icon: "pencil",
-                                title: "Edit Profile",
-                                destination: EditProfileView(viewModel: viewModel)
-                                    .environmentObject(coordinator)
+                                title: String(localized: "profile.edit_profile"),
+                                action: {
+                                    coordinator.showEditProfile()
+                                }
                             )
+
                             Divider()
 
-                            if let subscriptionVM = DIContainer.shared.container.resolve(
-                                SubscriptionViewModel.self, arguments: true, appCoordinator)
-                            {
-                                // Handle back navigation for Profile flow
-                                let _ =
-                                    subscriptionVM.onDismiss = {
-                                        coordinator.pop()
-                                    }
-                                accountNavigationRow(
-                                    icon: "checklist",
-                                    title: "Edit subscription",
-                                    destination: SubscriptionView(viewModel: subscriptionVM)
-                                )
-                            } else {
-                                accountNavigationRow(
-                                    icon: "checklist",
-                                    title: "Edit subscription",
-                                    destination: Text("Error resolving SubscriptionViewModel")
-                                )
-
-                            }
+                            accountNavigationRow(
+                                icon: "checklist",
+                                title: String(localized: "profile.edit_subscriptions"),
+                                action: {
+                                    coordinator.showSubscriptions()
+                                }
+                            )
 
                             Divider()
 
@@ -115,47 +124,43 @@ struct ProfileView: View {
 
                                 HStack {
                                     Image(systemName: "bell.badge")
-                                        .foregroundColor(.blue)
+                                        .foregroundColor(Color.theme.secondary)
                                         .frame(width: 24)
 
                                     Toggle(
                                         isOn: Binding(
-                                            get: {
-                                                viewModel.profile?.notificationsEnabled ?? false
-                                            },
+                                            get: { viewModel.notificationsEnabled },
                                             set: { newValue in
                                                 Task {
                                                     await viewModel.updateNotifications(
                                                         enabled: newValue,
-                                                        hour: viewModel.profile?.notificationHour
-                                                            ?? Date()
+                                                        hour: viewModel.notificationHour
                                                     )
                                                 }
                                             }
                                         )
                                     ) {
-                                        Text("Notification")
+                                        Text(String(localized: "profile.notifications"))
+                                            .foregroundColor(Color.theme.text)
                                     }
                                 }
                                 .padding(.horizontal)
                                 .padding(.vertical, 12)
 
                                 // 👇 APARECE SOLO SI ESTÁ ACTIVO
-                                if viewModel.profile?.notificationsEnabled == true {
+                                if viewModel.notificationsEnabled {
 
                                     HStack {
                                         Text("Hour")
-                                            .font(.subheadline)
-                                            .foregroundColor(.secondary)
+                                            .font(.theme.subheadline)
+                                            .foregroundColor(Color.theme.textSecondary)
 
                                         Spacer()
 
                                         DatePicker(
                                             "",
                                             selection: Binding(
-                                                get: {
-                                                    viewModel.profile?.notificationHour ?? Date()
-                                                },
+                                                get: { viewModel.notificationHour },
                                                 set: { newHour in
                                                     Task {
                                                         await viewModel.updateNotifications(
@@ -173,25 +178,25 @@ struct ProfileView: View {
                                     .padding()
                                     .background(
                                         RoundedRectangle(cornerRadius: 12)
-                                            .fill(Color(.systemGray6))
+                                            .fill(Color.theme.card)
                                     )
                                     .padding(.horizontal)
                                     .transition(.opacity)
                                 }
                             }
-                            .animation(.easeInOut, value: viewModel.profile?.notificationsEnabled)
+                            .animation(.easeInOut, value: viewModel.notificationsEnabled)
 
                             Divider()
 
                             // --- TOGGLE MODO OSCURO ---
                             HStack {
                                 Image(systemName: "moon.fill")
-                                    .foregroundColor(.purple)
+                                    .foregroundColor(Color.theme.primary)
                                     .frame(width: 24)
 
                                 Toggle(
                                     isOn: Binding(
-                                        get: { viewModel.profile?.darkModeEnabled ?? false },
+                                        get: { viewModel.darkModeEnabled },  // Local property
                                         set: { newValue in
                                             Task {
                                                 await viewModel.updateDarkMode(newValue)
@@ -199,13 +204,14 @@ struct ProfileView: View {
                                         }
                                     )
                                 ) {
-                                    Text("Modo Oscuro")
+                                    Text(String(localized: "profile.dark_mode"))
+                                        .foregroundColor(Color.theme.text)
                                 }
                             }
                             .padding(.horizontal)
                             .padding(.vertical, 12)
                         }
-                        .background(Color(UIColor.secondarySystemBackground))
+                        .background(Color.theme.card)
                         .cornerRadius(12)
                         .padding(.horizontal)
                     }
@@ -220,16 +226,16 @@ struct ProfileView: View {
 
                             Image(systemName: "arrow.uturn.left.circle.fill")
                                 .font(.system(size: 22))
-                                .foregroundColor(.red)
+                                .foregroundColor(Color.theme.error)
 
-                            Text("Log Out")
-                                .font(.headline)
-                                .foregroundColor(.red)
+                            Text(String(localized: "profile.logout"))
+                                .font(.theme.headline)
+                                .foregroundColor(Color.theme.error)
 
                             Spacer()  // centro
                         }
                         .padding(.vertical, 14)
-                        .background(Color(UIColor.secondarySystemBackground))
+                        .background(Color.theme.card)
                         .cornerRadius(12)
                     }
                     .padding(.horizontal)
@@ -240,12 +246,37 @@ struct ProfileView: View {
                 }
                 .padding(.vertical)
             }
-            .navigationBarHidden(true)
+            .navigationTitle(String(localized: "profile.title"))
+            .navigationBarTitleDisplayMode(.large)
+            .background(Color.theme.background.ignoresSafeArea())
             .onAppear {
                 Task { await viewModel.loadProfile() }
             }
-            .sheet(isPresented: $showEdit) {
-                EditProfileView(viewModel: viewModel)
+            // Handled via Coordinator now
+            .navigationDestination(for: ProfileRoute.self) { route in
+                switch route {
+                case .editProfile:
+                    EditProfileView(viewModel: viewModel)
+                        .environmentObject(coordinator)
+                case .subscriptions:
+                    if let subscriptionVM = DIContainer.shared.container.resolve(
+                        SubscriptionViewModel.self, arguments: true, appCoordinator)
+                    {
+                        // Handle back navigation for Profile flow
+                        let _ =
+                            subscriptionVM.onDismiss = {
+                                coordinator.pop()
+                            }
+                        SubscriptionView(viewModel: subscriptionVM)
+                    } else {
+                        Text("Error resolving SubscriptionViewModel")
+                    }
+                }
+            }
+            .onChange(of: viewModel.isSignedOut) { signedOut in
+                if signedOut {
+                    appCoordinator.logout()
+                }
             }
         }
     }
@@ -254,86 +285,45 @@ struct ProfileView: View {
 
     private func statBox(title: String, value: String, systemIcon: String) -> some View {
         VStack(spacing: 8) {
-            Image(systemName: systemIcon)
-                .font(.title2)
-                .foregroundColor(.accentColor)
+            if !systemIcon.isEmpty {
+                Image(systemName: systemIcon)
+                    .font(.theme.title2)
+                    .foregroundColor(Color.theme.secondary)
+            }
             Text(value)
-                .font(.title2)
+                .font(.theme.title2)
                 .fontWeight(.bold)
+                .foregroundColor(Color.theme.text)
             Text(title)
-                .font(.caption)
-                .foregroundColor(.gray)
+                .font(.theme.caption)
+                .foregroundColor(Color.theme.textSecondary)
         }
         .frame(width: 110, height: 100)
-        .background(Color(UIColor.secondarySystemBackground))
+        .background(Color.theme.card)
         .cornerRadius(14)
     }
 
-    private func accountRow(icon: String, title: String, action: @escaping () -> Void) -> some View
-    {
-        Button(action: action) {
-            HStack(spacing: 14) {
-                Image(systemName: icon)
-                    .frame(width: 36, height: 36)
-                    .background(Color(UIColor.systemBackground))
-                    .cornerRadius(8)
-                    .foregroundColor(.blue)
-
-                Text(title)
-                    .foregroundColor(.primary)
-
-                Spacer()
-
-                Image(systemName: "chevron.right")
-                    .foregroundColor(.gray)
-            }
-            .padding()
-        }
-    }
-
-    private func supportRow(icon: String, title: String, action: @escaping () -> Void) -> some View
-    {
-        Button(action: action) {
-            HStack(spacing: 14) {
-                Image(systemName: icon)
-                    .frame(width: 36, height: 36)
-                    .background(Color(UIColor.systemBackground))
-                    .cornerRadius(8)
-                    .foregroundColor(.green)
-
-                Text(title)
-                    .foregroundColor(.primary)
-
-                Spacer()
-
-                Image(systemName: "chevron.right")
-                    .foregroundColor(.gray)
-            }
-            .padding()
-        }
-
-    }
-
+    // Renamed to conform to "use actions" instead of destinations directly
     private func accountNavigationRow(
         icon: String,
         title: String,
-        destination: some View
+        action: @escaping () -> Void
     ) -> some View {
-        NavigationLink(destination: destination) {
+        Button(action: action) {
             HStack(spacing: 14) {
                 Image(systemName: icon)
                     .frame(width: 36, height: 36)
-                    .background(Color(UIColor.systemBackground))
+                    .background(Color.theme.background)
                     .cornerRadius(8)
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color.theme.secondary)
 
                 Text(title)
-                    .foregroundColor(.primary)
+                    .foregroundColor(Color.theme.text)
 
                 Spacer()
 
                 Image(systemName: "chevron.right")
-                    .foregroundColor(.gray)
+                    .foregroundColor(Color.theme.textSecondary)
             }
             .padding()
         }
@@ -342,7 +332,7 @@ struct ProfileView: View {
 }
 
 #Preview {
-    let coordinator = ProfileCoordinator()
+    let coordinator = AppCoordinator()
     ProfileView()
         .environmentObject(coordinator)
 }
