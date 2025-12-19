@@ -18,6 +18,7 @@ class RecordMoodViewModel: ObservableObject {
 
     private let getMoodsUseCase: GetMoodsUseCase
     private var cancellables = Set<AnyCancellable>()
+    private var pendingMoodId: String?
 
     init(getMoodsUseCase: GetMoodsUseCase) {
         self.getMoodsUseCase = getMoodsUseCase
@@ -34,6 +35,10 @@ class RecordMoodViewModel: ObservableObject {
                 switch resource {
                 case .success(let data):
                     self.moods = data
+                    if let pendingId = self.pendingMoodId {
+                        self.selectMood(byId: pendingId)
+                        self.pendingMoodId = nil
+                    }
                 case .error(let message):
                     self.errorMessage = message
                 default:
@@ -50,6 +55,8 @@ class RecordMoodViewModel: ObservableObject {
     func selectMood(byId id: String) {
         if let mood = moods.first(where: { $0.id == id }) {
             selectedMood = mood
+        } else {
+            pendingMoodId = id
         }
     }
 

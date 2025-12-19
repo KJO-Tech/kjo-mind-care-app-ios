@@ -5,42 +5,41 @@
 //  Created by Raydberg on 20/11/25.
 //
 
-import SwiftUI
 import Charts
+import SwiftUI
 
 struct MoodTrendChart: View {
     let data: [MoodChartPoint]
-    
+
     var body: some View {
-       
+
         Chart(data) { point in
-            
-            
+
             LineMark(
                 x: .value("Day", point.day),
                 y: .value("Value", point.value)
             )
             .interpolationMethod(.catmullRom)
-            .foregroundStyle(Color.blue)
+            .foregroundStyle(Color.theme.primary)
             .lineStyle(StrokeStyle(lineWidth: 2))
-            
+
             PointMark(
                 x: .value("Day", point.day),
                 y: .value("Value", point.value)
             )
-            .foregroundStyle(Color.gray)
+            .foregroundStyle(Color.theme.textSecondary)
             .symbolSize(100)
         }
         .chartYAxis {
             AxisMarks(position: .leading, values: [0, 1, 2, 3, 4]) { value in
                 AxisGridLine(stroke: StrokeStyle(lineWidth: 1, dash: [5]))
-                    .foregroundStyle(Color.white.opacity(0.2))
-                
+                    .foregroundStyle(Color.theme.border)
+
                 AxisValueLabel {
                     if let intValue = value.as(Int.self) {
                         Text("\(intValue)")
-                            .foregroundColor(.secondary)
-                            .font(.caption)
+                            .foregroundColor(Color.theme.textSecondary)
+                            .font(Font.theme.caption)
                     }
                 }
             }
@@ -50,8 +49,8 @@ struct MoodTrendChart: View {
                 AxisValueLabel {
                     if let day = value.as(String.self) {
                         Text(day)
-                            .foregroundColor(.secondary)
-                            .font(.caption)
+                            .foregroundColor(Color.theme.textSecondary)
+                            .font(Font.theme.caption)
                     }
                 }
             }
@@ -59,7 +58,6 @@ struct MoodTrendChart: View {
         .frame(height: 200)
     }
 }
-
 
 #Preview {
     ZStack {
@@ -69,7 +67,7 @@ struct MoodTrendChart: View {
             MoodChartPoint(day: "Mar", value: 3),
             MoodChartPoint(day: "Mie", value: 2),
             MoodChartPoint(day: "Jue", value: 4),
-            MoodChartPoint(day: "Vie", value: 2)
+            MoodChartPoint(day: "Vie", value: 2),
         ])
         .padding()
     }

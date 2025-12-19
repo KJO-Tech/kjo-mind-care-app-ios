@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUICore
 
- func getColorForEmotion(_ emotion: String) -> Color {
+public func getColorForEmotion(_ emotion: String) -> Color {
     let lowerEmotion = emotion.lowercased()
     if lowerEmotion.contains("alegre") || lowerEmotion.contains("feliz") {
         return .yellow

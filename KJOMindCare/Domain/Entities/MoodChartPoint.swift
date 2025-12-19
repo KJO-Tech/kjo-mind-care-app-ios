@@ -7,9 +7,8 @@
 
 import Foundation
 
-struct MoodChartPoint: Identifiable {
-    let id = UUID()
-    let day: String
-    let value: Int
+public struct MoodChartPoint: Identifiable {
+    public let id = UUID()
+    public let day: String
+    public let value: Int
 }
-

@@ -94,10 +94,9 @@ public struct HomeView: View {
                         Text("Error loading exercise")
                     }
                 case .recordMood(let moodId):
-                    // Passing Mood ID to RecordMoodView (Need to update RecordMoodView to handle it)
-                    RecordMoodView()  // Placeholder, ideally passing moodId
+                    // Passing Mood ID to RecordMoodView
+                    RecordMoodView(selectedMoodId: moodId)
                         .environmentObject(coordinator)
-                        .navigationBarBackButtonHidden(true)  // Should use custom back button if custom nav
                 }
             }
         }
