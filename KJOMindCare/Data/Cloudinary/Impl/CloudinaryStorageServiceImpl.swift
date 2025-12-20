@@ -13,6 +13,10 @@ class CloudinaryStorageServiceImpl: StorageService {
     private let uploadPreset = Configuration.cloudinaryUploadPreset
 
     init() {
+        print("🛠️ [Debug] Iniciando Cloudinary con:")
+        print("☁️ Cloud Name: \(Configuration.cloudinaryCloudName)")
+//        print("🔑 API Key: \(Configuration.cloudinaryApiKey)")
+        print("📦 Preset: \(Configuration.cloudinaryUploadPreset)")
         let config = CLDConfiguration(
             cloudName: Configuration.cloudinaryCloudName, secure: true)
         self.cloudinary = CLDCloudinary(configuration: config)
@@ -26,8 +30,8 @@ class CloudinaryStorageServiceImpl: StorageService {
             params.setFolder(folder)
             if let name = fileName {
                 params.setPublicId(name)
-//                params.setOverwrite(true)
-//                params.setInvalidate(true)
+                //                params.setOverwrite(true)
+                //                params.setInvalidate(true)
             }
 
             let request = cloudinary.createUploader().upload(
