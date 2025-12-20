@@ -23,6 +23,9 @@
         }
       }
     },
+    "\"%@\"" : {
+
+    },
     "%lld" : {
 
     },
@@ -54,9 +57,6 @@
           }
         }
       }
-    },
-    "Alegre" : {
-
     },
     "auth.login.appName" : {
       "localizations" : {
@@ -585,13 +585,7 @@
     "Blogs" : {
 
     },
-    "Bueno" : {
-
-    },
     "Cancelar" : {
-
-    },
-    "Cansado" : {
 
     },
     "Cargando..." : {
@@ -626,6 +620,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancelar"
+          }
+        }
+      }
+    },
+    "common.load_more" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Load more"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargar más"
           }
         }
       }
@@ -710,13 +720,7 @@
     "Error: %@" : {
 
     },
-    "Estresado" : {
-
-    },
     "Exercise not found" : {
-
-    },
-    "Feliz" : {
 
     },
     "Get Started" : {
@@ -891,6 +895,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Registrar Estado"
+          }
+        }
+      }
+    },
+    "mood.history.empty" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No mood history found"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se encontró historial de estado de ánimo"
+          }
+        }
+      }
+    },
+    "mood.history.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mood History"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historial de estado de ánimo"
           }
         }
       }
@@ -1093,9 +1129,6 @@
     "Name" : {
 
     },
-    "Neutro" : {
-
-    },
     "No activities for today" : {
 
     },
@@ -1175,9 +1208,6 @@
         }
       }
     },
-    "Regular" : {
-
-    },
     "Retry" : {
       "localizations" : {
         "en" : {
@@ -1252,9 +1282,6 @@
 
     },
     "Today's Activities" : {
-
-    },
-    "Triste" : {
 
     },
     "Tu correo" : {

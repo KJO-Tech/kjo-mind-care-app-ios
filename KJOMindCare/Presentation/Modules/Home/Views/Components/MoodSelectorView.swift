@@ -116,7 +116,7 @@ struct MoodSelectorView: View {
             .frame(width: 32, height: 32)
             .clipShape(Circle())
 
-            Text(mood.name["es"] ?? mood.name["en"] ?? "")
+            Text(mood.getName())
                 .font(.caption)
                 .fontWeight(.semibold)
                 .foregroundColor(Color.theme.primaryContent)

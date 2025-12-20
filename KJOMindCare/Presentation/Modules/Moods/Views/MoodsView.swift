@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MoodsView: View {
 
-    @StateObject private var viewModel = MoodsViewModel()
+    @StateObject private var viewModel = DIContainer.shared.container.resolve(MoodsViewModel.self)!
 
     var body: some View {
         NavigationView {
@@ -23,9 +23,15 @@ struct MoodsView: View {
                         timeframeSelector
                         chartCardSection
                         insightsCardSection
+                        historyCardSection
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 10)
+                    .padding(.bottom, 40)
+                }
+                .refreshable {
+                    viewModel.loadData()
+                    viewModel.loadHistory(reset: true)
                 }
             }
             .navigationBarTitleDisplayMode(.large)
@@ -39,12 +45,13 @@ struct MoodsView: View {
                     }
                 }
             }
-            //            .navigationBarHidden(true)
+            .onAppear {
+                viewModel.loadData()
+                viewModel.loadHistory(reset: true)
+            }
         }
         .navigationViewStyle(.stack)
     }
-
-
 
     private var timeframeSelector: some View {
         HStack {
@@ -105,7 +112,7 @@ struct MoodsView: View {
                 ForEach(viewModel.distributionData) { item in
                     MoodDistributionRow(
                         item: item,
-                        color: getColorForEmotion(item.emotion)
+                        color: Color(hex: item.colorHex) ?? Color.theme.secondary
                     )
                 }
             }
@@ -135,6 +142,108 @@ struct MoodsView: View {
             .foregroundColor(valueColor)
         }
         .frame(minWidth: 80, alignment: .leading)
+    }
+
+    private var historyCardSection: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            Text(String(localized: "mood.history.title"))
+                .font(Font.theme.title3)
+                .fontWeight(.bold)
+                .foregroundColor(Color.theme.text)
+
+            if viewModel.historyEntries.isEmpty && !viewModel.isLoadingHistory {
+                Text(String(localized: "mood.history.empty"))
+                    .font(Font.theme.body)
+                    .foregroundColor(Color.theme.textSecondary)
+                    .padding()
+            } else {
+                LazyVStack(spacing: 12) {
+                    ForEach(viewModel.historyEntries, id: \.id) { entry in
+                        MoodHistoryRow(entry: entry)
+                    }
+
+                    if viewModel.canLoadMore {
+                        Button(action: {
+                            viewModel.loadHistory()
+                        }) {
+                            if viewModel.isLoadingHistory {
+                                ProgressView()
+                            } else {
+                                Text(String(localized: "common.load_more"))
+                                    .font(Font.theme.body.bold())
+                                    .foregroundColor(Color.theme.primary)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                    }
+                }
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(20)
+        .background(Color.theme.card)
+        .cornerRadius(20)
+    }
+}
+
+struct MoodHistoryRow: View {
+    let entry: MoodHistoryItem
+
+    var body: some View {
+        HStack(spacing: 12) {
+            // Mood Image
+            AsyncImage(url: URL(string: entry.moodImage)) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                case .success(let image):
+                    image.resizable()
+                        .scaledToFit()
+                case .failure:
+                    Image(systemName: "face.smiling")  // Fallback
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(Color(hex: entry.moodColorHex) ?? .gray)
+                @unknown default:
+                    EmptyView()
+                }
+            }
+            .frame(width: 40, height: 40)
+            .padding(.leading, 8)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(entry.moodName)
+                    .font(Font.theme.body.bold())
+                    .foregroundColor(Color.theme.text)
+
+                Text(entry.date.formatted(date: .abbreviated, time: .shortened))
+                    .font(Font.theme.caption)
+                    .foregroundColor(Color.theme.textSecondary)
+                    .opacity(0.8)
+
+                if !entry.note.isEmpty {
+                    Text("\"\(entry.note)\"")
+                        .font(Font.theme.caption)
+                        .italic()
+                        .foregroundColor(Color.theme.textSecondary)
+                        .lineLimit(2)
+                        .padding(.top, 2)
+                }
+            }
+            Spacer()
+        }
+        .padding()
+        .background(
+            Color(hex: entry.moodColorHex).opacity(0.1) ?? Color.theme.surface
+        )
+        .cornerRadius(12)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(
+                    Color(hex: entry.moodColorHex).opacity(0.2) ?? Color.clear,
+                    lineWidth: 1)
+        )
     }
 }
 

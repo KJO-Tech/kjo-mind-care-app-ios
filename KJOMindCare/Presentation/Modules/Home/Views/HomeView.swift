@@ -25,6 +25,10 @@ public struct HomeView: View {
                     MoodSelectorView(viewModel: viewModel, coordinator: coordinator)
                         .padding(.horizontal)
 
+                    // Weekly History Component
+                    WeeklyHistoryView()
+                        .padding(.horizontal)
+
                     // Daily Activities Section
                     DailyActivitiesView(
                         assignments: viewModel.dailyAssignments,
@@ -38,10 +42,6 @@ public struct HomeView: View {
                         }
                     )
                     .padding(.horizontal)
-
-                    // Weekly History Component
-                    WeeklyHistoryView()
-                        .padding(.horizontal)
 
                     Spacer(minLength: 80)
                 }

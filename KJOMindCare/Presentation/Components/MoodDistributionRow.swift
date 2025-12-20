@@ -48,12 +48,12 @@ struct MoodDistributionRow: View {
         VStack(spacing: 20) {
             MoodDistributionRow(
                 item: MoodDistributionItem(
-                    emotion: "Alegre", percentage: 0.7, displayPercentage: "70%"),
+                    emotion: "Alegre", percentage: 0.7, displayPercentage: "70%", colorHex: "#fff"),
                 color: .yellow
             )
             MoodDistributionRow(
                 item: MoodDistributionItem(
-                    emotion: "Triste", percentage: 0.3, displayPercentage: "30%"),
+                    emotion: "Triste", percentage: 0.3, displayPercentage: "30%", colorHex: "#fff"),
                 color: .blue
             )
         }

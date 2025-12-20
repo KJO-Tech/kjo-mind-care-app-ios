@@ -12,4 +12,5 @@ public struct MoodDistributionItem: Identifiable {
     public let emotion: String
     public let percentage: CGFloat
     public let displayPercentage: String
+    public let colorHex: String
 }

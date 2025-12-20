@@ -30,6 +30,13 @@ final class DataAssembly: Assembly {
             )
         }
 
+        container.register(MoodEntryRepository.self) { r in
+            MoodEntryRepositoryImpl(
+                firestoreService: r.resolve(FireStoreService.self)!,
+                getMoodsUseCase: r.resolve(GetMoodsUseCase.self)!
+            )
+        }
+
         // Blog Repository
         container.register(BlogRepository.self) { r in
             BlogRepositoryImpl(

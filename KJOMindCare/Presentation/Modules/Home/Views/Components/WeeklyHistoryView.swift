@@ -1,16 +1,8 @@
 import SwiftUI
 
-struct WeeklyMoodEntry: Identifiable {
-    let id = UUID()
-    let day: String
-    let date: Date
-    let mood: Mood?
-}
-
 struct WeeklyHistoryView: View {
-    @State private var weeklyHistory: [WeeklyMoodEntry] = []
-    @State private var isLoading = true
-    @State private var hasError = false
+    @StateObject private var viewModel = DIContainer.shared.container.resolve(
+        WeeklyHistoryViewModel.self)!
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -29,16 +21,16 @@ struct WeeklyHistoryView: View {
             }
 
             // Content
-            if isLoading {
+            if viewModel.isLoading {
                 loadingView
-            } else if hasError {
+            } else if viewModel.errorMessage != nil {
                 errorView
             } else {
                 historyScrollView
             }
         }
         .onAppear {
-            loadMockData()
+            viewModel.loadData()
         }
     }
 
@@ -61,7 +53,7 @@ struct WeeklyHistoryView: View {
                 .font(.caption)
                 .foregroundColor(.red)
             Spacer()
-            Button(action: loadMockData) {
+            Button(action: viewModel.loadData) {
                 Image(systemName: "arrow.clockwise")
                     .foregroundColor(Color.theme.primary)
             }
@@ -74,7 +66,7 @@ struct WeeklyHistoryView: View {
     private var historyScrollView: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
-                ForEach(weeklyHistory) { entry in
+                ForEach(viewModel.weeklyHistory) { entry in
                     VStack(spacing: 8) {
                         // Day Initial
                         Text(entry.day.prefix(1))
@@ -142,91 +134,5 @@ struct WeeklyHistoryView: View {
             .padding(.vertical, 5)
             .padding(.horizontal, 10)
         }
-    }
-
-    // Mock Data Logic
-    private func loadMockData() {
-        // Simulate network delay
-        isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.weeklyHistory = self.generateCurrentWeekData()
-            self.isLoading = false
-        }
-    }
-
-    private func generateCurrentWeekData() -> [WeeklyMoodEntry] {
-        var entries: [WeeklyMoodEntry] = []
-        let calendar = Calendar.current
-        let today = Date()
-
-        // Find Monday of the current week.
-        // weekOfYear determines the week, .weekday == 2 is Monday.
-
-        // We will just generate "This week's Monday to Saturday"
-        // Let's get the start of the week relative to today.
-        // Assuming Gregorian, Sunday=1, Monday=2.
-
-        let weekday = calendar.component(.weekday, from: today)
-        // Calculate days to subtract to get to Monday.
-        // If today is Sunday (1), we want previous Monday (-6 days).
-        // If today is Monday (2), we want today (0 days).
-        // If today is Saturday (7), we want Monday (-5 days).
-
-        var daysToSubtract = 0
-        if weekday == 1 {  // Sunday
-            daysToSubtract = 6
-        } else {
-            daysToSubtract = weekday - 2
-        }
-
-        guard let monday = calendar.date(byAdding: .day, value: -daysToSubtract, to: today) else {
-            return []
-        }
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE"
-
-        for i in 0...5 {  // Monday (0) to Saturday (5)
-            if let date = calendar.date(byAdding: .day, value: i, to: monday) {
-                let dayName = dateFormatter.string(from: date).capitalized
-
-                // Random mood or empty
-                // Higher chance of empty to show the ghost
-                let randomMood = Int.random(in: 0...10) > 4 ? mockMoods.randomElement() : nil
-
-                entries.append(WeeklyMoodEntry(day: dayName, date: date, mood: randomMood))  // Pass full day name
-            }
-        }
-        return entries
-    }
-
-    private var mockMoods: [Mood] {
-        [
-            Mood(
-                id: "1", name: ["en": "Happy", "es": "Feliz"], description: [:],
-                image:
-                    "https://firebasestorage.googleapis.com/v0/b/kjomindcare.firebasestorage.app/o/moods%2Ffeliz.png?alt=media",
-                color: "#FFD700", isActive: true, value: 8),
-            Mood(
-                id: "2", name: ["en": "Sad", "es": "Triste"], description: [:],
-                image:
-                    "https://firebasestorage.googleapis.com/v0/b/kjomindcare.firebasestorage.app/o/moods%2Ftriste.png?alt=media",
-                color: "#4682B4", isActive: true, value: 3),
-            Mood(
-                id: "3", name: ["en": "Energetic", "es": "Energético"], description: [:],
-                image:
-                    "https://firebasestorage.googleapis.com/v0/b/kjomindcare.firebasestorage.app/o/moods%2Fenergetico.png?alt=media",
-                color: "#FF4500", isActive: true, value: 9),
-            Mood(
-                id: "4", name: ["en": "Calm", "es": "Calmado"], description: [:],
-                image:
-                    "https://firebasestorage.googleapis.com/v0/b/kjomindcare.firebasestorage.app/o/moods%2Fcalmado.png?alt=media",
-                color: "#98FB98", isActive: true, value: 6),
-            Mood(
-                id: "5", name: ["en": "Stressed", "es": "Estresado"], description: [:],
-                image:
-                    "https://firebasestorage.googleapis.com/v0/b/kjomindcare.firebasestorage.app/o/moods%2Festresado.png?alt=media",
-                color: "#9370DB", isActive: true, value: 2),
-        ]
     }
 }

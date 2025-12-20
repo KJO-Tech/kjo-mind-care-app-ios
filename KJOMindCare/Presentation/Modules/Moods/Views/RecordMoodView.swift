@@ -121,7 +121,6 @@ extension RecordMoodView {
                 }
                 Button(action: {
                     viewModel.saveMood()
-                    presentationMode.wrappedValue.dismiss()
                 }) {
                     Text(String(localized: "mood.record.save"))
                         .fontWeight(.semibold)
@@ -135,6 +134,13 @@ extension RecordMoodView {
             .padding(20)
             .background(Color.theme.background.opacity(0.95))
         }
+        .onChange(of: viewModel.isSaved) { isSaved in
+            if isSaved {
+                presentationMode.wrappedValue.dismiss()
+            }
+        }
+            
+        
     }
 }
 

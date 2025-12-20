@@ -21,7 +21,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		EA59C4F02ECA796E00BA0496 /* Exceptions for "KJOMindCare" folder in "KJOMindCare" target */ = {
+		EA872F492EF4F4B000B9BBFE /* Exceptions for "KJOMindCare" folder in "KJOMindCare" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/Info.plist,
@@ -34,7 +34,7 @@
 		EA59C4832ECA643A00BA0496 /* KJOMindCare */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				EA59C4F02ECA796E00BA0496 /* Exceptions for "KJOMindCare" folder in "KJOMindCare" target */,
+				EA872F492EF4F4B000B9BBFE /* Exceptions for "KJOMindCare" folder in "KJOMindCare" target */,
 			);
 			path = KJOMindCare;
 			sourceTree = "<group>";

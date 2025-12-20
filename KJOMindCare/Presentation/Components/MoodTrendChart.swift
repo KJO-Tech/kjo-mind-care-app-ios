@@ -27,11 +27,11 @@ struct MoodTrendChart: View {
                 x: .value("Day", point.day),
                 y: .value("Value", point.value)
             )
-            .foregroundStyle(Color.theme.textSecondary)
+            .foregroundStyle(Color(hex: point.colorHex ?? "") ?? Color.theme.textSecondary)
             .symbolSize(100)
         }
         .chartYAxis {
-            AxisMarks(position: .leading, values: [0, 1, 2, 3, 4]) { value in
+            AxisMarks(position: .leading, values: [0, 1, 2, 3, 4, 5]) { value in
                 AxisGridLine(stroke: StrokeStyle(lineWidth: 1, dash: [5]))
                     .foregroundStyle(Color.theme.border)
 
