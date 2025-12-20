@@ -54,9 +54,6 @@
     "Alegre" : {
 
     },
-    "auth.email" : {
-
-    },
     "auth.login.appName" : {
       "localizations" : {
         "en" : {
@@ -389,6 +386,7 @@
       }
     },
     "auth.register.fullName.title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -686,7 +684,6 @@
 
     },
     "Email" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -948,6 +945,9 @@
         }
       }
     },
+    "Nombre Completo" : {
+
+    },
     "O" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1008,6 +1008,7 @@
       }
     },
     "profile.edit.tap_to_change" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

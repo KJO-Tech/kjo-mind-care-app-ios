@@ -17,6 +17,10 @@ final class DataAssembly: Assembly {
             FireStoreServiceImpl()
         }.inObjectScope(.container)
 
+        container.register(StorageService.self) { _ in
+            CloudinaryStorageServiceImpl()
+        }.inObjectScope(.container)
+
         container.register(AuthRepository.self) { r in
             AuthRepositoryImpl(
                 authService: r.resolve(AuthFirebaseService.self)!,
@@ -55,7 +59,8 @@ final class DataAssembly: Assembly {
         container.register(ActivitySubscriptionRepository.self) { r in
             ActivitySubscriptionRepositoryImpl(
                 firestoreService: r.resolve(FireStoreService.self)!,
-                dailyActivityRepository: r.resolve(DailyActivityRepository.self)!
+                dailyActivityRepository: r.resolve(
+                    DailyActivityRepository.self)!
             )
         }
 
@@ -72,5 +77,10 @@ final class DataAssembly: Assembly {
                 firestoreService: r.resolve(FireStoreService.self)!
             )
         }
+       
+        container.register(UserSettingsRepository.self) { _ in
+            UserSettingsRepositoryImpl()
+        }.inObjectScope(.container)
+
     }
 }

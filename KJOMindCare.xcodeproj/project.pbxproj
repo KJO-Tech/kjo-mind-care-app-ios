@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B7C85C802EF6F99B00664729 /* Cloudinary in Frameworks */ = {isa = PBXBuildFile; productRef = B7C85C7F2EF6F99B00664729 /* Cloudinary */; };
 		B7F6B66F2EDB891100D0E52C /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = B7F6B66E2EDB891100D0E52C /* FirebaseCore */; };
 		B7F6B6712EDB891200D0E52C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B7F6B6702EDB891200D0E52C /* FirebaseFirestore */; };
 		B7F6B6732EDB89FD00D0E52C /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B7F6B6722EDB89FD00D0E52C /* FirebaseAnalytics */; };
@@ -50,6 +51,7 @@
 				B7F6B66F2EDB891100D0E52C /* FirebaseCore in Frameworks */,
 				B7F6B6712EDB891200D0E52C /* FirebaseFirestore in Frameworks */,
 				B7F6B6772EDB89FD00D0E52C /* FirebaseCrashlytics in Frameworks */,
+				B7C85C802EF6F99B00664729 /* Cloudinary in Frameworks */,
 				B7F6B6732EDB89FD00D0E52C /* FirebaseAnalytics in Frameworks */,
 				B7F6B6752EDB89FD00D0E52C /* FirebaseAuth in Frameworks */,
 				B7F6B67A2EDB8B4500D0E52C /* Swinject in Frameworks */,
@@ -102,6 +104,7 @@
 				B7F6B6762EDB89FD00D0E52C /* FirebaseCrashlytics */,
 				B7F6B6792EDB8B4500D0E52C /* Swinject */,
 				EAB068A52EEA4A0E006B2CBE /* YouTubePlayerKit */,
+				B7C85C7F2EF6F99B00664729 /* Cloudinary */,
 			);
 			productName = KJOMindCare;
 			productReference = EA59C4812ECA643A00BA0496 /* KJOMindCare.app */;
@@ -135,6 +138,7 @@
 				B7F6B66D2EDB891100D0E52C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B7F6B6782EDB8B4500D0E52C /* XCRemoteSwiftPackageReference "Swinject" */,
 				EAB068A42EEA4A0E006B2CBE /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
+				B7C85C7E2EF6F99A00664729 /* XCRemoteSwiftPackageReference "cloudinary_ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EA59C4822ECA643A00BA0496 /* Products */;
@@ -288,6 +292,8 @@
 		};
 		EA59C4902ECA643D00BA0496 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = EA59C4832ECA643A00BA0496 /* KJOMindCare */;
+			baseConfigurationReferenceRelativePath = Secrets.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -317,6 +323,8 @@
 		};
 		EA59C4912ECA643D00BA0496 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = EA59C4832ECA643A00BA0496 /* KJOMindCare */;
+			baseConfigurationReferenceRelativePath = Secrets.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -368,6 +376,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B7C85C7E2EF6F99A00664729 /* XCRemoteSwiftPackageReference "cloudinary_ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cloudinary/cloudinary_ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.2.4;
+			};
+		};
 		B7F6B66D2EDB891100D0E52C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -395,6 +411,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B7C85C7F2EF6F99B00664729 /* Cloudinary */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7C85C7E2EF6F99A00664729 /* XCRemoteSwiftPackageReference "cloudinary_ios" */;
+			productName = Cloudinary;
+		};
 		B7F6B66E2EDB891100D0E52C /* FirebaseCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B7F6B66D2EDB891100D0E52C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

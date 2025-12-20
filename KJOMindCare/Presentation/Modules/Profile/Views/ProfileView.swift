@@ -48,6 +48,7 @@ struct ProfileView: View {
                                     EmptyView()
                                 }
                             }
+                            .id(viewModel.profileImageURL)
                         } else {
                             Circle()
                                 .fill(Color.theme.card)
@@ -59,7 +60,7 @@ struct ProfileView: View {
                                 )
                         }
 
-                        // Updated to use local published properties
+
                         if !viewModel.userName.isEmpty {
                             Text(viewModel.userName)
                                 .font(.theme.title2)
@@ -69,8 +70,7 @@ struct ProfileView: View {
                                 .foregroundColor(Color.theme.textSecondary)
                                 .font(.theme.subheadline)
                         } else {
-                            // Minimal loading state if needed, or just standard fields
-                            // Often if empty, just show nothing or placeholder
+
                             Text("Loading...")
                                 .font(.theme.caption)
                                 .foregroundColor(Color.theme.textSecondary)
@@ -147,7 +147,7 @@ struct ProfileView: View {
                                 .padding(.horizontal)
                                 .padding(.vertical, 12)
 
-                                // 👇 APARECE SOLO SI ESTÁ ACTIVO
+                               
                                 if viewModel.notificationsEnabled {
 
                                     HStack {

@@ -1,0 +1,56 @@
+//
+//  CloudinaryStorageServiceImpl.swift
+//  KJOMindCare
+//
+//  Created by DAMII on 20/12/25.
+//
+
+import Cloudinary
+import UIKit
+
+class CloudinaryStorageServiceImpl: StorageService {
+    private let cloudinary: CLDCloudinary
+    private let uploadPreset = Configuration.cloudinaryUploadPreset
+
+    init() {
+        let config = CLDConfiguration(
+            cloudName: Configuration.cloudinaryCloudName, secure: true)
+        self.cloudinary = CLDCloudinary(configuration: config)
+    }
+
+    func upload(data: Data, folder: String, fileName: String?) async throws
+        -> String
+    {
+        return try await withCheckedThrowingContinuation { continuation in
+            let params = CLDUploadRequestParams()
+            params.setFolder(folder)
+            if let name = fileName {
+                params.setPublicId(name)
+//                params.setOverwrite(true)
+//                params.setInvalidate(true)
+            }
+
+            let request = cloudinary.createUploader().upload(
+                data: data, uploadPreset: uploadPreset, params: params
+            )
+
+            request.response { result, error in
+                if let error = error {
+                    print(
+                        "❌ [Cloudinary] Error detallado: \(error.localizedDescription)"
+                    )
+                    continuation.resume(throwing: error)
+                    return
+                }
+
+                if let url = result?.secureUrl {
+                    print("✅ [Cloudinary] Subida completa: \(url)")
+                    continuation.resume(returning: url)
+                } else {
+                    continuation.resume(
+                        throwing: NSError(domain: "Cloudinary", code: -1))
+                }
+            }
+        }
+    }
+}
