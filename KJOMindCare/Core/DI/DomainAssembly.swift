@@ -223,5 +223,16 @@ final class DomainAssembly: Assembly {
         container.register(GetMoodsUseCase.self) { r in
             GetMoodsUseCase(repository: r.resolve(MoodRepository.self)!)
         }
+
+        container.register(SaveUserRemoteUseCase.self) { r in
+            SaveUserRemoteUseCase(
+                storageService: r.resolve(StorageService.self)!,
+                firestoreService: r.resolve(FireStoreService.self)!
+            )
+        }
+        container.register(UpdateUserSettingsUseCase.self) { r in
+            UpdateUserSettingsUseCase(
+                repo: r.resolve(UserSettingsRepository.self)!)
+        }
     }
 }

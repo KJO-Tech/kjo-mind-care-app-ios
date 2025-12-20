@@ -62,8 +62,11 @@ final class PresentationAssembly: Assembly {
         container.register(SettingsViewModel.self) { r in
             SettingsViewModel(
                 signOutUseCase: r.resolve(SignOutUseCase.self)!,
-                getProfileUC: r.resolve(GetUserProfileUseCase.self)!,
-                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!
+                getRemoteUserUC: r.resolve(GetUserProfileUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!,
+                saveRemoteUserUC: r.resolve(SaveUserRemoteUseCase.self)!,
+                updateLocalSettingsUC: r.resolve(UpdateUserSettingsUseCase.self)!,
+                settingsRepo: r.resolve(UserSettingsRepository.self)!
             )
         }
 

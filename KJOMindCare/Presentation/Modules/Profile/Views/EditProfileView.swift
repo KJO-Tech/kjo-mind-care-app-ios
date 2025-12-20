@@ -3,7 +3,6 @@ import SwiftUI
 public struct EditProfileView: View {
     @EnvironmentObject var coordinator: ProfileCoordinator
     @ObservedObject var viewModel: SettingsViewModel
-
     @State private var newName: String = ""
     @State private var newEmail: String = ""
     @State private var newImage: UIImage? = nil
@@ -11,48 +10,20 @@ public struct EditProfileView: View {
 
     public var body: some View {
         VStack(spacing: 24) {
-
-            // Image Picker
             ZStack(alignment: .bottomTrailing) {
-                if let newImg = newImage {
-                    Image(uiImage: newImg)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 120, height: 120)
-                        .clipShape(Circle())
-                        .shadow(radius: 4)
-                } else if let currentImg = viewModel.profileImage {
+                if let uiImage = newImage {
+                    Image(uiImage: uiImage).profileCircleStyle()
                 } else if let url = viewModel.profileImageURL {
-                    AsyncImage(url: url) { phase in
-                        switch phase {
-                        case .empty:
-                            ProgressView()
-                                .frame(width: 120, height: 120)
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 120, height: 120)
-                                .clipShape(Circle())
-                                .shadow(radius: 4)
-                        case .failure:
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .frame(width: 120, height: 120)
-                                .foregroundColor(Color.theme.card)
-                        @unknown default:
-                            EmptyView()
-                        }
+                    AsyncImage(url: url) { image in
+                        image.resizable().profileCircleStyle()
+                    } placeholder: {
+                        ProgressView().frame(width: 120, height: 120)
                     }
                 } else {
-                    Circle()
-                        .fill(Color.theme.card)
+                    Image(systemName: "person.circle.fill")
+                        .resizable()
                         .frame(width: 120, height: 120)
-                        .overlay(
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .foregroundColor(Color.theme.card)
-                        )
+                        .foregroundColor(Color.theme.card)
                 }
 
                 Image(systemName: "camera.fill")
@@ -62,38 +33,20 @@ public struct EditProfileView: View {
                     .clipShape(Circle())
                     .offset(x: 4, y: 4)
             }
-            .onTapGesture {
-                showImagePicker.toggle()
-            }
-            .padding(.top, 20)
-
-            Text(String(localized: "profile.edit.tap_to_change"))
-                .font(.theme.caption)
-                .foregroundColor(Color.theme.textSecondary)
+            .onTapGesture { showImagePicker.toggle() }
 
             VStack(spacing: 16) {
-                TextField(String(localized: "auth.register.fullName.title"), text: $newName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    // Or custom styling if available, using standard for now or similar to theme
-                    // Let's use standard modifier for theming if we had a custom field component
+                TextField("Nombre Completo", text: $newName)
                     .padding()
                     .background(Color.theme.card)
-                    .cornerRadius(8)
-                    .foregroundColor(Color.theme.text)
-                    .font(.theme.body)
-                // If placeholder color needed, requires custom view modifiers or placeholder view
+                    .cornerRadius(12)
 
-                TextField(String(localized: "auth.email"), text: $newEmail)
-                    .textContentType(.emailAddress)
-                    .keyboardType(.emailAddress)
-                    .autocapitalization(.none)
+                TextField("Email", text: $newEmail)
+                    .disabled(true)
                     .padding()
-                    .background(Color.theme.card)  // Consistent with theme
-                    .cornerRadius(8)
-                    .foregroundColor(Color.theme.text)
-                    .font(.theme.body)
-                    .disabled(true)  // Typically email change requires re-auth or special flow
-                    .opacity(0.7)
+                    .background(Color.theme.card)
+                    .cornerRadius(12)
+                    .opacity(0.6)
             }
             .padding(.horizontal)
 
@@ -101,11 +54,18 @@ public struct EditProfileView: View {
 
             Button(action: {
                 Task {
-                    await viewModel.saveProfile(name: newName, email: newEmail, image: newImage)
-                    coordinator.pop()
+                    await viewModel.saveProfile(
+                        name: newName, email: newEmail, image: newImage)
+
+                    try? await Task.sleep(nanoseconds: 300_000_000)
+
+                
+                    await MainActor.run {
+                        coordinator.pop()
+                    }
                 }
             }) {
-                Text(String(localized: "common.save_changes"))
+                Text("common.save_changes")
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -114,19 +74,21 @@ public struct EditProfileView: View {
                     .cornerRadius(12)
             }
             .padding(.horizontal)
-            .padding(.bottom, 20)
-        }
-        .padding()
-        .background(Color.theme.background.ignoresSafeArea())
-        .navigationTitle(String(localized: "profile.edit_profile"))
-        .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $showImagePicker) {
-            ImagePicker(image: $newImage)
         }
         .onAppear {
-            // Populate fields from ViewModel properties
             newName = viewModel.userName
             newEmail = viewModel.userEmail
         }
+        .sheet(isPresented: $showImagePicker) { ImagePicker(image: $newImage) }
+    }
+}
+
+
+extension View {
+    func profileCircleStyle() -> some View {
+        self.aspectRatio(contentMode: .fill)
+            .frame(width: 120, height: 120)
+            .clipShape(Circle())
+            .shadow(radius: 4)
     }
 }

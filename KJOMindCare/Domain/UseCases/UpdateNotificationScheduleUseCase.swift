@@ -5,10 +5,14 @@
 //  Created by DAMII on 12/12/25.
 //
 
-class UpdateNotificationScheduleUseCase {
-    private let repo = UserProfileRepository()
+class UpdateUserSettingsUseCase {
+    private let repo: UserSettingsRepository
     
-    func execute(_ profile: UserProfile) async throws {
-        try repo.saveProfile(profile)
+    init(repo: UserSettingsRepository) {
+        self.repo = repo
+    }
+    
+    func execute(_ settings: UserSettings) async throws {
+        try await repo.saveSettings(settings)
     }
 }
