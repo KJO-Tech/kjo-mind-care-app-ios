@@ -32,7 +32,11 @@ final class PresentationAssembly: Assembly {
         }
 
         container.register(RecordMoodViewModel.self) { r in
-            RecordMoodViewModel(getMoodsUseCase: r.resolve(GetMoodsUseCase.self)!)
+            RecordMoodViewModel(
+                getMoodsUseCase: r.resolve(GetMoodsUseCase.self)!,
+                addMoodEntryUseCase: r.resolve(AddMoodEntryUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!
+            )
         }
 
         container.register(CategoryListViewModel.self) { r in
@@ -56,6 +60,22 @@ final class PresentationAssembly: Assembly {
                 categoryId: categoryId,
                 getActivityCategoriesUseCase: r.resolve(GetActivityCategoriesUseCase.self)!,
                 getExercisesByCategoryUseCase: r.resolve(GetExercisesByCategoryUseCase.self)!
+            )
+        }
+
+        container.register(MoodsViewModel.self) { r in
+            MoodsViewModel(
+                getMoodStatisticsUseCase: r.resolve(GetMoodStatisticsUseCase.self)!,
+                getMoodEntriesUseCase: r.resolve(GetMoodEntriesUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!,
+                getMoodsUseCase: r.resolve(GetMoodsUseCase.self)!
+            )
+        }
+
+        container.register(WeeklyHistoryViewModel.self) { r in
+            WeeklyHistoryViewModel(
+                getWeeklyMoodsUseCase: r.resolve(GetWeeklyMoodsUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!
             )
         }
     }

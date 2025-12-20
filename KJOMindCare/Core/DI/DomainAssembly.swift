@@ -211,5 +211,18 @@ final class DomainAssembly: Assembly {
         container.register(GetMoodsUseCase.self) { r in
             GetMoodsUseCase(repository: r.resolve(MoodRepository.self)!)
         }
+
+        container.register(AddMoodEntryUseCase.self) { r in
+            AddMoodEntryUseCase(repository: r.resolve(MoodEntryRepository.self)!)
+        }
+        container.register(GetMoodEntriesUseCase.self) { r in
+            GetMoodEntriesUseCase(repository: r.resolve(MoodEntryRepository.self)!)
+        }
+        container.register(GetWeeklyMoodsUseCase.self) { r in
+            GetWeeklyMoodsUseCase(repository: r.resolve(MoodEntryRepository.self)!)
+        }
+        container.register(GetMoodStatisticsUseCase.self) { r in
+            GetMoodStatisticsUseCase(repository: r.resolve(MoodEntryRepository.self)!)
+        }
     }
 }

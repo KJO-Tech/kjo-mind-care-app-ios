@@ -21,4 +21,14 @@ public struct Mood: Codable, Identifiable, Equatable {
         self.isActive = isActive
         self.value = value
     }
+
+    public func getName(languageCode: String? = nil) -> String {
+        let code = languageCode ?? Locale.current.language.languageCode?.identifier ?? "en"
+        return name[code] ?? name["en"] ?? name.values.first ?? "Unnamed Mood"
+    }
+
+    public func getDescription(languageCode: String? = nil) -> String {
+        let code = languageCode ?? Locale.current.language.languageCode?.identifier ?? "en"
+        return description[code] ?? description["en"] ?? description.values.first ?? ""
+    }
 }

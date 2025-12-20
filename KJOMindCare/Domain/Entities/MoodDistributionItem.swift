@@ -7,10 +7,10 @@
 
 import Foundation
 
-
-struct MoodDistributionItem: Identifiable {
-    let id = UUID()
-    let emotion: String
-    let percentage: CGFloat 
-    let displayPercentage: String
+public struct MoodDistributionItem: Identifiable {
+    public let id = UUID()
+    public let emotion: String
+    public let percentage: CGFloat
+    public let displayPercentage: String
+    public let colorHex: String
 }

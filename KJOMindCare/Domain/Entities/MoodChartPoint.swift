@@ -7,9 +7,15 @@
 
 import Foundation
 
-struct MoodChartPoint: Identifiable {
-    let id = UUID()
-    let day: String
-    let value: Int
-}
+public struct MoodChartPoint: Identifiable {
+    public let id = UUID()
+    public let day: String
+    public let value: Double
+    public let colorHex: String?
 
+    public init(day: String, value: Double, colorHex: String? = nil) {
+        self.day = day
+        self.value = value
+        self.colorHex = colorHex
+    }
+}

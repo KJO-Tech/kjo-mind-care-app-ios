@@ -21,14 +21,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		EA59C4F02ECA796E00BA0496 /* Exceptions for "KJOMindCare" folder in "KJOMindCare" target */ = {
+		EA872F492EF4F4B000B9BBFE /* Exceptions for "KJOMindCare" folder in "KJOMindCare" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Core/Base/.gitkeep,
-				Core/Utlis/.gitkeep,
-				Presentation/Modules/Auth/Coordinator/.gitkeep,
-				Presentation/Modules/Home/ViewModels/.gitkeep,
-				Presentation/Modules/Moods/ViewModels/.gitkeep,
 				Resources/Info.plist,
 			);
 			target = EA59C4802ECA643A00BA0496 /* KJOMindCare */;
@@ -39,7 +34,7 @@
 		EA59C4832ECA643A00BA0496 /* KJOMindCare */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				EA59C4F02ECA796E00BA0496 /* Exceptions for "KJOMindCare" folder in "KJOMindCare" target */,
+				EA872F492EF4F4B000B9BBFE /* Exceptions for "KJOMindCare" folder in "KJOMindCare" target */,
 			);
 			path = KJOMindCare;
 			sourceTree = "<group>";

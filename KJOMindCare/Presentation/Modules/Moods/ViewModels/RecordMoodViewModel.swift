@@ -15,12 +15,21 @@ class RecordMoodViewModel: ObservableObject {
     @Published var noteText: String = ""
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
+    @Published var isSaved: Bool = false
 
     private let getMoodsUseCase: GetMoodsUseCase
+    private let addMoodEntryUseCase: AddMoodEntryUseCase
+    private let checkUserSessionUseCase: CheckUserSessionUseCase
     private var cancellables = Set<AnyCancellable>()
+    private var pendingMoodId: String?
 
-    init(getMoodsUseCase: GetMoodsUseCase) {
+    init(
+        getMoodsUseCase: GetMoodsUseCase, addMoodEntryUseCase: AddMoodEntryUseCase,
+        checkUserSessionUseCase: CheckUserSessionUseCase
+    ) {
         self.getMoodsUseCase = getMoodsUseCase
+        self.addMoodEntryUseCase = addMoodEntryUseCase
+        self.checkUserSessionUseCase = checkUserSessionUseCase
         fetchMoods()
     }
 
@@ -34,6 +43,10 @@ class RecordMoodViewModel: ObservableObject {
                 switch resource {
                 case .success(let data):
                     self.moods = data
+                    if let pendingId = self.pendingMoodId {
+                        self.selectMood(byId: pendingId)
+                        self.pendingMoodId = nil
+                    }
                 case .error(let message):
                     self.errorMessage = message
                 default:
@@ -50,12 +63,41 @@ class RecordMoodViewModel: ObservableObject {
     func selectMood(byId id: String) {
         if let mood = moods.first(where: { $0.id == id }) {
             selectedMood = mood
+        } else {
+            pendingMoodId = id
         }
     }
 
     func saveMood() {
-        guard let mood = selectedMood else { return }
-        // Implement save logic (e.g., SaveMoodUseCase)
-        print("Guardando Mood: \(mood.name["es"] ?? "") con nota: \(noteText)")
+        guard let selectedMood = selectedMood else { return }
+        guard let user = checkUserSessionUseCase.execute() else {
+            errorMessage = "User not logged in"
+            return
+        }
+
+        let entry = MoodEntry(
+            moodId: selectedMood.id,
+            note: noteText,
+            userId: user.id
+        )
+
+        isLoading = true
+        addMoodEntryUseCase.execute(entry: entry)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (resource: Resource<Void>) in
+                guard let self = self else { return }
+                self.isLoading = false
+                switch resource {
+                case .loading:
+                    self.isLoading = true
+                case .success:
+                    self.noteText = ""
+                    self.selectedMood = nil
+                    self.isSaved = true
+                case .error(let message):
+                    self.errorMessage = message
+                }
+            }
+            .store(in: &cancellables)
     }
 }
