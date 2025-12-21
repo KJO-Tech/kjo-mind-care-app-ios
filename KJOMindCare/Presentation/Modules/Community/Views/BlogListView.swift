@@ -1,9 +1,8 @@
 import SwiftUI
 
 struct BlogListView: View {
-    
     @StateObject var vm: BlogListViewModel
-    
+    @EnvironmentObject var coordinator: CommunityCoordinator
     
     init(vm: BlogListViewModel) {
         _vm = StateObject(wrappedValue: vm)
@@ -11,49 +10,46 @@ struct BlogListView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            
             Text("Community Blog")
-                .font(.largeTitle.bold())
-                .foregroundColor(.white)
+                .font(.theme.largeTitle.bold())
+                .foregroundColor(Color.theme.primary)
                 .padding(.top, 10)
             
             searchBar
             filterTabs
             blogList
         }
-        .background(Color.black.edgesIgnoringSafeArea(.all))
+        .background(Color.background.edgesIgnoringSafeArea(.all))
         .overlay(alignment: .bottomTrailing) {
             floatingButton
         }
     }
 }
 
-
 extension BlogListView {
     var searchBar: some View {
         HStack {
             HStack {
                 Image(systemName: "magnifyingglass")
-                    .foregroundColor(.gray)
+                    .foregroundColor(Color.theme.textSecondary)
                 
                 TextField("Search blogs...", text: $vm.searchText)
-                    .foregroundColor(.white)
+                    .foregroundColor(Color.theme.text)
             }
             .padding(12)
-            .background(Color.white.opacity(0.08))
+            .background(Color.theme.card)
             .cornerRadius(14)
             
             Button {} label: {
                 Image(systemName: "slider.horizontal.3")
-                    .font(.title3)
-                    .foregroundColor(.white)
+                    .font(.theme.title3)
+                    .foregroundColor(Color.theme.text)
             }
         }
         .padding(.horizontal)
         .padding(.top, 5)
     }
 }
-
 
 extension BlogListView {
     var filterTabs: some View {
@@ -64,11 +60,11 @@ extension BlogListView {
                         vm.selectedFilter = filter
                     } label: {
                         Text(filter.rawValue)
-                            .foregroundColor(vm.selectedFilter == filter ? .purple : .gray)
+                            .foregroundColor(vm.selectedFilter == filter ? Color.theme.primary : Color.theme.textSecondary)
                     }
                     
                     Rectangle()
-                        .fill(vm.selectedFilter == filter ? Color.purple : .clear)
+                        .fill(vm.selectedFilter == filter ? Color.theme.primary : Color.clear)
                         .frame(height: 3)
                 }
                 .frame(maxWidth: .infinity)
@@ -78,7 +74,6 @@ extension BlogListView {
         .padding(.top, 5)
     }
 }
-
 
 extension BlogListView {
     var blogList: some View {
@@ -97,21 +92,20 @@ extension BlogListView {
     }
 }
 
-
 extension BlogListView {
     var floatingButton: some View {
         Button {
-            
+            coordinator.showCreateBlog()
         } label: {
             ZStack {
                 Circle()
-                    .fill(.ultraThinMaterial)
+                    .fill(Color.theme.primary)
                     .frame(width: 65, height: 65)
-                    .shadow(color: .purple.opacity(0.7), radius: 8)
+                    .shadow(color: Color.primary.opacity(0.7), radius: 8)
                 
                 Image(systemName: "plus")
-                    .foregroundColor(.purple)
-                    .font(.title)
+                    .foregroundColor(Color.theme.primaryContent)
+                    .font(.theme.title)
             }
             .padding()
         }
@@ -120,7 +114,9 @@ extension BlogListView {
 
 
 #Preview {
-    let vm = BlogListViewModel()
-    BlogListView(vm: vm)
-        .preferredColorScheme(.dark)
+    let listBlogsVM = DIContainer.shared.container.resolve(BlogListViewModel.self)!
+    let coordinator = CommunityCoordinator()
+    
+    BlogListView(vm: listBlogsVM)
+        .environmentObject(coordinator)
 }

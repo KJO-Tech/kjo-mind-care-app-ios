@@ -1,5 +1,5 @@
 //
-//  SignOutUseCase.swift
+//  GetCurrentUserUseCase.swift
 //  KJOMindCare
 //
 //  Created by DAMII on 12/12/25.
@@ -7,14 +7,14 @@
 
 import Foundation
 
-final class SignOutUseCase {
+final class GetCurrentUserUseCase {
     private let repository: AuthRepository
     
     init(repository: AuthRepository) {
         self.repository = repository
     }
     
-    func execute() throws {
-        try repository.signOut()
+    func execute() -> User? {
+        return repository.currentUser
     }
 }

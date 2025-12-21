@@ -116,6 +116,24 @@ extension RecordMoodView {
     fileprivate var actionButtonsSection: some View {
         VStack {
             Spacer()
+            
+            // Success/Error Messages
+            if let successMessage = viewModel.successMessage {
+                Text(successMessage)
+                    .font(.caption)
+                    .foregroundColor(.green)
+                    .padding(.horizontal)
+                    .padding(.bottom, 5)
+            }
+            
+            if let errorMessage = viewModel.errorMessage {
+                Text(errorMessage)
+                    .font(.caption)
+                    .foregroundColor(.red)
+                    .padding(.horizontal)
+                    .padding(.bottom, 5)
+            }
+            
             HStack(spacing: 15) {
 
                 Button(action: {
@@ -129,18 +147,33 @@ extension RecordMoodView {
                         .background(Color.gray.opacity(0.3))
                         .cornerRadius(15)
                 }
+                .disabled(viewModel.isSaving)
+                
                 Button(action: {
                     viewModel.saveMood()
-                    presentationMode.wrappedValue.dismiss()
+                    // Dismiss after a short delay if successful
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        if viewModel.successMessage != nil {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    }
                 }) {
-                    Text(String(String(localized: "Guardar")))
-                        .fontWeight(.semibold)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.teal)
-                        .cornerRadius(15)
+                    HStack {
+                        if viewModel.isSaving {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                .scaleEffect(0.8)
+                        }
+                        Text(viewModel.isSaving ? "Saving..." : String(localized: "Guardar"))
+                    }
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(viewModel.isSaving ? Color.gray : Color.teal)
+                    .cornerRadius(15)
                 }
+                .disabled(viewModel.isSaving || viewModel.selectedMood == nil)
             }
             .padding(20)
             .background(Color.black.opacity(0.8))

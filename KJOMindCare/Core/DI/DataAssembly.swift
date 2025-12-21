@@ -76,10 +76,16 @@ final class DataAssembly: Assembly {
                 firestoreService: r.resolve(FireStoreService.self)!
             )
         }
-       
+
         container.register(UserSettingsRepository.self) { _ in
             UserSettingsRepositoryImpl()
         }.inObjectScope(.container)
 
+        // Mood Entry Repository
+        container.register(MoodEntryRepository.self) { r in
+            MoodEntryRepositoryImpl(
+                firestoreService: r.resolve(FireStoreService.self)!
+            )
+        }
     }
 }

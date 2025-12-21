@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MoodsView: View {
 
-    @StateObject private var viewModel = MoodsViewModel()
+    @StateObject private var viewModel = DIContainer.shared.container.resolve(MoodsViewModel.self)!
 
     var body: some View {
         NavigationView {
@@ -17,15 +17,37 @@ struct MoodsView: View {
                 Color.black
                     .ignoresSafeArea()
 
-                ScrollView {
-                    VStack(spacing: 25) {
-                        headerSection
-                        timeframeSelector
-                        chartCardSection
-                        insightsCardSection
+                if viewModel.isLoading {
+                    ProgressView("Loading mood data...")
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .foregroundColor(.white)
+                } else if let error = viewModel.errorMessage {
+                    VStack(spacing: 20) {
+                        Text("Error loading data")
+                            .font(.headline)
+                            .foregroundColor(.red)
+                        Text(error)
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                        Button("Retry") {
+                            viewModel.loadData()
+                        }
+                        .padding()
+                        .background(Color.teal)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.top, 10)
+                } else {
+                    ScrollView {
+                        VStack(spacing: 25) {
+                            headerSection
+                            timeframeSelector
+                            chartCardSection
+                            insightsCardSection
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.top, 10)
+                    }
                 }
             }
             //            .navigationBarHidden(true)

@@ -14,7 +14,9 @@ final class UpdateBlogUseCase {
         self.repository = repository
     }
     
-    func execute(blogPost: Blog) async throws {
-        try await repository.updateBlog(blogPost: blogPost)
+    func execute(blogPost: Blog, mediaData: Data? = nil, mediaType: MediaType? = nil) async throws {
+        var updatedBlog = blogPost
+        
+        try await repository.updateBlog(blogPost: updatedBlog)
     }
 }

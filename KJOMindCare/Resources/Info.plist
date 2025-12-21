@@ -23,5 +23,11 @@
 		<key>UIColorName</key>
 		<string>Primary</string>
 	</dict>
+	<key>CLOUDINARY_CLOUD_NAME</key>
+	<string>YOUR_CLOUD_NAME_HERE</string>
+	<key>CLOUDINARY_API_KEY</key>
+	<string>YOUR_API_KEY_HERE</string>
+	<key>CLOUDINARY_API_SECRET</key>
+	<string>YOUR_API_SECRET_HERE</string>
 </dict>
 </plist>

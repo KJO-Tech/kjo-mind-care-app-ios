@@ -34,6 +34,18 @@ final class DomainAssembly: Assembly {
             )
         }
 
+        container.register(LoginWithGoogleUseCase.self) { r in
+            LoginWithGoogleUseCase(
+                repository: r.resolve(AuthRepository.self)!
+            )
+        }
+
+        container.register(GetCurrentUserUseCase.self) { r in
+            GetCurrentUserUseCase(
+                repository: r.resolve(AuthRepository.self)!
+            )
+        }
+
         container.register(SignOutUseCase.self) { r in
             SignOutUseCase(
                 repository: r.resolve(AuthRepository.self)!
@@ -233,6 +245,19 @@ final class DomainAssembly: Assembly {
         container.register(UpdateUserSettingsUseCase.self) { r in
             UpdateUserSettingsUseCase(
                 repo: r.resolve(UserSettingsRepository.self)!)
+        }
+
+        // Mood Entry Use Cases
+        container.register(SaveMoodEntryUseCase.self) { r in
+            SaveMoodEntryUseCase(repository: r.resolve(MoodEntryRepository.self)!)
+        }
+
+        container.register(GetMoodEntriesUseCase.self) { r in
+            GetMoodEntriesUseCase(repository: r.resolve(MoodEntryRepository.self)!)
+        }
+
+        container.register(GetMoodEntriesByDateRangeUseCase.self) { r in
+            GetMoodEntriesByDateRangeUseCase(repository: r.resolve(MoodEntryRepository.self)!)
         }
     }
 }

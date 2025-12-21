@@ -9,8 +9,13 @@ import Swinject
 
 final class PresentationAssembly: Assembly {
     func assemble(container: Container) {
+
         container.register(LoginViewModel.self) { r in
-            LoginViewModel(loginUseCase: r.resolve(LoginUseCase.self)!)
+            LoginViewModel(
+                loginUseCase: r.resolve(LoginUseCase.self)!,
+                getCurrentUserUseCase: r.resolve(GetCurrentUserUseCase.self)!,
+                loginWithGoogleUseCase: r.resolve(LoginWithGoogleUseCase.self)!
+            )
         }
 
         container.register(RegisterViewModel.self) { r in
@@ -32,7 +37,11 @@ final class PresentationAssembly: Assembly {
         }
 
         container.register(RecordMoodViewModel.self) { r in
-            RecordMoodViewModel(getMoodsUseCase: r.resolve(GetMoodsUseCase.self)!)
+            RecordMoodViewModel(
+                getMoodsUseCase: r.resolve(GetMoodsUseCase.self)!,
+                saveMoodEntryUseCase: r.resolve(SaveMoodEntryUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!
+            )
         }
 
         container.register(CategoryListViewModel.self) { r in
@@ -79,6 +88,24 @@ final class PresentationAssembly: Assembly {
                 checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!,
                 coordinator: coordinator,
                 isEditMode: isEditMode
+            )
+        }
+
+        container.register(BlogListViewModel.self) { r in
+            BlogListViewModel(getBlogPostsUseCase: r.resolve(GetBlogPostsUseCase.self)!)
+        }
+
+        container.register(CreateBlogViewModel.self) { r in
+            CreateBlogViewModel(
+                createBlogUseCase: r.resolve(CreateBlogUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!
+            )
+        }
+
+        container.register(MoodsViewModel.self) { r in
+            MoodsViewModel(
+                getMoodEntriesUseCase: r.resolve(GetMoodEntriesByDateRangeUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!
             )
         }
     }

@@ -6,8 +6,10 @@
 //
 import Foundation
 import FirebaseAuth
+import GoogleSignIn
 
 final class AutAuthFirebaseServiceImpl: AuthFirebaseService {
+
     
     var currentUser: User? {
         guard let firebaseUser = Auth.auth().currentUser else { return nil }
@@ -63,6 +65,39 @@ final class AutAuthFirebaseServiceImpl: AuthFirebaseService {
             }
         }
     }
+    
+    func signInWithGoogle() async throws -> User {
+        guard let presentingVC = await UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .flatMap({ $0.windows })
+            .first(where: { $0.isKeyWindow })?
+            .rootViewController else {
+            throw NSError(domain: "GoogleSignIn", code: -1)
+        }
+
+        let googleResult = try await GIDSignIn.sharedInstance.signIn(withPresenting: presentingVC)
+
+        guard let idToken = googleResult.user.idToken?.tokenString else {
+            throw NSError(domain: "GoogleSignIn", code: -2)
+        }
+
+        let credential = GoogleAuthProvider.credential(
+            withIDToken: idToken,
+            accessToken: googleResult.user.accessToken.tokenString
+        )
+
+        let firebaseResult = try await Auth.auth().signIn(with: credential)
+        let fUser = firebaseResult.user
+
+        return User(
+            uid: fUser.uid,
+            fullName: fUser.displayName ?? "",
+            email: fUser.email ?? "",
+            role: "user",
+            profileImage: fUser.photoURL?.absoluteString
+        )
+    }
+    
     
     
     func signOut() throws {

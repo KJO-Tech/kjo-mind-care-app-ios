@@ -17,9 +17,14 @@ public class LoginViewModel: ObservableObject {
     @Published var recoveryEmail: String = ""
 
     private let loginUseCase: LoginUseCase
+    private let getCurrentUserUseCase: GetCurrentUserUseCase
+    private let loginWithGoogleUseCase: LoginWithGoogleUseCase
 
-    init(loginUseCase: LoginUseCase) {
+    init(loginUseCase: LoginUseCase, getCurrentUserUseCase: GetCurrentUserUseCase, loginWithGoogleUseCase: LoginWithGoogleUseCase) {
         self.loginUseCase = loginUseCase
+        self.getCurrentUserUseCase = getCurrentUserUseCase
+        self.loginWithGoogleUseCase = loginWithGoogleUseCase
+        self.loggedUser = getCurrentUserUseCase.execute()
     }
 
     var isFormValid: Bool {
@@ -67,12 +72,15 @@ public class LoginViewModel: ObservableObject {
         isLoading = true
         defer { isLoading = false }
 
-        // TODO: Implement Google Sign-In Logic
-        print("Iniciando sesión con Google (Maquetado)")
-        try? await Task.sleep(nanoseconds: 1_000_000_000)  // Simular delay
-
-        // Simular éxito (opcional, por ahora solo print)
-        print("Google Sign-In simulado completado")
+        do {
+            let user = try await loginWithGoogleUseCase.execute()
+            self.loggedUser = user
+            print("Usuario \(user.fullName) (\(user.email)) inició sesión con Google correctamente")
+        } catch {
+            self.errorMessage = "Error al iniciar sesión con Google"
+            self.loggedUser = nil
+            print("Google Sign-In fallido: \(error.localizedDescription)")
+        }
     }
 
 }

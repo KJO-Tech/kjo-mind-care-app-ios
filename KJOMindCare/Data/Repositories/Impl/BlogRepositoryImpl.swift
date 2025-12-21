@@ -36,8 +36,11 @@ class BlogRepositoryImpl: BlogRepository {
                 }
                 
                 let blogs = documents.compactMap { document -> Blog? in
-                    try? document.data(as: Blog.self)
+                    var blog = try? document.data(as: Blog.self)
+                    blog?.id = document.documentID
+                    return blog
                 }
+
                 
                 subject.send(blogs)
             }

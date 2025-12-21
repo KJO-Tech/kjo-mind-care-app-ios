@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B7BF8B2E2EECAC9700477748 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B7BF8B2D2EECAC9700477748 /* GoogleSignIn */; };
+		B7BF8B302EECAC9700477748 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B7BF8B2F2EECAC9700477748 /* GoogleSignInSwift */; };
 		B7C85C802EF6F99B00664729 /* Cloudinary in Frameworks */ = {isa = PBXBuildFile; productRef = B7C85C7F2EF6F99B00664729 /* Cloudinary */; };
 		B7F6B66F2EDB891100D0E52C /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = B7F6B66E2EDB891100D0E52C /* FirebaseCore */; };
 		B7F6B6712EDB891200D0E52C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B7F6B6702EDB891200D0E52C /* FirebaseFirestore */; };
@@ -52,9 +54,11 @@
 				B7F6B6712EDB891200D0E52C /* FirebaseFirestore in Frameworks */,
 				B7F6B6772EDB89FD00D0E52C /* FirebaseCrashlytics in Frameworks */,
 				B7C85C802EF6F99B00664729 /* Cloudinary in Frameworks */,
+				B7BF8B302EECAC9700477748 /* GoogleSignInSwift in Frameworks */,
 				B7F6B6732EDB89FD00D0E52C /* FirebaseAnalytics in Frameworks */,
 				B7F6B6752EDB89FD00D0E52C /* FirebaseAuth in Frameworks */,
 				B7F6B67A2EDB8B4500D0E52C /* Swinject in Frameworks */,
+				B7BF8B2E2EECAC9700477748 /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +109,8 @@
 				B7F6B6792EDB8B4500D0E52C /* Swinject */,
 				EAB068A52EEA4A0E006B2CBE /* YouTubePlayerKit */,
 				B7C85C7F2EF6F99B00664729 /* Cloudinary */,
+				B7BF8B2D2EECAC9700477748 /* GoogleSignIn */,
+				B7BF8B2F2EECAC9700477748 /* GoogleSignInSwift */,
 			);
 			productName = KJOMindCare;
 			productReference = EA59C4812ECA643A00BA0496 /* KJOMindCare.app */;
@@ -139,6 +145,7 @@
 				B7F6B6782EDB8B4500D0E52C /* XCRemoteSwiftPackageReference "Swinject" */,
 				EAB068A42EEA4A0E006B2CBE /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
 				B7C85C7E2EF6F99A00664729 /* XCRemoteSwiftPackageReference "cloudinary_ios" */,
+				B7BF8B2C2EECAC9700477748 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EA59C4822ECA643A00BA0496 /* Products */;
@@ -380,6 +387,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B7BF8B2C2EECAC9700477748 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		B7C85C7E2EF6F99A00664729 /* XCRemoteSwiftPackageReference "cloudinary_ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/cloudinary/cloudinary_ios";
@@ -415,6 +430,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B7BF8B2D2EECAC9700477748 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7BF8B2C2EECAC9700477748 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		B7BF8B2F2EECAC9700477748 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7BF8B2C2EECAC9700477748 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
 		B7C85C7F2EF6F99B00664729 /* Cloudinary */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B7C85C7E2EF6F99A00664729 /* XCRemoteSwiftPackageReference "cloudinary_ios" */;
