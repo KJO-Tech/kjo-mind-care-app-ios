@@ -158,7 +158,7 @@ struct MoodsView: View {
                     .padding()
             } else {
                 LazyVStack(spacing: 12) {
-                    ForEach(viewModel.historyEntries, id: \.id) { entry in
+                    ForEach(viewModel.historyEntries) { entry in
                         MoodHistoryRow(entry: entry)
                     }
 

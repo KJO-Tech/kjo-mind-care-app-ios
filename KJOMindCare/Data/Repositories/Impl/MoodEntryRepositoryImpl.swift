@@ -20,7 +20,11 @@ class MoodEntryRepositoryImpl: MoodEntryRepository {
         return Future<Resource<Void>, Never> { promise in
             Task {
                 do {
-                    try await self.firestoreService.save(entry, at: self.collectionName)
+                    // Generate ID client-side so we can save it in the document body
+                    let ref = self.firestore.collection(self.collectionName).document()
+                    var entryToSave = entry
+                    entryToSave.id = ref.documentID
+                    try ref.setData(from: entryToSave)
                     promise(.success(.success(())))
                 } catch {
                     promise(.success(.error(error.localizedDescription)))
@@ -32,9 +36,6 @@ class MoodEntryRepositoryImpl: MoodEntryRepository {
 
     func getMoodEntries(userId: String) -> AnyPublisher<Resource<[MoodEntry]>, Never> {
         let subject = CurrentValueSubject<Resource<[MoodEntry]>, Never>(.loading)
-
-        // Match the pattern from CommentRepositoryImpl: Listen directly with Firebase logic if needed, or check if firestoreService.getCollection provides real-time updates.
-        // CommentRepositoryImpl uses manual addSnapshotListener. Let's do that to be safe.
 
         let listener = firestore.collection(collectionName)
             .whereField("userId", isEqualTo: userId)
@@ -50,7 +51,6 @@ class MoodEntryRepositoryImpl: MoodEntryRepository {
                     return
                 }
 
-                // Manual mapping or Codable
                 let entries = documents.compactMap { document -> MoodEntry? in
                     try? document.data(as: MoodEntry.self)
                 }
