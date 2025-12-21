@@ -5,8 +5,7 @@ struct ProfileView: View {
     @State private var showEdit = false
 
     @StateObject private var coordinator = ProfileCoordinator()
-    @StateObject private var viewModel = DIContainer.shared.container.resolve(
-        SettingsViewModel.self)!
+    @ObservedObject var viewModel: SettingsViewModel
     @EnvironmentObject var appCoordinator: AppCoordinator
 
     var body: some View {
@@ -329,7 +328,8 @@ struct ProfileView: View {
 }
 
 #Preview {
+    let vm = DIContainer.shared.container.resolve(SettingsViewModel.self)!
     let coordinator = AppCoordinator()
-    ProfileView()
+    ProfileView(viewModel: vm)
         .environmentObject(coordinator)
 }

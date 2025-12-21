@@ -2,7 +2,7 @@ import SwiftUI
 
 public struct HomeView: View {
     @StateObject private var coordinator = HomeCoordinator()
-    @StateObject private var viewModel = DIContainer.shared.container.resolve(HomeViewModel.self)!
+    @ObservedObject var viewModel: HomeViewModel
 
     public var body: some View {
         NavigationStack(path: $coordinator.path) {

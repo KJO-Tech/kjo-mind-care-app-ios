@@ -1,20 +1,16 @@
 import SwiftUI
 
 struct BlogListView: View {
-    @StateObject var vm: BlogListViewModel
+    @ObservedObject var vm: BlogListViewModel
     @EnvironmentObject var coordinator: CommunityCoordinator
-    
-    init(vm: BlogListViewModel) {
-        _vm = StateObject(wrappedValue: vm)
-    }
-    
+
     var body: some View {
         VStack(spacing: 0) {
             Text("Community Blog")
                 .font(.theme.largeTitle.bold())
                 .foregroundColor(Color.theme.primary)
                 .padding(.top, 10)
-            
+
             searchBar
             filterTabs
             blogList
@@ -32,15 +28,16 @@ extension BlogListView {
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(Color.theme.textSecondary)
-                
+
                 TextField("Search blogs...", text: $vm.searchText)
                     .foregroundColor(Color.theme.text)
             }
             .padding(12)
             .background(Color.theme.card)
             .cornerRadius(14)
-            
-            Button {} label: {
+
+            Button {
+            } label: {
                 Image(systemName: "slider.horizontal.3")
                     .font(.theme.title3)
                     .foregroundColor(Color.theme.text)
@@ -60,9 +57,11 @@ extension BlogListView {
                         vm.selectedFilter = filter
                     } label: {
                         Text(filter.rawValue)
-                            .foregroundColor(vm.selectedFilter == filter ? Color.theme.primary : Color.theme.textSecondary)
+                            .foregroundColor(
+                                vm.selectedFilter == filter
+                                    ? Color.theme.primary : Color.theme.textSecondary)
                     }
-                    
+
                     Rectangle()
                         .fill(vm.selectedFilter == filter ? Color.theme.primary : Color.clear)
                         .frame(height: 3)
@@ -102,7 +101,7 @@ extension BlogListView {
                     .fill(Color.theme.primary)
                     .frame(width: 65, height: 65)
                     .shadow(color: Color.primary.opacity(0.7), radius: 8)
-                
+
                 Image(systemName: "plus")
                     .foregroundColor(Color.theme.primaryContent)
                     .font(.theme.title)
@@ -112,11 +111,10 @@ extension BlogListView {
     }
 }
 
-
 #Preview {
     let listBlogsVM = DIContainer.shared.container.resolve(BlogListViewModel.self)!
     let coordinator = CommunityCoordinator()
-    
+
     BlogListView(vm: listBlogsVM)
         .environmentObject(coordinator)
 }

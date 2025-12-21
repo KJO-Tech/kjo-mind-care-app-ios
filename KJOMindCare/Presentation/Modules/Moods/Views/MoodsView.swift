@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MoodsView: View {
 
-    @StateObject private var viewModel = DIContainer.shared.container.resolve(MoodsViewModel.self)!
+    @ObservedObject var viewModel: MoodsViewModel
 
     var body: some View {
         NavigationView {
@@ -247,8 +247,7 @@ struct MoodHistoryRow: View {
     }
 }
 
-struct MoodsView_Previews: PreviewProvider {
-    static var previews: some View {
-        MoodsView()
-    }
+#Preview {
+    let vm = DIContainer.shared.container.resolve(MoodsViewModel.self)!
+    MoodsView(viewModel: vm)
 }
