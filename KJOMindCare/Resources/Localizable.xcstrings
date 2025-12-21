@@ -26,6 +26,9 @@
         }
       }
     },
+    "\"%@\"" : {
+
+    },
     "%lld" : {
 
     },
@@ -33,6 +36,7 @@
 
     },
     "Add a note (optional)" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -48,10 +52,7 @@
         }
       }
     },
-    "Add a note..." : {
-
-    },
-    "Alegre" : {
+    "Archivo seleccionado" : {
 
     },
     "auth.login.appName" : {
@@ -575,16 +576,7 @@
     "Blog" : {
 
     },
-    "Bueno" : {
-
-    },
-    "Cancel" : {
-
-    },
     "Cancelar" : {
-
-    },
-    "Cansado" : {
 
     },
     "Cargando..." : {
@@ -604,6 +596,22 @@
     "Check your subscriptions if you want daily exercises." : {
 
     },
+    "common.cancel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
+          }
+        }
+      }
+    },
     "common.error" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -617,6 +625,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Error"
+          }
+        }
+      }
+    },
+    "common.load_more" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Load more"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargar más"
           }
         }
       }
@@ -663,6 +687,9 @@
     "Completed" : {
 
     },
+    "Contenido" : {
+
+    },
     "Content type not supported yet." : {
 
     },
@@ -677,7 +704,7 @@
         }
       }
     },
-    "Create Blog" : {
+    "Crear Blog" : {
 
     },
     "Day" : {
@@ -730,22 +757,13 @@
     "Error: %@" : {
 
     },
-    "Estado general" : {
-
-    },
-    "Estresado" : {
+    "Escribe el título de tu blog" : {
 
     },
     "Exercise not found" : {
 
     },
-    "Feliz" : {
-
-    },
     "Get Started" : {
-
-    },
-    "Guardar" : {
 
     },
     "Hello, world!" : {
@@ -766,6 +784,7 @@
 
     },
     "How are you feeling today? What's on your mind?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -883,13 +902,8 @@
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." : {
 
     },
-    "Mas frecuente" : {
-
-    },
-    "Mood" : {
-
-    },
     "Mood Distribution" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -905,22 +919,248 @@
         }
       }
     },
-    "Mood History" : {
-
+    "mood.action.register" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log Mood"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrar Estado"
+          }
+        }
+      }
     },
-    "Mood Level: %lld" : {
-
+    "mood.history.empty" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No mood history found"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se encontró historial de estado de ánimo"
+          }
+        }
+      }
     },
-    "Mood Tracker" : {
-
+    "mood.history.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mood History"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historial de estado de ánimo"
+          }
+        }
+      }
     },
-    "Mood Trends" : {
-
+    "mood.insights.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your Insights"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tus estadísticas"
+          }
+        }
+      }
     },
-    "Moods" : {
-
+    "mood.record.note.placeholder" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How are you feeling today? What's on your mind?"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Cómo te sientes hoy? ¿Qué tienes en mente?"
+          }
+        }
+      }
     },
-    "Neutro" : {
+    "mood.record.note.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add a note (optional)"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añade una nota (opcional)"
+          }
+        }
+      }
+    },
+    "mood.record.question" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How are you feeling?"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Cómo te sientes?"
+          }
+        }
+      }
+    },
+    "mood.record.save" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar"
+          }
+        }
+      }
+    },
+    "mood.record.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record Mood"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registro de Ánimo"
+          }
+        }
+      }
+    },
+    "mood.stats.distribution" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mood Distribution"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distribución"
+          }
+        }
+      }
+    },
+    "mood.stats.mostFrequent" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Most Frequent"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más frecuente"
+          }
+        }
+      }
+    },
+    "mood.stats.overall" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overall Mood"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estado general"
+          }
+        }
+      }
+    },
+    "mood.stats.trend" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mood Trend"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tendencia"
+          }
+        }
+      }
+    },
+    "mood.tracker.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mood Tracker"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registro de Estado"
+          }
+        }
+      }
+    },
+    "mood.trends.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mood Trends"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tendencias"
+          }
+        }
+      }
+    },
+    "Multimedia (Opcional)" : {
 
     },
     "No activities for today" : {
@@ -1156,7 +1396,10 @@
         }
       }
     },
-    "Publish Blog" : {
+    "Publicando..." : {
+
+    },
+    "Publicar Blog" : {
 
     },
     "Record Mood" : {
@@ -1179,9 +1422,6 @@
     "Recuperar Contraseña" : {
 
     },
-    "Registrar Estado" : {
-
-    },
     "Registrate" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1192,9 +1432,6 @@
           }
         }
       }
-    },
-    "Regular" : {
-
     },
     "Retry" : {
       "localizations" : {
@@ -1212,9 +1449,6 @@
         }
       }
     },
-    "Save Mood" : {
-
-    },
     "Search blogs..." : {
 
     },
@@ -1224,7 +1458,7 @@
     "Seleccionar imagen" : {
 
     },
-    "Select a mood" : {
+    "Seleccionar imagen o video" : {
 
     },
     "subscription.continue" : {
@@ -1324,13 +1558,10 @@
         }
       }
     },
-    "Title" : {
+    "Título" : {
 
     },
     "Today's Activities" : {
-
-    },
-    "Triste" : {
 
     },
     "Tu correo" : {
@@ -1369,6 +1600,7 @@
       }
     },
     "Your Insights" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

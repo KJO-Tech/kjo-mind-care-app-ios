@@ -10,7 +10,7 @@ public class MoodCoordinator: Coordinator {
     public init() {}
 
     public func start() {
-        // Root is MoodListView
+        // Root is MoodsView
     }
 
     public func showCreateMood() {

@@ -14,22 +14,21 @@ class RecordMoodViewModel: ObservableObject {
     @Published var selectedMood: Mood?
     @Published var noteText: String = ""
     @Published var isLoading: Bool = false
-    @Published var isSaving: Bool = false
     @Published var errorMessage: String? = nil
-    @Published var successMessage: String? = nil
+    @Published var isSaved: Bool = false
 
     private let getMoodsUseCase: GetMoodsUseCase
-    private let saveMoodEntryUseCase: SaveMoodEntryUseCase
+    private let addMoodEntryUseCase: AddMoodEntryUseCase
     private let checkUserSessionUseCase: CheckUserSessionUseCase
     private var cancellables = Set<AnyCancellable>()
+    private var pendingMoodId: String?
 
     init(
-        getMoodsUseCase: GetMoodsUseCase,
-        saveMoodEntryUseCase: SaveMoodEntryUseCase,
+        getMoodsUseCase: GetMoodsUseCase, addMoodEntryUseCase: AddMoodEntryUseCase,
         checkUserSessionUseCase: CheckUserSessionUseCase
     ) {
         self.getMoodsUseCase = getMoodsUseCase
-        self.saveMoodEntryUseCase = saveMoodEntryUseCase
+        self.addMoodEntryUseCase = addMoodEntryUseCase
         self.checkUserSessionUseCase = checkUserSessionUseCase
         fetchMoods()
     }
@@ -44,6 +43,10 @@ class RecordMoodViewModel: ObservableObject {
                 switch resource {
                 case .success(let data):
                     self.moods = data
+                    if let pendingId = self.pendingMoodId {
+                        self.selectMood(byId: pendingId)
+                        self.pendingMoodId = nil
+                    }
                 case .error(let message):
                     self.errorMessage = message
                 default:
@@ -60,58 +63,39 @@ class RecordMoodViewModel: ObservableObject {
     func selectMood(byId id: String) {
         if let mood = moods.first(where: { $0.id == id }) {
             selectedMood = mood
+        } else {
+            pendingMoodId = id
         }
     }
 
     func saveMood() {
-        guard let mood = selectedMood else {
-            errorMessage = "Please select a mood"
+        guard let selectedMood = selectedMood else { return }
+        guard let user = checkUserSessionUseCase.execute() else {
+            errorMessage = "User not logged in"
             return
         }
-        
-        isSaving = true
-        errorMessage = nil
-        successMessage = nil
-        
-        // Get current user ID
-        checkUserSessionUseCase.execute()
+
+        let entry = MoodEntry(
+            moodId: selectedMood.id,
+            note: noteText,
+            userId: user.id
+        )
+
+        isLoading = true
+        addMoodEntryUseCase.execute(entry: entry)
             .receive(on: DispatchQueue.main)
-            .flatMap { [weak self] userResource -> AnyPublisher<Resource<MoodEntry>, Never> in
-                guard let self = self else {
-                    return Just(.error("User session error")).eraseToAnyPublisher()
-                }
-                
-                switch userResource {
-                case .success(let user):
-                    // Save mood entry with user ID and mood name
-                    let moodName = mood.name["es"] ?? mood.name["en"] ?? "Unknown"
-                    return self.saveMoodEntryUseCase.execute(
-                        userId: user.uid,
-                        mood: moodName,
-                        note: self.noteText
-                    )
-                case .error(let message):
-                    return Just(.error(message)).eraseToAnyPublisher()
-                default:
-                    return Just(.error("Unknown error")).eraseToAnyPublisher()
-                }
-            }
-            .sink { [weak self] resource in
+            .sink { [weak self] (resource: Resource<Void>) in
                 guard let self = self else { return }
-                self.isSaving = false
-                
+                self.isLoading = false
                 switch resource {
-                case .success(let entry):
-                    self.successMessage = "Mood saved successfully!"
-                    print("✅ Mood Entry guardado: \(entry.mood) - \(entry.note)")
-                    // Clear form
-                    self.selectedMood = nil
+                case .loading:
+                    self.isLoading = true
+                case .success:
                     self.noteText = ""
+                    self.selectedMood = nil
+                    self.isSaved = true
                 case .error(let message):
-                    self.errorMessage = "Error saving mood: \(message)"
-                    print("❌ Error guardando mood: \(message)")
-                default:
-                    break
+                    self.errorMessage = message
                 }
             }
             .store(in: &cancellables)

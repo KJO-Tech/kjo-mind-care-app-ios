@@ -23,6 +23,10 @@ public struct HomeView: View {
                     MoodSelectorView(viewModel: viewModel, coordinator: coordinator)
                         .padding(.horizontal)
 
+                    // Weekly History Component
+                    WeeklyHistoryView()
+                        .padding(.horizontal)
+
                     // Daily Activities Section
                     DailyActivitiesView(
                         assignments: viewModel.dailyAssignments,
@@ -36,10 +40,6 @@ public struct HomeView: View {
                         }
                     )
                     .padding(.horizontal)
-
-                    // Weekly History Component
-                    WeeklyHistoryView()
-                        .padding(.horizontal)
 
                     Spacer(minLength: 80)
                 }
@@ -92,10 +92,9 @@ public struct HomeView: View {
                         Text("Error loading exercise")
                     }
                 case .recordMood(let moodId):
-                    // Passing Mood ID to RecordMoodView (Need to update RecordMoodView to handle it)
-                    RecordMoodView()  // Placeholder, ideally passing moodId
+                    // Passing Mood ID to RecordMoodView
+                    RecordMoodView(selectedMoodId: moodId)
                         .environmentObject(coordinator)
-                        .navigationBarBackButtonHidden(true)  // Should use custom back button if custom nav
                 }
             }
         }

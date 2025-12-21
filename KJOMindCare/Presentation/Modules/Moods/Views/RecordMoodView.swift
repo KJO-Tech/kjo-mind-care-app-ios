@@ -22,21 +22,17 @@ struct RecordMoodView: View {
 
     var body: some View {
         ZStack {
-
-            Color.black
+            Color.theme.background
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
 
-                headerSection
-
                 ScrollView {
                     VStack(alignment: .leading, spacing: 25) {
-
-                        Text(String(localized: "How are you feeling?"))
-                            .font(.title2)
+                        Text(String(localized: "mood.record.question"))
+                            .font(Font.theme.title2)
                             .fontWeight(.bold)
-                            .foregroundColor(.white)
+                            .foregroundColor(Color.theme.text)
 
                         moodGridSection
 
@@ -54,20 +50,12 @@ struct RecordMoodView: View {
                 viewModel.selectMood(byId: moodId)
             }
         }
+        .navigationTitle(String(localized: "mood.record.title"))
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 extension RecordMoodView {
-
-    fileprivate var headerSection: some View {
-        HStack {
-            Text(String(localized: "Mood Tracker"))
-                .font(.headline)
-                .foregroundColor(.white)
-            Spacer()
-        }
-        .padding()
-    }
 
     fileprivate var moodGridSection: some View {
         LazyVGrid(columns: columns, spacing: 15) {
@@ -87,27 +75,28 @@ extension RecordMoodView {
 
     fileprivate var noteSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Add a note (optional)")
-                .font(.headline)
-                .foregroundColor(.white)
+            Text(String(localized: "mood.record.note.title"))
+                .font(Font.theme.headline)
+                .foregroundColor(Color.theme.text)
 
             ZStack(alignment: .topLeading) {
                 if viewModel.noteText.isEmpty {
-                    Text("How are you feeling today? What's on your mind?")
-                        .foregroundColor(.gray)
+                    Text(String(localized: "mood.record.note.placeholder"))
+                        .foregroundColor(Color.theme.textSecondary)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 12)
                 }
 
                 TextEditor(text: $viewModel.noteText)
+                    .padding(8)  // Internal padding
                     .scrollContentBackground(.hidden)
-                    .background(Color.gray.opacity(0.2))
-                    .foregroundColor(.white)
+                    .background(Color.theme.card)
+                    .foregroundColor(.theme.text)
                     .frame(height: 120)
                     .cornerRadius(12)
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                            .stroke(Color.theme.border, lineWidth: 1)
                     )
             }
         }
@@ -116,68 +105,42 @@ extension RecordMoodView {
     fileprivate var actionButtonsSection: some View {
         VStack {
             Spacer()
-            
-            // Success/Error Messages
-            if let successMessage = viewModel.successMessage {
-                Text(successMessage)
-                    .font(.caption)
-                    .foregroundColor(.green)
-                    .padding(.horizontal)
-                    .padding(.bottom, 5)
-            }
-            
-            if let errorMessage = viewModel.errorMessage {
-                Text(errorMessage)
-                    .font(.caption)
-                    .foregroundColor(.red)
-                    .padding(.horizontal)
-                    .padding(.bottom, 5)
-            }
-            
             HStack(spacing: 15) {
 
                 Button(action: {
                     presentationMode.wrappedValue.dismiss()
                 }) {
-                    Text("Cancel")
+                    Text(String(localized: "common.cancel"))
+                        .font(Font.theme.body)
                         .fontWeight(.semibold)
-                        .foregroundColor(.white)
+                        .foregroundColor(Color.theme.text)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.gray.opacity(0.3))
+                        .background(Color.theme.surface)
                         .cornerRadius(15)
                 }
-                .disabled(viewModel.isSaving)
-                
                 Button(action: {
                     viewModel.saveMood()
-                    // Dismiss after a short delay if successful
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                        if viewModel.successMessage != nil {
-                            presentationMode.wrappedValue.dismiss()
-                        }
-                    }
                 }) {
-                    HStack {
-                        if viewModel.isSaving {
-                            ProgressView()
-                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                                .scaleEffect(0.8)
-                        }
-                        Text(viewModel.isSaving ? "Saving..." : String(localized: "Guardar"))
-                    }
-                    .fontWeight(.semibold)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(viewModel.isSaving ? Color.gray : Color.teal)
-                    .cornerRadius(15)
+                    Text(String(localized: "mood.record.save"))
+                        .fontWeight(.semibold)
+                        .foregroundColor(Color.theme.primaryContent)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.theme.primary)
+                        .cornerRadius(15)
                 }
-                .disabled(viewModel.isSaving || viewModel.selectedMood == nil)
             }
             .padding(20)
-            .background(Color.black.opacity(0.8))
+            .background(Color.theme.background.opacity(0.95))
         }
+        .onChange(of: viewModel.isSaved) { isSaved in
+            if isSaved {
+                presentationMode.wrappedValue.dismiss()
+            }
+        }
+            
+        
     }
 }
 
@@ -207,13 +170,13 @@ struct MoodCardItem: View {
             .shadow(radius: isSelected ? 5 : 0)
 
             Text(mood.name["es"] ?? mood.name["en"] ?? "")
-                .font(.headline)
-                .foregroundColor(.white)
+                .font(Font.theme.headline)
+                .foregroundColor(Color.theme.text)
                 .multilineTextAlignment(.center)
 
             Text(mood.description["es"] ?? mood.description["en"] ?? "")
-                .font(.caption2)
-                .foregroundColor(.gray)
+                .font(Font.theme.caption2)
+                .foregroundColor(Color.theme.textSecondary)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -222,7 +185,7 @@ struct MoodCardItem: View {
         .frame(maxWidth: .infinity, minHeight: 140)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color.gray.opacity(0.2))
+                .fill(Color.theme.card)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 16)
