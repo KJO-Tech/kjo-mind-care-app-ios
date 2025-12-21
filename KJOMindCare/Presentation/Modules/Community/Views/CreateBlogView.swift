@@ -1,148 +1,197 @@
-import SwiftUI
 import PhotosUI
+import SwiftUI
 
 public struct CreateBlogView: View {
-    @StateObject var viewModel: CreateBlogViewModel
     @EnvironmentObject var coordinator: CommunityCoordinator
+    @StateObject private var vm: CreateBlogViewModel
+
+    public init(vm: CreateBlogViewModel) {
+        _vm = StateObject(wrappedValue: vm)
+    }
+
+    public init() {
+        self.init(vm: CreateBlogViewModel())
+    }
 
     public var body: some View {
-        ZStack {
-            Color.theme.background.ignoresSafeArea()
-            
-            ScrollView {
-                VStack(spacing: 20) {
-                    // Title Field
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Título")
-                            .font(.theme.headline)
-                            .foregroundColor(Color.theme.text)
-                        
-                        TextField("Escribe el título de tu blog", text: $viewModel.title)
-                            .padding()
-                            .background(Color.theme.surface)
-                            .cornerRadius(12)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(Color.theme.textSecondary.opacity(0.2), lineWidth: 1)
-                            )
+        ScrollView {
+            VStack(spacing: 24) {
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Title")
+                        .font(.headline)
+                        .foregroundColor(.white)
+
+                    TextField("Blog title", text: $vm.title)
+                        .padding(12)
+                        .background(Color.white.opacity(0.08))
+                        .cornerRadius(12)
+                        .foregroundColor(.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(vm.titleError ? Color.red : Color.clear, lineWidth: 2)
+                        )
+
+                    if vm.titleError {
+                        Text("El título no puede estar vacío")
+                            .font(.caption)
+                            .foregroundColor(.red)
                     }
-                    .padding(.horizontal)
-                    
-                    // Content Field
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Contenido")
-                            .font(.theme.headline)
-                            .foregroundColor(Color.theme.text)
-                        
-                        TextEditor(text: $viewModel.content)
-                            .frame(minHeight: 200)
-                            .padding(8)
-                            .background(Color.theme.surface)
-                            .cornerRadius(12)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(Color.theme.textSecondary.opacity(0.2), lineWidth: 1)
-                            )
-                    }
-                    .padding(.horizontal)
-                    
-                    // Media Picker
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Multimedia (Opcional)")
-                            .font(.theme.headline)
-                            .foregroundColor(Color.theme.text)
-                        
-                        PhotosPicker(
-                            selection: $viewModel.selectedMediaItem,
-                            matching: .any(of: [.images, .videos])
-                        ) {
-                            HStack {
-                                Image(systemName: viewModel.selectedMediaItem != nil ? "checkmark.circle.fill" : "photo.on.rectangle.angled")
-                                    .foregroundColor(viewModel.selectedMediaItem != nil ? .green : Color.theme.primary)
-                                
-                                Text(viewModel.selectedMediaItem != nil ? "Archivo seleccionado" : "Seleccionar imagen o video")
-                                    .font(.theme.body)
-                                    .foregroundColor(Color.theme.text)
-                                
-                                Spacer()
-                                
-                                if viewModel.selectedMediaItem != nil {
-                                    Button(action: {
-                                        viewModel.clearMedia()
-                                    }) {
-                                        Image(systemName: "xmark.circle.fill")
-                                            .foregroundColor(Color.theme.textSecondary)
+                }
+                .padding(.horizontal)
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Category")
+                        .font(.headline)
+                        .foregroundColor(.white)
+
+                    Menu {
+                        ForEach(BlogCategory.allCases) { category in
+                            Button(action: {
+                                vm.selectedCategory = category
+                            }) {
+                                HStack {
+                                    Image(systemName: category.icon)
+                                    Text(category.title)
+                                    if vm.selectedCategory == category {
+                                        Image(systemName: "checkmark")
                                     }
                                 }
                             }
-                            .padding()
-                            .background(Color.theme.surface)
-                            .cornerRadius(12)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(Color.theme.primary.opacity(0.3), lineWidth: 1)
-                            )
                         }
-                        .onChange(of: viewModel.selectedMediaItem) { _ in
-                            Task {
-                                await viewModel.loadMediaData()
-                            }
-                        }
-                    }
-                    .padding(.horizontal)
-                    
-                    // Error Message
-                    if let error = viewModel.errorMessage {
-                        Text(error)
-                            .font(.theme.caption)
-                            .foregroundColor(.red)
-                            .padding(.horizontal)
-                    }
-                    
-                    // Publish Button
-                    Button(action: {
-                        Task {
-                            let success = await viewModel.createBlog()
-                            if success {
-                                coordinator.pop()
-                            }
-                        }
-                    }) {
+                    } label: {
                         HStack {
-                            if viewModel.isLoading {
-                                ProgressView()
-                                    .progressViewStyle(CircularProgressViewStyle(tint: Color.theme.primaryContent))
-                            }
-                            
-                            Text(viewModel.isLoading ? "Publicando..." : "Publicar Blog")
-                                .font(.theme.headline)
-                                .foregroundColor(Color.theme.primaryContent)
+                            Image(systemName: vm.selectedCategory.icon)
+                                .foregroundColor(.purple)
+                            Text(vm.selectedCategory.title)
+                                .foregroundColor(.white)
+                            Spacer()
+                            Image(systemName: "chevron.down")
+                                .foregroundColor(.gray)
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(viewModel.isFormValid && !viewModel.isLoading ? Color.theme.primary : Color.theme.primary.opacity(0.5))
+                        .padding(12)
+                        .background(Color.white.opacity(0.08))
                         .cornerRadius(12)
                     }
-                    .disabled(!viewModel.isFormValid || viewModel.isLoading)
-                    .padding(.horizontal)
-                    .padding(.top, 10)
-                    
-                    Spacer()
                 }
-                .padding(.top)
+                .padding(.horizontal)
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Content")
+                        .font(.headline)
+                        .foregroundColor(.white)
+
+                    TextEditor(text: $vm.content)
+                        .padding(8)
+                        .background(Color.white.opacity(0.08))
+                        .cornerRadius(12)
+                        .foregroundColor(.white)
+                        .frame(minHeight: 150)
+                        .scrollContentBackground(.hidden)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(vm.contentError ? Color.red : Color.clear, lineWidth: 2)
+                        )
+
+                    if vm.contentError {
+                        Text("El contenido no puede estar vacío")
+                            .font(.caption)
+                            .foregroundColor(.red)
+                    }
+                }
+                .padding(.horizontal)
+
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("Image/Video (Optional)")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding(.horizontal)
+
+                    if let selectedImage = vm.selectedImage {
+                        VStack(spacing: 12) {
+                            MediaPreviewView(image: selectedImage)
+                                .padding(.horizontal)
+
+                            Button {
+                                vm.clearMedia()
+                            } label: {
+                                HStack {
+                                    Image(systemName: "xmark.circle.fill")
+                                    Text("Clear Media")
+                                }
+                                .font(.subheadline)
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 12)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(Color.white.opacity(0.1))
+                                )
+                            }
+                            .padding(.horizontal)
+                        }
+                    }
+
+                    Button {
+                        vm.showImagePicker = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "camera.fill")
+                            Text(
+                                vm.selectedImage == nil
+                                    ? "Select Image or Video" : "Change Image or Video")
+                        }
+                        .font(.subheadline)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.purple.opacity(0.6))
+                        )
+                    }
+                    .padding(.horizontal)
+                }
+
+                Button(action: {
+                    if vm.validateForm() {
+                        _ = vm.publishBlog()
+                        coordinator.pop()
+                    }
+                }) {
+                    Text("Publish Blog")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.purple)
+                        )
+                }
+                .padding(.horizontal)
+                .padding(.top, 10)
+
+                Spacer()
             }
+            .padding(.top)
         }
-        .navigationTitle("Crear Blog")
+        .background(Color.black.edgesIgnoringSafeArea(.all))
+        .navigationTitle("Create Blog")
         .navigationBarTitleDisplayMode(.inline)
+        .preferredColorScheme(.dark)
+        .sheet(isPresented: $vm.showImagePicker) {
+            ImagePickerView(
+                selectedImage: $vm.selectedImage,
+                isPresented: $vm.showImagePicker
+            )
+        }
     }
 }
 
 #Preview {
-    let createBlogVM = DIContainer.shared.container.resolve(CreateBlogViewModel.self)!
-    let coordinator = CommunityCoordinator()
-    
     NavigationView {
-        CreateBlogView(viewModel: createBlogVM)
-            .environmentObject(coordinator)
+        CreateBlogView()
     }
+    .preferredColorScheme(.dark)
 }
