@@ -117,10 +117,13 @@ final class PresentationAssembly: Assembly {
                 getBlogByIdUseCase: r.resolve(GetBlogByIdUseCase.self)!,
                 getCommentsForBlogUseCase: r.resolve(GetCommentsForBlogUseCase.self)!,
                 addCommentUseCase: r.resolve(AddCommentUseCase.self)!,
+                updateCommentUseCase: r.resolve(UpdateCommentUseCase.self)!,
+                deleteCommentUseCase: r.resolve(DeleteCommentUseCase.self)!,
                 checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!,
                 getCategoryByIdUseCase: r.resolve(GetCategoryByIdUseCase.self)!,
                 getUserProfileUseCase: r.resolve(GetUserProfileUseCase.self)!,
-                toggleLikeUseCase: r.resolve(ToggleLikeUseCase.self)!
+                toggleLikeUseCase: r.resolve(ToggleLikeUseCase.self)!,
+                updateBlogStatusUseCase: r.resolve(UpdateBlogStatusUseCase.self)!
             )
         }
 

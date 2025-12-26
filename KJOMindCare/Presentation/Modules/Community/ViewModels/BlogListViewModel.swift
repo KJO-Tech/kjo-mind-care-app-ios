@@ -73,13 +73,6 @@ class BlogListViewModel: ObservableObject {
             } receiveValue: { [weak self] blogs in
                 guard let self = self else { return }
 
-                print("📊 Received \(blogs.count) total blogs")
-                if let first = blogs.first {
-                    print(
-                        "📊 First blog from DB: '\(first.title)' - likes: \(first.likes), created: \(first.createdAt.dateValue())"
-                    )
-                }
-
                 // Store all blogs - filtering and sorting happens in computed property
                 self.allBlogs = blogs
             }

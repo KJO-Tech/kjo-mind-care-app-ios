@@ -289,24 +289,35 @@ struct BlogDetailView: View {
     @ViewBuilder
     private var deleteDialogOverlay: some View {
         if viewModel.showDeleteDialog {
-            DeleteConfirmationDialog(
-                title: viewModel.itemToDelete == .blog ? "Delete Blog" : "Delete Comment",
-                message: viewModel.itemToDelete == .blog
-                    ? "Are you sure you want to delete this blog? This action cannot be undone."
-                    : "Are you sure you want to delete this comment? This action cannot be undone.",
-                onDelete: {
-                    if case .blog = viewModel.itemToDelete {
-                        viewModel.confirmDeleteBlog()
-                        coordinator.pop()
-                    } else {
-                        viewModel.confirmDeleteComment()
+            ZStack {
+                Color.theme.shadow.opacity(0.3)
+                    .edgesIgnoringSafeArea(.all)
+                    .onTapGesture {
+                        viewModel.showDeleteDialog = false
+                        viewModel.itemToDelete = nil
                     }
-                },
-                onCancel: {
-                    viewModel.showDeleteDialog = false
-                    viewModel.itemToDelete = nil
-                }
-            )
+
+                DeleteConfirmationDialog(
+                    title: viewModel.itemToDelete == .blog ? "Delete Blog" : "Delete Comment",
+                    message: viewModel.itemToDelete == .blog
+                        ? "Are you sure you want to delete this blog? This action cannot be undone."
+                        : "Are you sure you want to delete this comment? This action cannot be undone.",
+                    onDelete: {
+                        if case .blog = viewModel.itemToDelete {
+                            viewModel.confirmDeleteBlog()
+                            coordinator.pop()
+                        } else {
+                            viewModel.confirmDeleteComment()
+                        }
+                    },
+                    onCancel: {
+                        viewModel.showDeleteDialog = false
+                        viewModel.itemToDelete = nil
+                    }
+                )
+                .frame(maxWidth: 400)
+                .padding(.horizontal, 32)
+            }
             .transition(.opacity)
         }
     }

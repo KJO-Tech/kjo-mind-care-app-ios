@@ -7,7 +7,7 @@ struct BlogCard: View {
     var onLike: (() -> Void)?
     var onShare: (() -> Void)?
 
-            // Image Preview (Top)
+    // Image Preview (Top)
     var mediaView: some View {
         Group {
             if let mediaUrl = blog.mediaUrl, let mediaType = blog.mediaType {

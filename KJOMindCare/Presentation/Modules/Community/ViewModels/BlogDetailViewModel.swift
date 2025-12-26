@@ -39,29 +39,38 @@ class BlogDetailViewModel: ObservableObject {
     private let getBlogByIdUseCase: GetBlogByIdUseCase
     private let getCommentsForBlogUseCase: GetCommentsForBlogUseCase
     private let addCommentUseCase: AddCommentUseCase
+    private let updateCommentUseCase: UpdateCommentUseCase
+    private let deleteCommentUseCase: DeleteCommentUseCase
     private let checkUserSessionUseCase: CheckUserSessionUseCase
     private let getCategoryByIdUseCase: GetCategoryByIdUseCase
     private let getUserProfileUseCase: GetUserProfileUseCase
     private let toggleLikeUseCase: ToggleLikeUseCase
+    private let updateBlogStatusUseCase: UpdateBlogStatusUseCase
 
     nonisolated init(
         blogId: String,
         getBlogByIdUseCase: GetBlogByIdUseCase,
         getCommentsForBlogUseCase: GetCommentsForBlogUseCase,
         addCommentUseCase: AddCommentUseCase,
+        updateCommentUseCase: UpdateCommentUseCase,
+        deleteCommentUseCase: DeleteCommentUseCase,
         checkUserSessionUseCase: CheckUserSessionUseCase,
         getCategoryByIdUseCase: GetCategoryByIdUseCase,
         getUserProfileUseCase: GetUserProfileUseCase,
-        toggleLikeUseCase: ToggleLikeUseCase
+        toggleLikeUseCase: ToggleLikeUseCase,
+        updateBlogStatusUseCase: UpdateBlogStatusUseCase
     ) {
         self.blogId = blogId
         self.getBlogByIdUseCase = getBlogByIdUseCase
         self.getCommentsForBlogUseCase = getCommentsForBlogUseCase
         self.addCommentUseCase = addCommentUseCase
+        self.updateCommentUseCase = updateCommentUseCase
+        self.deleteCommentUseCase = deleteCommentUseCase
         self.checkUserSessionUseCase = checkUserSessionUseCase
         self.getCategoryByIdUseCase = getCategoryByIdUseCase
         self.getUserProfileUseCase = getUserProfileUseCase
         self.toggleLikeUseCase = toggleLikeUseCase
+        self.updateBlogStatusUseCase = updateBlogStatusUseCase
     }
 
     private var cancellables = Set<AnyCancellable>()
@@ -273,7 +282,22 @@ class BlogDetailViewModel: ObservableObject {
     }
 
     func confirmDeleteBlog() {
-        // Call DeleteBlogUseCase
+        guard let blog = blog else { return }
+
+        Task { @MainActor in
+            isLoading = true
+            do {
+                try await updateBlogStatusUseCase.execute(blogId: blog.id, status: .DELETED)
+                showDeleteDialog = false
+                itemToDelete = nil
+                print("✅ Blog marked as deleted successfully")
+                // Note: Navigation back is handled in BlogDetailView after calling this
+            } catch {
+                errorMessage = "Error al eliminar el blog"
+                print("❌ Error deleting blog: \(error)")
+            }
+            isLoading = false
+        }
     }
 
     func isMyComment(_ comment: Comment) -> Bool {

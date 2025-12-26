@@ -10,5 +10,5 @@ import Foundation
 enum BlogStatus: String, Codable {
     case PENDING
     case PUBLISHED
-    case REJECTED
+    case DELETED
 }
