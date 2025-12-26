@@ -75,6 +75,14 @@ struct BlogDetailView: View {
         .task {
             if viewModel.blog == nil { await viewModel.loadData() }
         }
+        .onAppear {
+            // Reload when returning from edit screen
+            if viewModel.blog != nil {
+                Task {
+                    await viewModel.loadData()
+                }
+            }
+        }
     }
 
     // MARK: - Subviews
@@ -350,7 +358,7 @@ struct BlogDetailView: View {
 private struct CommentRowWrapper: View {
     let comment: Comment
     @ObservedObject var viewModel: BlogDetailViewModel
-    
+
     var body: some View {
         CommentRow(
             comment: comment,

@@ -26,6 +26,15 @@ struct BlogListView: View {
         }
         .navigationTitle("Community")
         .background(Color.background.edgesIgnoringSafeArea(.all))
+        .onAppear {
+            // Refresh when returning from other screens
+            if !coordinator.path.isEmpty {
+                // Only refresh if we came back from somewhere
+                Task {
+                    await vm.refresh()
+                }
+            }
+        }
         .overlay(alignment: .bottomTrailing) {
             floatingButton
         }
