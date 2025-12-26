@@ -5,6 +5,7 @@ class BlogListViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var selectedFilter: BlogFilter = .all
     @Published private var allBlogs: [Blog] = []
+    @Published var isLoading: Bool = false
 
     private let getBlogPostsUseCase: GetBlogPostsUseCase
     private let checkUserSessionUseCase: CheckUserSessionUseCase
@@ -50,10 +51,12 @@ class BlogListViewModel: ObservableObject {
     }
 
     func loadBlogs(filter: BlogFilter? = nil) {
+        isLoading = true
         // Always fetch all blogs (no filter passed to repository)
         getBlogPostsUseCase.execute()
             .receive(on: DispatchQueue.main)
-            .sink { completion in
+            .sink { [weak self] completion in
+                self?.isLoading = false
                 if case .failure(let error) = completion {
                     print("Error loading blogs: \(error)")
                 }

@@ -4,6 +4,9 @@
     "" : {
 
     },
+    "¡Blog Enviado!" : {
+
+    },
     "¿No tienes una cuenta?" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -771,6 +774,9 @@
     "Enviar" : {
 
     },
+    "Error" : {
+
+    },
     "Error loading categories" : {
 
     },
@@ -1250,6 +1256,9 @@
         }
       }
     },
+    "OK" : {
+
+    },
     "profile.dark_mode" : {
       "localizations" : {
         "en" : {
@@ -1613,6 +1622,9 @@
 
     },
     "Today's Activities" : {
+
+    },
+    "Tu blog ha sido enviado exitosamente. Está pendiente de aprobación por un administrador." : {
 
     },
     "Tu correo" : {

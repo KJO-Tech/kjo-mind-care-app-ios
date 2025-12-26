@@ -294,7 +294,11 @@ class CreateBlogViewModel: ObservableObject {
 
             return true
         } catch {
-            errorMessage = error.localizedDescription
+            print("Error uploading blog: \(error)")
+            errorMessage =
+                isEditMode
+                ? "Error al actualizar el blog. Por favor, intenta de nuevo."
+                : "Error al crear el blog. Por favor, intenta de nuevo."
             return false
         }
     }

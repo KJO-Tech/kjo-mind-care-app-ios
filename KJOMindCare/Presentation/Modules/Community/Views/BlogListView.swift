@@ -38,6 +38,17 @@ struct BlogListView: View {
         .overlay(alignment: .bottomTrailing) {
             floatingButton
         }
+        .overlay {
+            if vm.isLoading {
+                ZStack {
+                    Color.black.opacity(0.3)
+                        .edgesIgnoringSafeArea(.all)
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .scaleEffect(1.5)
+                }
+            }
+        }
         .sheet(isPresented: $vm.showCategoryFilter) {
             CategoryFilterSheet(viewModel: vm)
         }

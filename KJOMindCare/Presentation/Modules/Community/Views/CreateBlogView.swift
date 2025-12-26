@@ -15,31 +15,32 @@ public struct CreateBlogView: View {
 
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Title")
-                        .font(.headline)
-                        .foregroundColor(.white)
+                        .font(.theme.headline)
+                        .foregroundColor(Color.theme.text)
 
                     TextField("Blog title", text: $vm.title)
                         .padding(12)
-                        .background(Color.white.opacity(0.08))
+                        .background(Color.theme.surface)
                         .cornerRadius(12)
-                        .foregroundColor(.white)
+                        .foregroundColor(Color.theme.text)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(vm.titleError ? Color.red : Color.clear, lineWidth: 2)
+                                .stroke(
+                                    vm.titleError ? Color.theme.error : Color.clear, lineWidth: 2)
                         )
 
                     if vm.titleError {
                         Text("El título no puede estar vacío")
-                            .font(.caption)
-                            .foregroundColor(.red)
+                            .font(.theme.caption)
+                            .foregroundColor(Color.theme.error)
                     }
                 }
                 .padding(.horizontal)
 
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Category")
-                        .font(.headline)
-                        .foregroundColor(.white)
+                        .font(.theme.headline)
+                        .foregroundColor(Color.theme.text)
 
                     Menu {
                         ForEach(vm.categories) { category in
@@ -64,13 +65,13 @@ public struct CreateBlogView: View {
                                     languageCode: Locale.current.language.languageCode?.identifier
                                         ?? "en") ?? "Select Category"
                             )
-                            .foregroundColor(.white)
+                            .foregroundColor(Color.theme.text)
                             Spacer()
                             Image(systemName: "chevron.down")
-                                .foregroundColor(.gray)
+                                .foregroundColor(Color.theme.text)
                         }
                         .padding(12)
-                        .background(Color.white.opacity(0.08))
+                        .background(Color.theme.surface)
                         .cornerRadius(12)
                     }
                 }
@@ -78,33 +79,34 @@ public struct CreateBlogView: View {
 
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Content")
-                        .font(.headline)
-                        .foregroundColor(.white)
+                        .font(.theme.headline)
+                        .foregroundColor(Color.theme.text)
 
                     TextEditor(text: $vm.content)
                         .padding(8)
-                        .background(Color.white.opacity(0.08))
+                        .background(Color.theme.surface)
                         .cornerRadius(12)
-                        .foregroundColor(.white)
+                        .foregroundColor(Color.theme.text)
                         .frame(minHeight: 150)
                         .scrollContentBackground(.hidden)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(vm.contentError ? Color.red : Color.clear, lineWidth: 2)
+                                .stroke(
+                                    vm.contentError ? Color.theme.error : Color.clear, lineWidth: 2)
                         )
 
                     if vm.contentError {
                         Text("El contenido no puede estar vacío")
-                            .font(.caption)
-                            .foregroundColor(.red)
+                            .font(.theme.caption)
+                            .foregroundColor(Color.theme.error)
                     }
                 }
                 .padding(.horizontal)
 
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Image/Video (Optional)")
-                        .font(.headline)
-                        .foregroundColor(.white)
+                        .font(.theme.headline)
+                        .foregroundColor(Color.theme.text)
                         .padding(.horizontal)
 
                     if vm.selectedMediaType == .VIDEO, let videoData = vm.selectedMediaData {
@@ -119,7 +121,7 @@ public struct CreateBlogView: View {
                                         Color.black.opacity(0.5)
                                         ProgressView()
                                             .progressViewStyle(
-                                                CircularProgressViewStyle(tint: .white)
+                                                CircularProgressViewStyle(tint: Color.theme.text)
                                             )
                                             .scaleEffect(1.5)
                                     }
@@ -135,13 +137,13 @@ public struct CreateBlogView: View {
                                     Image(systemName: "xmark.circle.fill")
                                     Text("Clear Video")
                                 }
-                                .font(.subheadline)
-                                .foregroundColor(.white)
+                                .font(.theme.subheadline)
+                                .foregroundColor(Color.theme.text)
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 12)
                                 .background(
                                     RoundedRectangle(cornerRadius: 12)
-                                        .fill(Color.white.opacity(0.1))
+                                        .fill(Color.theme.background.opacity(0.1))
                                 )
                             }
                             .padding(.horizontal)
@@ -154,10 +156,10 @@ public struct CreateBlogView: View {
 
                                 if vm.isLoading {
                                     ZStack {
-                                        Color.black.opacity(0.5)
+                                        Color.theme.shadow.opacity(0.5)
                                         ProgressView()
                                             .progressViewStyle(
-                                                CircularProgressViewStyle(tint: .white)
+                                                CircularProgressViewStyle(tint: Color.theme.text)
                                             )
                                             .scaleEffect(1.5)
                                     }
@@ -172,13 +174,13 @@ public struct CreateBlogView: View {
                                     Image(systemName: "xmark.circle.fill")
                                     Text("Clear Media")
                                 }
-                                .font(.subheadline)
-                                .foregroundColor(.white)
+                                .font(.theme.subheadline)
+                                .foregroundColor(Color.theme.text)
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 12)
                                 .background(
                                     RoundedRectangle(cornerRadius: 12)
-                                        .fill(Color.white.opacity(0.1))
+                                        .fill(Color.theme.shadow.opacity(0.1))
                                 )
                             }
                             .padding(.horizontal)
@@ -192,13 +194,13 @@ public struct CreateBlogView: View {
                             Image(systemName: "photo.badge.plus")
                             Text("Select Media")
                         }
-                        .font(.subheadline)
-                        .foregroundColor(.white)
+                        .font(.theme.subheadline)
+                        .foregroundColor(Color.theme.primaryContent)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 12)
                         .background(
                             RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.purple.opacity(0.6))  // Assuming Color.theme.primary is not defined, using original color
+                                .fill(Color.theme.primary.opacity(0.6))
                         )
                     }
                     .padding(.horizontal)
@@ -225,13 +227,13 @@ public struct CreateBlogView: View {
                     }
                 }) {
                     Text(vm.isEditMode ? "Update Blog" : "Publish Blog")
-                        .font(.headline)
-                        .foregroundColor(.white)
+                        .font(.theme.headline)
+                        .foregroundColor(Color.theme.primaryContent)
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(
                             RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.purple)
+                                .fill(Color.theme.primary)
                         )
                 }
                 .padding(.horizontal)
@@ -241,10 +243,28 @@ public struct CreateBlogView: View {
             }
             .padding(.top)
         }
-        .background(Color.black.edgesIgnoringSafeArea(.all))
+        .background(Color.theme.background.edgesIgnoringSafeArea(.all))
         .navigationTitle(vm.isEditMode ? "Edit Blog" : "Create Blog")
         .navigationBarTitleDisplayMode(.inline)
         .preferredColorScheme(.dark)
+        .alert("¡Blog Enviado!", isPresented: $vm.showSuccessAlert) {
+            Button("OK") {
+                coordinator.pop()
+            }
+        } message: {
+            Text(
+                "Tu blog ha sido enviado exitosamente. Está pendiente de aprobación por un administrador."
+            )
+        }
+        .alert("Error", isPresented: .constant(vm.errorMessage != nil)) {
+            Button("OK") {
+                vm.errorMessage = nil
+            }
+        } message: {
+            if let error = vm.errorMessage {
+                Text(error)
+            }
+        }
         .sheet(isPresented: $vm.showImagePicker) {
             ImagePickerView(
                 selectedImage: $vm.selectedImage,
