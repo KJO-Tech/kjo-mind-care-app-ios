@@ -45,16 +45,19 @@ class SettingsViewModel: ObservableObject {
 
     @MainActor
     func loadProfile() async {
-      
+        // Only load if we don't have data yet
+        if !userName.isEmpty {
+            return
+        }
+
         if let sessionUser = checkUserSessionUseCase.execute() {
             self.internalUser = sessionUser
             self.userName = sessionUser.fullName
             self.userEmail = sessionUser.email
-            
+
             try? await fetchRemoteData(userId: sessionUser.uid)
         }
 
-      
         if let settings = try? await settingsRepo.getSettings() {
             self.internalSettings = settings
             self.notificationsEnabled = settings.notificationsEnabled
@@ -68,10 +71,12 @@ class SettingsViewModel: ObservableObject {
         await MainActor.run {
             self.internalUser = remoteUser
             self.userName = remoteUser.fullName
-            
+
             if let path = remoteUser.profileImage {
+                // Convert http to https for Cloudinary URLs
+                let httpsPath = path.replacingOccurrences(of: "http://", with: "https://")
                 let timestamp = Int(Date().timeIntervalSince1970)
-                if let url = URL(string: "\(path)?t=\(timestamp)") {
+                if let url = URL(string: "\(httpsPath)?t=\(timestamp)") {
                     self.profileImageURL = url
                 }
             }
@@ -82,21 +87,20 @@ class SettingsViewModel: ObservableObject {
     func saveProfile(name: String, email: String, image: UIImage?) async {
         guard var user = internalUser else { return }
         user.fullName = name
-        
+
         do {
-            
+
             let updatedUser = try await saveRemoteUserUC.execute(user: user, image: image)
-            
-         
+
             self.internalUser = updatedUser
             self.userName = updatedUser.fullName
-            
-         
+
             if let path = updatedUser.profileImage {
-              
+                // Convert http to https for Cloudinary URLs
+                let httpsPath = path.replacingOccurrences(of: "http://", with: "https://")
                 let timestamp = Int(Date().timeIntervalSince1970)
-                let freshURLString = "\(path)?t=\(timestamp)"
-                
+                let freshURLString = "\(httpsPath)?t=\(timestamp)"
+
                 if let url = URL(string: freshURLString) {
                     print("🔄 [ViewModel] Forzando nueva URL para romper caché: \(freshURLString)")
                     self.profileImageURL = url
@@ -113,7 +117,7 @@ class SettingsViewModel: ObservableObject {
         guard var settings = internalSettings else { return }
         settings.notificationsEnabled = enabled
         settings.notificationHour = hour
-        
+
         try? await updateLocalSettingsUC.execute(settings)
         self.internalSettings = settings
         self.notificationsEnabled = enabled
@@ -124,7 +128,7 @@ class SettingsViewModel: ObservableObject {
     func updateDarkMode(_ enabled: Bool) async {
         guard var settings = internalSettings else { return }
         settings.darkModeEnabled = enabled
-        
+
         try? await updateLocalSettingsUC.execute(settings)
         self.internalSettings = settings
         self.darkModeEnabled = enabled

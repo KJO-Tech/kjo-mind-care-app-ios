@@ -77,13 +77,13 @@ struct ProfileView: View {
                     .padding(.top, 6)
 
                     // ---------- ESTADÍSTICAS ----------
-                    HStack(spacing: 16) {
-                        statBox(title: "Check-ins", value: "28", systemIcon: "")
-                        statBox(title: "Post", value: "14", systemIcon: "")
-                        statBox(title: "Badges", value: "3", systemIcon: "")
-                    }
-                    .padding(.horizontal)
-                    .padding(.top, 6)
+                    // HStack(spacing: 16) {
+                    //     statBox(title: "Check-ins", value: "28", systemIcon: "")
+                    //     statBox(title: "Post", value: "14", systemIcon: "")
+                    //     statBox(title: "Badges", value: "3", systemIcon: "")
+                    // }
+                    // .padding(.horizontal)
+                    // .padding(.top, 6)
 
                     // ---------- SUBTITULO SETTINGS ----------
                     VStack(alignment: .leading, spacing: 8) {
