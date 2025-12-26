@@ -44,7 +44,8 @@ final class DataAssembly: Assembly {
         // Blog Repository
         container.register(BlogRepository.self) { r in
             BlogRepositoryImpl(
-                firestoreService: r.resolve(FireStoreService.self)!
+                firestoreService: r.resolve(FireStoreService.self)!,
+                authRepository: r.resolve(AuthRepository.self)!
             )
         }
 
@@ -80,7 +81,8 @@ final class DataAssembly: Assembly {
         // Comment Repository
         container.register(CommentRepository.self) { r in
             CommentRepositoryImpl(
-                firestoreService: r.resolve(FireStoreService.self)!
+                firestoreService: r.resolve(FireStoreService.self)!,
+                authRepository: r.resolve(AuthRepository.self)!
             )
         }
 

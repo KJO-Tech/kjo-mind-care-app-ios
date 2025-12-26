@@ -5,7 +5,7 @@ struct CommentInputView: View {
     @Binding var text: String
     let onSave: () -> Void
     let onCancel: () -> Void
-    
+
     private var placeholder: String {
         switch mode {
         case .create:
@@ -13,10 +13,10 @@ struct CommentInputView: View {
         case .edit:
             return "Edit your comment..."
         case .reply(let comment):
-            return "Replying to \(comment.authorName)..."
+            return "Replying to \(comment.author.fullName)..."
         }
     }
-    
+
     private var title: String {
         switch mode {
         case .create:
@@ -27,7 +27,9 @@ struct CommentInputView: View {
             return "Reply to Comment"
         }
     }
-    
+
+    @FocusState private var isFocused: Bool
+
     var body: some View {
         VStack(spacing: 0) {
             // Header (solo para edit/reply)
@@ -41,17 +43,24 @@ struct CommentInputView: View {
                 .padding()
                 .background(Color.white.opacity(0.05))
             }
-            
+
             // Input area
             HStack(alignment: .center, spacing: 12) {
                 TextField(placeholder, text: $text)
+                    .focused($isFocused)
+                    .submitLabel(.send)
+                    .onSubmit {
+                        if !text.trimmingCharacters(in: .whitespaces).isEmpty {
+                            onSave()
+                        }
+                    }
                     .padding(12)
                     .background(
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(Color.purple, lineWidth: 2)
                     )
                     .foregroundColor(.white)
-                
+
                 // Buttons
                 HStack(spacing: 8) {
                     Button {
@@ -63,7 +72,7 @@ struct CommentInputView: View {
                             .padding(.horizontal, 16)
                             .padding(.vertical, 10)
                     }
-                    
+
                     Button {
                         onSave()
                     } label: {
@@ -74,7 +83,9 @@ struct CommentInputView: View {
                             .padding(.vertical, 10)
                             .background(
                                 RoundedRectangle(cornerRadius: 20)
-                                    .fill(text.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray : Color.purple)
+                                    .fill(
+                                        text.trimmingCharacters(in: .whitespaces).isEmpty
+                                            ? Color.gray : Color.purple)
                             )
                     }
                     .disabled(text.trimmingCharacters(in: .whitespaces).isEmpty)
@@ -83,8 +94,11 @@ struct CommentInputView: View {
             .padding()
             .background(Color(white: 0.1))
         }
+        .onAppear {
+            isFocused = true
+        }
     }
-    
+
     private var isCreateMode: Bool {
         if case .create = mode {
             return true
@@ -101,9 +115,9 @@ struct CommentInputView: View {
             onSave: {},
             onCancel: {}
         )
-        
+
         CommentInputView(
-            mode: .reply(Comment.mockList[0]),
+            mode: .reply(Comment()),
             text: .constant("This is a reply"),
             onSave: {},
             onCancel: {}

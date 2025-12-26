@@ -3,6 +3,7 @@ import SwiftUI
 public enum CommunityRoute: Hashable {
     case blogDetail(String)
     case createBlog
+    case editBlog(String)  // Blog ID instead of Blog object
 }
 
 public class CommunityCoordinator: Coordinator {
@@ -14,11 +15,21 @@ public class CommunityCoordinator: Coordinator {
         // Root is BlogListView
     }
 
-    public func showBlogDetail(blogTitle: String) {
-        path.append(CommunityRoute.blogDetail(blogTitle))
+    public func showBlogDetail(blogId: String) {
+        path.append(CommunityRoute.blogDetail(blogId))
     }
 
     public func showCreateBlog() {
         path.append(CommunityRoute.createBlog)
+    }
+
+    func showEditBlog(blog: Blog) {
+        path.append(CommunityRoute.editBlog(blog.id))
+    }
+
+    public func pop() {
+        if !path.isEmpty {
+            path.removeLast()
+        }
     }
 }

@@ -1,73 +1,45 @@
 import SwiftUI
 
 struct CategoryRadioButton: View {
-    let category: BlogCategory?
+    let category: Category?
     let isSelected: Bool
-    let isClearOption: Bool
+    var isClearOption: Bool = false
     let action: () -> Void
-    
-    init(
-        category: BlogCategory?,
-        isSelected: Bool,
-        isClearOption: Bool = false,
-        action: @escaping () -> Void
-    ) {
-        self.category = category
-        self.isSelected = isSelected
-        self.isClearOption = isClearOption
-        self.action = action
-    }
-    
+
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 16) {
-                ZStack {
-                    Circle()
-                        .strokeBorder(isSelected ? Color.purple : Color.gray.opacity(0.5), lineWidth: 2)
-                        .frame(width: 24, height: 24)
-                    
-                    if isSelected {
-                        Circle()
-                            .fill(Color.purple)
-                            .frame(width: 14, height: 14)
-                    }
+            HStack {
+                if isClearOption {
+                    Image(systemName: "xmark.circle")
+                        .foregroundColor(isSelected ? .theme.primary : .theme.textSecondary)
+                    Text("Clear Filter")
+                        .foregroundColor(isSelected ? .theme.primary : .theme.textSecondary)
+                } else if let category = category {
+                    // No icon in Category entity, simple text
+                    Text(
+                        category.getLocalizedName(
+                            languageCode: Locale.current.language.languageCode?.identifier ?? "en")
+                    )
+                    .foregroundColor(isSelected ? .theme.primary : .theme.text)
                 }
-                
-                Text(isClearOption ? "Clear selection" : category?.title ?? "")
-                    .foregroundColor(.white)
-                    .font(.body)
-                
-                Spacer()
-            }
-            .padding(.vertical, 8)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(PlainButtonStyle())
-    }
-}
 
-#Preview {
-    VStack(spacing: 20) {
-        CategoryRadioButton(
-            category: nil,
-            isSelected: true,
-            isClearOption: true,
-            action: {}
-        )
-        
-        CategoryRadioButton(
-            category: .sleep,
-            isSelected: true,
-            action: {}
-        )
-        
-        CategoryRadioButton(
-            category: .anxiety,
-            isSelected: false,
-            action: {}
-        )
+                Spacer()
+
+                if isSelected {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.theme.primary)
+                } else {
+                    Image(systemName: "circle")
+                        .foregroundColor(.theme.textSecondary)
+                }
+            }
+            .padding()
+            .background(Color.theme.card)
+            .cornerRadius(12)
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(isSelected ? Color.theme.primary : Color.clear, lineWidth: 1)
+            )
+        }
     }
-    .padding()
-    .background(Color.black)
-    .preferredColorScheme(.dark)
 }

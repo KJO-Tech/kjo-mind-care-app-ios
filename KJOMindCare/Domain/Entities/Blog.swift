@@ -5,8 +5,8 @@
 //  Created by DAMII on 4/12/25.
 //
 
-import Foundation
 import FirebaseFirestore
+import Foundation
 
 struct Blog: Codable, Identifiable {
     var id: String
@@ -22,7 +22,26 @@ struct Blog: Codable, Identifiable {
     var comments: Int
     var categoryId: String?
     var status: BlogStatus
-    
+
+    // Transient property
+    var isLiked: Bool = false
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case content
+        case author
+        case createdAt
+        case updatedAt
+        case mediaUrl
+        case mediaType
+        case likes
+        case reaction
+        case comments
+        case categoryId
+        case status
+    }
+
     init(
         id: String = "",
         title: String = "",
@@ -52,11 +71,11 @@ struct Blog: Codable, Identifiable {
         self.categoryId = categoryId
         self.status = status
     }
-    
+
     func getLocalDateTime() -> Date {
         return Date(timeIntervalSince1970: TimeInterval(createdAt.seconds))
     }
-    
+
     func getTimeAgo() -> String {
         let now = Date()
         let postDateTime = getLocalDateTime()
@@ -65,11 +84,11 @@ struct Blog: Codable, Identifiable {
             from: postDateTime,
             to: now
         )
-        
+
         // Detect language from device locale
         let languageCode = Locale.current.language.languageCode?.identifier ?? "en"
         let isSpanish = languageCode.starts(with: "es")
-        
+
         if let years = components.year, years > 0 {
             if isSpanish {
                 return years == 1 ? "Hace 1 año" : "Hace \(years) años"
@@ -77,7 +96,7 @@ struct Blog: Codable, Identifiable {
                 return years == 1 ? "1 year ago" : "\(years) years ago"
             }
         }
-        
+
         if let months = components.month, months > 0 {
             if isSpanish {
                 return months == 1 ? "Hace 1 mes" : "Hace \(months) meses"
@@ -85,7 +104,7 @@ struct Blog: Codable, Identifiable {
                 return months == 1 ? "1 month ago" : "\(months) months ago"
             }
         }
-        
+
         if let days = components.day, days > 0 {
             if isSpanish {
                 return days == 1 ? "Hace 1 día" : "Hace \(days) días"
@@ -93,7 +112,7 @@ struct Blog: Codable, Identifiable {
                 return days == 1 ? "1 day ago" : "\(days) days ago"
             }
         }
-        
+
         if let hours = components.hour, hours > 0 {
             if isSpanish {
                 return hours == 1 ? "Hace 1 hora" : "Hace \(hours) horas"
@@ -101,7 +120,7 @@ struct Blog: Codable, Identifiable {
                 return hours == 1 ? "1 hour ago" : "\(hours) hours ago"
             }
         }
-        
+
         if let minutes = components.minute, minutes > 0 {
             if isSpanish {
                 return minutes == 1 ? "Hace 1 minuto" : "Hace \(minutes) minutos"
@@ -109,7 +128,7 @@ struct Blog: Codable, Identifiable {
                 return minutes == 1 ? "1 minute ago" : "\(minutes) minutes ago"
             }
         }
-        
+
         return isSpanish ? "Ahora" : "Just now"
     }
 }

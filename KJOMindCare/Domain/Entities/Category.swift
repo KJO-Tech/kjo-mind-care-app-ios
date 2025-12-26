@@ -5,15 +5,16 @@
 //  Created by DAMII on 4/12/25.
 //
 
+import FirebaseFirestore
 import Foundation
 
 struct Category: Codable, Identifiable {
-    var id: String
+    @DocumentID var id: String?
     var nameTranslations: [String: String]
     var isActive: Bool
-    
+
     init(
-        id: String = "",
+        id: String? = nil,
         nameTranslations: [String: String] = [:],
         isActive: Bool = true
     ) {
@@ -21,11 +22,9 @@ struct Category: Codable, Identifiable {
         self.nameTranslations = nameTranslations
         self.isActive = isActive
     }
-    
+
     func getLocalizedName(languageCode: String) -> String {
-        return nameTranslations[languageCode] ??
-               nameTranslations["en"] ??
-               nameTranslations.values.first ??
-               "Unnamed Category"
+        return nameTranslations[languageCode] ?? nameTranslations["en"] ?? nameTranslations.values
+            .first ?? "Unnamed Category"
     }
 }

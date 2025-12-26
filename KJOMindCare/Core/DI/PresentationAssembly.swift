@@ -92,13 +92,35 @@ final class PresentationAssembly: Assembly {
         }
 
         container.register(BlogListViewModel.self) { r in
-            BlogListViewModel(getBlogPostsUseCase: r.resolve(GetBlogPostsUseCase.self)!)
+            BlogListViewModel(
+                getBlogPostsUseCase: r.resolve(GetBlogPostsUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!,
+                toggleLikeUseCase: r.resolve(ToggleLikeUseCase.self)!,
+                getCategoriesUseCase: r.resolve(GetCategoriesUseCase.self)!
+            )
         }
 
         container.register(CreateBlogViewModel.self) { r in
             CreateBlogViewModel(
                 createBlogUseCase: r.resolve(CreateBlogUseCase.self)!,
-                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!,
+                getUserProfileUseCase: r.resolve(GetUserProfileUseCase.self)!,
+                getCategoriesUseCase: r.resolve(GetCategoriesUseCase.self)!,
+                storageService: r.resolve(StorageService.self)!,
+                updateBlogUseCase: r.resolve(UpdateBlogUseCase.self)!
+            )
+        }
+
+        container.register(BlogDetailViewModel.self) { (r, blogId: String) in
+            BlogDetailViewModel(
+                blogId: blogId,
+                getBlogByIdUseCase: r.resolve(GetBlogByIdUseCase.self)!,
+                getCommentsForBlogUseCase: r.resolve(GetCommentsForBlogUseCase.self)!,
+                addCommentUseCase: r.resolve(AddCommentUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!,
+                getCategoryByIdUseCase: r.resolve(GetCategoryByIdUseCase.self)!,
+                getUserProfileUseCase: r.resolve(GetUserProfileUseCase.self)!,
+                toggleLikeUseCase: r.resolve(ToggleLikeUseCase.self)!
             )
         }
 

@@ -35,6 +35,9 @@
     "%lld min" : {
 
     },
+    "•" : {
+
+    },
     "Add a note (optional)" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -52,7 +55,10 @@
         }
       }
     },
-    "Archivo seleccionado" : {
+    "Add comment" : {
+
+    },
+    "Apply Filters" : {
 
     },
     "auth.login.appName" : {
@@ -573,7 +579,13 @@
         }
       }
     },
-    "Blog" : {
+    "Blog not found" : {
+
+    },
+    "Blog title" : {
+
+    },
+    "Cancel" : {
 
     },
     "Cancelar" : {
@@ -593,7 +605,25 @@
     "Categories" : {
 
     },
+    "Category" : {
+
+    },
+    "Change Image or Video" : {
+
+    },
     "Check your subscriptions if you want daily exercises." : {
+
+    },
+    "Clear Filter" : {
+
+    },
+    "Clear Filters" : {
+
+    },
+    "Clear Media" : {
+
+    },
+    "Comments (%lld)" : {
 
     },
     "common.cancel" : {
@@ -678,7 +708,7 @@
         }
       }
     },
-    "Community Blog" : {
+    "Community" : {
 
     },
     "Complete Exercise" : {
@@ -687,7 +717,7 @@
     "Completed" : {
 
     },
-    "Contenido" : {
+    "Content" : {
 
     },
     "Content type not supported yet." : {
@@ -704,10 +734,25 @@
         }
       }
     },
-    "Crear Blog" : {
+    "Create Blog" : {
 
     },
     "Day" : {
+
+    },
+    "Delete" : {
+
+    },
+    "Delete Blog" : {
+
+    },
+    "Edit Blog" : {
+
+    },
+    "El contenido no puede estar vacío" : {
+
+    },
+    "El título no puede estar vacío" : {
 
     },
     "Email" : {
@@ -757,10 +802,10 @@
     "Error: %@" : {
 
     },
-    "Escribe el título de tu blog" : {
+    "Exercise not found" : {
 
     },
-    "Exercise not found" : {
+    "Filter by Category" : {
 
     },
     "Get Started" : {
@@ -809,6 +854,9 @@
           }
         }
       }
+    },
+    "Image/Video (Optional)" : {
+
     },
     "Ingresa tu correo electronico asociado a tu cuenta" : {
 
@@ -880,6 +928,9 @@
     "Loading activities..." : {
 
     },
+    "Loading blog..." : {
+
+    },
     "Loading..." : {
 
     },
@@ -898,9 +949,6 @@
           }
         }
       }
-    },
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." : {
-
     },
     "Mood Distribution" : {
       "extractionState" : "stale",
@@ -1160,13 +1208,13 @@
         }
       }
     },
-    "Multimedia (Opcional)" : {
-
-    },
     "No activities for today" : {
 
     },
     "No categories found." : {
+
+    },
+    "No details found for this blog." : {
 
     },
     "No moods available" : {
@@ -1396,10 +1444,7 @@
         }
       }
     },
-    "Publicando..." : {
-
-    },
-    "Publicar Blog" : {
+    "Publish Blog" : {
 
     },
     "Record Mood" : {
@@ -1449,6 +1494,9 @@
         }
       }
     },
+    "Save" : {
+
+    },
     "Search blogs..." : {
 
     },
@@ -1458,7 +1506,10 @@
     "Seleccionar imagen" : {
 
     },
-    "Seleccionar imagen o video" : {
+    "Select Image or Video" : {
+
+    },
+    "Share" : {
 
     },
     "subscription.continue" : {
@@ -1558,13 +1609,16 @@
         }
       }
     },
-    "Título" : {
+    "Title" : {
 
     },
     "Today's Activities" : {
 
     },
     "Tu correo" : {
+
+    },
+    "Update Blog" : {
 
     },
     "Value" : {

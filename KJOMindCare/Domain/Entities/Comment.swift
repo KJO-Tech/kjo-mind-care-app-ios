@@ -5,24 +5,37 @@
 //  Created by DAMII on 4/12/25.
 //
 
-import Foundation
 import FirebaseFirestore
+import Foundation
 
-struct Comment: Codable, Identifiable {
-    var id: String
+public struct Comment: Codable, Identifiable {
+    @DocumentID public var id: String?
     var author: User
     var content: String
     var createdAt: Timestamp
     var parentCommentId: String?
-    var replies: [Comment]
-    
+    var replies: [Comment] = []
+
+    // Transient property, not persisted
+    var isMine: Bool = false
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case author
+        case content
+        case createdAt
+        case parentCommentId
+        // Exclude replies and isMine from Firestore persistence
+    }
+
     init(
-        id: String = "",
+        id: String? = nil,
         author: User = User(uid: "", fullName: "", email: "", role: ""),
         content: String = "",
         createdAt: Timestamp = Timestamp(),
         parentCommentId: String? = nil,
-        replies: [Comment] = []
+        replies: [Comment] = [],
+        isMine: Bool = false
     ) {
         self.id = id
         self.author = author
@@ -30,12 +43,13 @@ struct Comment: Codable, Identifiable {
         self.createdAt = createdAt
         self.parentCommentId = parentCommentId
         self.replies = replies
+        self.isMine = isMine
     }
-    
+
     func getLocalDateTime() -> Date {
         return Date(timeIntervalSince1970: TimeInterval(createdAt.seconds))
     }
-    
+
     func getTimeAgo() -> String {
         let now = Date()
         let commentDateTime = getLocalDateTime()
@@ -44,11 +58,11 @@ struct Comment: Codable, Identifiable {
             from: commentDateTime,
             to: now
         )
-        
+
         // Detect language from device locale
         let languageCode = Locale.current.language.languageCode?.identifier ?? "en"
         let isSpanish = languageCode.starts(with: "es")
-        
+
         if let years = components.year, years > 0 {
             if isSpanish {
                 return years == 1 ? "Hace 1 año" : "Hace \(years) años"
@@ -56,7 +70,7 @@ struct Comment: Codable, Identifiable {
                 return years == 1 ? "1 year ago" : "\(years) years ago"
             }
         }
-        
+
         if let months = components.month, months > 0 {
             if isSpanish {
                 return months == 1 ? "Hace 1 mes" : "Hace \(months) meses"
@@ -64,7 +78,7 @@ struct Comment: Codable, Identifiable {
                 return months == 1 ? "1 month ago" : "\(months) months ago"
             }
         }
-        
+
         if let days = components.day, days > 0 {
             if isSpanish {
                 return days == 1 ? "Hace 1 día" : "Hace \(days) días"
@@ -72,7 +86,7 @@ struct Comment: Codable, Identifiable {
                 return days == 1 ? "1 day ago" : "\(days) days ago"
             }
         }
-        
+
         if let hours = components.hour, hours > 0 {
             if isSpanish {
                 return hours == 1 ? "Hace 1 hora" : "Hace \(hours) horas"
@@ -80,7 +94,7 @@ struct Comment: Codable, Identifiable {
                 return hours == 1 ? "1 hour ago" : "\(hours) hours ago"
             }
         }
-        
+
         if let minutes = components.minute, minutes > 0 {
             if isSpanish {
                 return minutes == 1 ? "Hace 1 minuto" : "Hace \(minutes) minutos"
@@ -88,11 +102,7 @@ struct Comment: Codable, Identifiable {
                 return minutes == 1 ? "1 minute ago" : "\(minutes) minutes ago"
             }
         }
-        
+
         return isSpanish ? "Ahora" : "Just now"
-    }
-    
-    func isMine(currentUserId: String) -> Bool {
-        return author.uid == currentUserId
     }
 }

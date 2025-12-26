@@ -5,12 +5,8 @@ public struct CreateBlogView: View {
     @EnvironmentObject var coordinator: CommunityCoordinator
     @StateObject private var vm: CreateBlogViewModel
 
-    public init(vm: CreateBlogViewModel) {
+    init(vm: CreateBlogViewModel) {
         _vm = StateObject(wrappedValue: vm)
-    }
-
-    public init() {
-        self.init(vm: CreateBlogViewModel())
     }
 
     public var body: some View {
@@ -46,14 +42,16 @@ public struct CreateBlogView: View {
                         .foregroundColor(.white)
 
                     Menu {
-                        ForEach(BlogCategory.allCases) { category in
+                        ForEach(vm.categories) { category in
                             Button(action: {
                                 vm.selectedCategory = category
                             }) {
                                 HStack {
-                                    Image(systemName: category.icon)
-                                    Text(category.title)
-                                    if vm.selectedCategory == category {
+                                    Text(
+                                        category.getLocalizedName(
+                                            languageCode: Locale.current.language.languageCode?
+                                                .identifier ?? "en"))
+                                    if vm.selectedCategory?.id == category.id {
                                         Image(systemName: "checkmark")
                                     }
                                 }
@@ -61,10 +59,12 @@ public struct CreateBlogView: View {
                         }
                     } label: {
                         HStack {
-                            Image(systemName: vm.selectedCategory.icon)
-                                .foregroundColor(.purple)
-                            Text(vm.selectedCategory.title)
-                                .foregroundColor(.white)
+                            Text(
+                                vm.selectedCategory?.getLocalizedName(
+                                    languageCode: Locale.current.language.languageCode?.identifier
+                                        ?? "en") ?? "Select Category"
+                            )
+                            .foregroundColor(.white)
                             Spacer()
                             Image(systemName: "chevron.down")
                                 .foregroundColor(.gray)
@@ -155,11 +155,14 @@ public struct CreateBlogView: View {
 
                 Button(action: {
                     if vm.validateForm() {
-                        _ = vm.publishBlog()
-                        coordinator.pop()
+                        Task {
+                            if await vm.publishBlog() {
+                                coordinator.pop()
+                            }
+                        }
                     }
                 }) {
-                    Text("Publish Blog")
+                    Text(vm.isEditMode ? "Update Blog" : "Publish Blog")
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
@@ -177,7 +180,7 @@ public struct CreateBlogView: View {
             .padding(.top)
         }
         .background(Color.black.edgesIgnoringSafeArea(.all))
-        .navigationTitle("Create Blog")
+        .navigationTitle(vm.isEditMode ? "Edit Blog" : "Create Blog")
         .navigationBarTitleDisplayMode(.inline)
         .preferredColorScheme(.dark)
         .sheet(isPresented: $vm.showImagePicker) {
@@ -190,8 +193,9 @@ public struct CreateBlogView: View {
 }
 
 #Preview {
+    let vm = DIContainer.shared.container.resolve(CreateBlogViewModel.self)!
     NavigationView {
-        CreateBlogView()
+        CreateBlogView(vm: vm)
     }
     .preferredColorScheme(.dark)
 }

@@ -5,6 +5,7 @@
 //  Created by DAMII on 17/12/25.
 //
 
+import Combine
 import Foundation
 import PhotosUI
 import SwiftUI
@@ -20,18 +21,92 @@ class CreateBlogViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var showSuccessAlert: Bool = false
 
+    // UI Properties from new design
+    // UI Properties
+    @Published var categories: [Category] = []
+    @Published var selectedCategory: Category? = nil
+    @Published var titleError: Bool = false
+    @Published var contentError: Bool = false
+    @Published var showImagePicker: Bool = false
+    @Published var selectedImage: UIImage? = nil
+
+    // Edit mode
+    @Published var editingBlogId: String?
+    var isEditMode: Bool { editingBlogId != nil }
+
+    // Store original media to preserve if user doesn't change it
+    private var originalMediaUrl: String?
+    private var originalMediaType: MediaType?
+
     private let createBlogUseCase: CreateBlogUseCase
     private let checkUserSessionUseCase: CheckUserSessionUseCase
+    private let getUserProfileUseCase: GetUserProfileUseCase
+    private let getCategoriesUseCase: GetCategoriesUseCase
+    private let storageService: StorageService
+    private let updateBlogUseCase: UpdateBlogUseCase
+
+    private var cancellables = Set<AnyCancellable>()
 
     nonisolated init(
-        createBlogUseCase: CreateBlogUseCase, checkUserSessionUseCase: CheckUserSessionUseCase
+        createBlogUseCase: CreateBlogUseCase,
+        checkUserSessionUseCase: CheckUserSessionUseCase,
+        getUserProfileUseCase: GetUserProfileUseCase,
+        getCategoriesUseCase: GetCategoriesUseCase,
+        storageService: StorageService,
+        updateBlogUseCase: UpdateBlogUseCase
     ) {
         self.createBlogUseCase = createBlogUseCase
         self.checkUserSessionUseCase = checkUserSessionUseCase
+        self.getUserProfileUseCase = getUserProfileUseCase
+        self.getCategoriesUseCase = getCategoriesUseCase
+        self.storageService = storageService
+        self.updateBlogUseCase = updateBlogUseCase
+
+        Task { await loadCategories() }
     }
 
-    var isFormValid: Bool {
-        !title.isEmpty && !content.isEmpty
+    @MainActor
+    func loadCategories() {
+        getCategoriesUseCase.execute()
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                if case .failure(let error) = completion {
+                    print("Error loading categories: \(error)")
+                }
+            } receiveValue: { [weak self] categories in
+                self?.categories = categories
+                // Default selection if needed, or leave nil
+                if let first = categories.first {
+                    self?.selectedCategory = first
+                }
+            }
+            .store(in: &cancellables)
+    }
+
+    func loadBlogForEditing(_ blog: Blog) {
+        self.editingBlogId = blog.id
+        self.title = blog.title
+        self.content = blog.content
+        self.selectedCategory = categories.first(where: { $0.id == blog.categoryId })
+
+        // Store original media info to preserve if user doesn't change it
+        self.originalMediaUrl = blog.mediaUrl
+        self.originalMediaType = blog.mediaType
+
+        // Load original image for preview if available
+        if let mediaUrlString = blog.mediaUrl, blog.mediaType == .IMAGE,
+            let url = URL(string: mediaUrlString)
+        {
+            Task { @MainActor in
+                do {
+                    let (data, _) = try await URLSession.shared.data(from: url)
+                    self.selectedImage = UIImage(data: data)
+                } catch {
+                    print("Error loading original image for editing: \(error)")
+                    self.errorMessage = "Error al cargar la imagen original."
+                }
+            }
+        }
     }
 
     func loadMediaData() async {
@@ -56,14 +131,17 @@ class CreateBlogViewModel: ObservableObject {
         }
     }
 
-    func createBlog() async -> Bool {
-        guard isFormValid else {
-            errorMessage = "Por favor completa todos los campos"
-            return false
-        }
+    func validateForm() -> Bool {
+        titleError = title.trimmingCharacters(in: .whitespaces).isEmpty
+        contentError = content.trimmingCharacters(in: .whitespaces).isEmpty
+        return !titleError && !contentError && selectedCategory != nil
+    }
 
-        guard let currentUser = checkUserSessionUseCase.execute() else {
-            errorMessage = "No se pudo obtener el usuario actual"
+    func publishBlog() async -> Bool {
+        guard validateForm() else { return false }
+
+        guard let sessionUser = checkUserSessionUseCase.execute() else {
+            errorMessage = "No active session"
             return false
         }
 
@@ -72,33 +150,79 @@ class CreateBlogViewModel: ObservableObject {
         defer { isLoading = false }
 
         do {
-            let blog = Blog(
-                title: title,
-                content: content,
-                author: currentUser,
-                categoryId: nil
-            )
+            // Fetch full profile
+            let author: User
+            let profile = try await getUserProfileUseCase.execute(userId: sessionUser.uid)
 
-            let blogId = try await createBlogUseCase.execute(
-                blogPost: blog,
-                mediaData: selectedMediaData,
-                mediaType: selectedMediaType
-            )
+            author = profile ?? sessionUser
 
-            print("Blog creado exitosamente con ID: \(blogId)")
+            var mediaUrl: String? = nil
+            var mediaType: MediaType? = nil
+
+            if let image = selectedImage {
+                // User selected a new image - upload it
+                guard let data = image.jpegData(compressionQuality: 0.7) else {
+                    print("Error converting image to data")
+                    return false
+                }
+
+                let timestamp = Int(Date().timeIntervalSince1970)
+                let uniqueFileName = "blog_\(sessionUser.uid)_\(timestamp)"
+
+                // Use StorageService directly as requested
+                mediaUrl = try await storageService.upload(
+                    data: data,
+                    folder: "blogs",
+                    fileName: uniqueFileName
+                )
+                mediaType = .IMAGE
+            } else if isEditMode {
+                // Editing mode and no new image selected - preserve original media
+                mediaUrl = originalMediaUrl
+                mediaType = originalMediaType
+            }
+
+            if let editingId = editingBlogId {
+                // Update existing blog
+                var updatedBlog = Blog(
+                    id: editingId,
+                    title: title,
+                    content: content,
+                    author: author,
+                    mediaUrl: mediaUrl,
+                    mediaType: mediaType,  // Use the determined mediaType (either new or original)
+                    categoryId: selectedCategory?.id
+                )
+
+                try await updateBlogUseCase.execute(blogPost: updatedBlog)
+                print("Blog updated with ID: \(editingId)")
+            } else {
+                // Create new blog
+                let blog = Blog(
+                    title: title,
+                    content: content,
+                    author: author,
+                    mediaUrl: mediaUrl,
+                    mediaType: selectedMediaType,
+                    categoryId: selectedCategory?.id
+                )
+
+                let blogId = try await createBlogUseCase.execute(blogPost: blog)
+                print("Blog created with ID: \(blogId)")
+            }
+
             showSuccessAlert = true
 
-            // Reset form
+            // Cleanup
             title = ""
             content = ""
-            selectedMediaItem = nil
-            selectedMediaData = nil
-            selectedMediaType = nil
+            clearMedia()
+            editingBlogId = nil
 
             return true
         } catch {
-            print("Error al crear blog: \(error.localizedDescription)")
-            errorMessage = "Error al crear el blog. Intenta nuevamente."
+            print("Error \(isEditMode ? "updating" : "creating") blog: \(error)")
+            errorMessage = "Error \(isEditMode ? "updating" : "creating") blog"
             return false
         }
     }

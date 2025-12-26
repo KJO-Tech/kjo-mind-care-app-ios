@@ -44,8 +44,10 @@ class CloudinaryStorageServiceImpl: StorageService {
                 }
 
                 if let url = result?.secureUrl {
-                    print("✅ [Cloudinary] Subida completa: \(url)")
-                    continuation.resume(returning: url)
+                    // Force HTTPS if not present
+                    let secureUrl = url.replacingOccurrences(of: "http://", with: "https://")
+                    print("✅ [Cloudinary] Subida completa: \(secureUrl)")
+                    continuation.resume(returning: secureUrl)
                 } else {
                     continuation.resume(
                         throwing: NSError(domain: "Cloudinary", code: -1))
