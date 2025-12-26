@@ -30,7 +30,8 @@ class SaveUserRemoteUseCase {
             let photoURL = try await storageService.upload(
                 data: data,
                 folder: "users/profiles",
-                fileName: uniqueFileName
+                fileName: uniqueFileName,
+                resourceType: nil
             )
 
             updatedUser.profileImage = photoURL

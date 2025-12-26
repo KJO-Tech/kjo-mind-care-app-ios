@@ -107,10 +107,63 @@ public struct CreateBlogView: View {
                         .foregroundColor(.white)
                         .padding(.horizontal)
 
-                    if let selectedImage = vm.selectedImage {
+                    if vm.selectedMediaType == .VIDEO, let videoData = vm.selectedMediaData {
+                        // Video preview
                         VStack(spacing: 12) {
-                            MediaPreviewView(image: selectedImage)
-                                .padding(.horizontal)
+                            ZStack {
+                                VideoPlayerView(videoData: videoData)
+                                    .cornerRadius(12)
+
+                                if vm.isLoading {
+                                    ZStack {
+                                        Color.black.opacity(0.5)
+                                        ProgressView()
+                                            .progressViewStyle(
+                                                CircularProgressViewStyle(tint: .white)
+                                            )
+                                            .scaleEffect(1.5)
+                                    }
+                                    .cornerRadius(12)
+                                }
+                            }
+                            .padding(.horizontal)
+
+                            Button {
+                                vm.clearMedia()
+                            } label: {
+                                HStack {
+                                    Image(systemName: "xmark.circle.fill")
+                                    Text("Clear Video")
+                                }
+                                .font(.subheadline)
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 12)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(Color.white.opacity(0.1))
+                                )
+                            }
+                            .padding(.horizontal)
+                        }
+                    } else if let selectedImage = vm.selectedImage {
+                        // Image preview
+                        VStack(spacing: 12) {
+                            ZStack {
+                                MediaPreviewView(image: selectedImage)
+
+                                if vm.isLoading {
+                                    ZStack {
+                                        Color.black.opacity(0.5)
+                                        ProgressView()
+                                            .progressViewStyle(
+                                                CircularProgressViewStyle(tint: .white)
+                                            )
+                                            .scaleEffect(1.5)
+                                    }
+                                }
+                            }
+                            .padding(.horizontal)
 
                             Button {
                                 vm.clearMedia()
@@ -133,25 +186,34 @@ public struct CreateBlogView: View {
                     }
 
                     Button {
-                        vm.showImagePicker = true
+                        vm.showImagePicker.toggle()
                     } label: {
                         HStack {
-                            Image(systemName: "camera.fill")
-                            Text(
-                                vm.selectedImage == nil
-                                    ? "Select Image or Video" : "Change Image or Video")
+                            Image(systemName: "photo.badge.plus")
+                            Text("Select Media")
                         }
                         .font(.subheadline)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 14)
+                        .padding(.vertical, 12)
                         .background(
                             RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.purple.opacity(0.6))
+                                .fill(Color.purple.opacity(0.6))  // Assuming Color.theme.primary is not defined, using original color
                         )
                     }
                     .padding(.horizontal)
+                    .photosPicker(
+                        isPresented: $vm.showImagePicker,
+                        selection: $vm.selectedMediaItem,
+                        matching: .any(of: [.images, .videos])  // Allow both images and videos
+                    )
+                    .onChange(of: vm.selectedMediaItem) { newItem in
+                        Task {
+                            await vm.loadMediaData()
+                        }
+                    }
                 }
+                .padding(.vertical)
 
                 Button(action: {
                     if vm.validateForm() {

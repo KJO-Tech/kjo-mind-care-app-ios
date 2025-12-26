@@ -18,12 +18,19 @@ class CloudinaryStorageServiceImpl: StorageService {
         self.cloudinary = CLDCloudinary(configuration: config)
     }
 
-    func upload(data: Data, folder: String, fileName: String?) async throws
+    func upload(data: Data, folder: String, fileName: String?, resourceType: String? = nil)
+        async throws
         -> String
     {
         return try await withCheckedThrowingContinuation { continuation in
             let params = CLDUploadRequestParams()
             params.setFolder(folder)
+
+            // Set resource type for videos (default is "image")
+            if let resourceType = resourceType {
+                params.setResourceType(resourceType)
+            }
+
             if let name = fileName {
                 params.setPublicId(name)
                 //                params.setOverwrite(true)

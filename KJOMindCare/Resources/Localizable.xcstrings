@@ -608,9 +608,6 @@
     "Category" : {
 
     },
-    "Change Image or Video" : {
-
-    },
     "Check your subscriptions if you want daily exercises." : {
 
     },
@@ -621,6 +618,9 @@
 
     },
     "Clear Media" : {
+
+    },
+    "Clear Video" : {
 
     },
     "Comments (%lld)" : {
@@ -1506,10 +1506,7 @@
     "Seleccionar imagen" : {
 
     },
-    "Select Image or Video" : {
-
-    },
-    "Share" : {
+    "Select Media" : {
 
     },
     "subscription.continue" : {

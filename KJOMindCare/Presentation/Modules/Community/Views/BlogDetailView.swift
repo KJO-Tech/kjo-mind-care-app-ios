@@ -175,28 +175,9 @@ struct BlogDetailView: View {
             .foregroundColor(.gray)
             .font(.subheadline)
 
-            shareActionButton(blog: blog)
-
             Spacer()
         }
         .padding(.vertical, 8)
-    }
-
-    @ViewBuilder
-    private func shareActionButton(blog: Blog) -> some View {
-        Button {
-            presentShareSheet(blog: blog)
-        } label: {
-            Text("Share")
-                .font(.subheadline)
-                .foregroundColor(Color.theme.primary)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(Color.theme.primary.opacity(0.2))
-                )
-        }
     }
 
     @ViewBuilder

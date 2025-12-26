@@ -7,53 +7,73 @@ struct BlogCard: View {
     var onLike: (() -> Void)?
     var onShare: (() -> Void)?
 
+            // Image Preview (Top)
+    var mediaView: some View {
+        Group {
+            if let mediaUrl = blog.mediaUrl, let mediaType = blog.mediaType {
+                switch mediaType {
+                case .IMAGE:
+                    let secureUrl = mediaUrl.replacingOccurrences(of: "http://", with: "https://")
+                    AsyncImage(url: URL(string: secureUrl)) { phase in
+                        switch phase {
+                        case .empty:
+                            ZStack {
+                                Color.gray.opacity(0.2)
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle())
+                            }
+                            .frame(height: 200)
+                            .cornerRadius(12)
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(height: 200)
+                                .frame(maxWidth: .infinity)
+                                .clipped()
+                                .cornerRadius(12)
+                        case .failure:
+                            Rectangle()
+                                .fill(Color.gray.opacity(0.2))
+                                .frame(height: 200)
+                                .cornerRadius(12)
+                                .overlay(
+                                    Image(systemName: "photo")
+                                        .font(.system(size: 40))
+                                        .foregroundColor(.gray)
+                                )
+                        @unknown default:
+                            EmptyView()
+                        }
+                    }
+                case .VIDEO:
+                    // Show video preview thumbnail
+                    let secureUrl = mediaUrl.replacingOccurrences(of: "http://", with: "https://")
+                    if let videoURL = URL(string: secureUrl) {
+                        VideoPlayerView(videoURL: videoURL, autoPlay: false)
+                            .frame(height: 200)
+                            .cornerRadius(12)
+                    } else {
+                        Rectangle()
+                            .fill(Color.gray.opacity(0.2))
+                            .frame(height: 200)
+                            .cornerRadius(12)
+                            .overlay(
+                                Image(systemName: "play.circle.fill")
+                                    .font(.system(size: 60))
+                                    .foregroundColor(.white)
+                            )
+                    }
+                }
+            }
+        }
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
 
             // Image Preview (Top)
-            if let mediaUrl = blog.mediaUrl,
-                let url = URL(
-                    string: mediaUrl.replacingOccurrences(of: "http://", with: "https://"))
-            {
-                if blog.mediaType == .VIDEO {
-                    ZStack {
-                        Rectangle()
-                            .fill(Color.black.opacity(0.1))
-                            .frame(height: 180)
-                            .frame(maxWidth: .infinity)
-
-                        Image(systemName: "play.circle.fill")
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                            .foregroundColor(.white)
-                            .shadow(radius: 4)
-                    }
-                } else {
-                    AsyncImage(url: url) { phase in
-                        if let image = phase.image {
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(height: 180)
-                                .frame(maxWidth: .infinity)
-                                .clipped()
-                        } else if phase.error != nil {
-                            Rectangle()
-                                .fill(Color.gray.opacity(0.2))
-                                .frame(height: 180)
-                                .overlay(
-                                    Image(systemName: "photo")
-                                        .foregroundColor(.gray)
-                                )
-                        } else {
-                            Rectangle()
-                                .fill(Color.theme.background.opacity(0.5))
-                                .frame(height: 180)
-                                .overlay(ProgressView())
-                        }
-                    }
-                }
-            }
+            mediaView
 
             VStack(alignment: .leading, spacing: 12) {
                 HStack(spacing: 12) {

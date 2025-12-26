@@ -113,21 +113,82 @@ class CreateBlogViewModel: ObservableObject {
         guard let item = selectedMediaItem else { return }
 
         do {
-            // Try to load as image first
-            if let imageData = try? await item.loadTransferable(type: Data.self) {
-                selectedMediaData = imageData
+            // Detect media type based on the item's supported content types FIRST
+            if let contentType = item.supportedContentTypes.first {
+                let identifier = contentType.identifier.lowercased()
+
+                print("📹 Content Type Identifier: \(identifier)")
+                print("📹 Content Type: \(contentType)")
+
+                // Check if it's a video
+                if contentType.conforms(to: .movie) || contentType.conforms(to: .video) {
+                    selectedMediaType = .VIDEO
+                    print("✅ Detected media type: VIDEO")
+
+                    // For videos, just load the data (no UIImage)
+                    if let data = try await item.loadTransferable(type: Data.self) {
+                        selectedMediaData = data
+                        // Create a placeholder image for video preview
+                        selectedImage = createVideoPlaceholder()
+                    }
+                    return
+                }
+
+                // Check if it's an image
+                if contentType.conforms(to: .image) {
+                    selectedMediaType = .IMAGE
+                    print("✅ Detected media type: IMAGE")
+
+                    // For images, load as UIImage
+                    if let data = try await item.loadTransferable(type: Data.self) {
+                        selectedMediaData = data
+                        selectedImage = UIImage(data: data)
+                    }
+                    return
+                }
+
+                // Unknown type
+                print("⚠️ Unknown media type: \(contentType), defaulting to IMAGE")
                 selectedMediaType = .IMAGE
-                return
             }
 
-            // If not an image, try as video
-            if let videoData = try? await item.loadTransferable(type: Data.self) {
-                selectedMediaData = videoData
-                selectedMediaType = .VIDEO
+            // Fallback: try to load as image
+            if let data = try await item.loadTransferable(type: Data.self) {
+                selectedMediaData = data
+                selectedImage = UIImage(data: data)
+                selectedMediaType = .IMAGE
             }
         } catch {
-            print("Error loading media: \(error.localizedDescription)")
+            print("❌ Error loading media: \(error)")
             errorMessage = "Error al cargar el archivo multimedia"
+        }
+    }
+
+    // Helper to create a placeholder image for video
+    private func createVideoPlaceholder() -> UIImage {
+        let size = CGSize(width: 200, height: 200)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { context in
+            // Background
+            UIColor.systemGray5.setFill()
+            context.fill(CGRect(origin: .zero, size: size))
+
+            // Play icon
+            let playIconSize: CGFloat = 60
+            let playIconRect = CGRect(
+                x: (size.width - playIconSize) / 2,
+                y: (size.height - playIconSize) / 2,
+                width: playIconSize,
+                height: playIconSize
+            )
+
+            UIColor.white.setFill()
+            let path = UIBezierPath()
+            path.move(to: CGPoint(x: playIconRect.minX + 15, y: playIconRect.minY))
+            path.addLine(to: CGPoint(x: playIconRect.maxX - 5, y: playIconRect.midY))
+            path.addLine(to: CGPoint(x: playIconRect.minX + 15, y: playIconRect.maxY))
+            path.close()
+            path.fill()
         }
     }
 
@@ -159,7 +220,7 @@ class CreateBlogViewModel: ObservableObject {
             var mediaUrl: String? = nil
             var mediaType: MediaType? = nil
 
-            if let image = selectedImage {
+            if let image = selectedImage, selectedMediaType == .IMAGE {
                 // User selected a new image - upload it
                 guard let data = image.jpegData(compressionQuality: 0.7) else {
                     print("Error converting image to data")
@@ -167,15 +228,27 @@ class CreateBlogViewModel: ObservableObject {
                 }
 
                 let timestamp = Int(Date().timeIntervalSince1970)
-                let uniqueFileName = "blog_\(sessionUser.uid)_\(timestamp)"
+                let uniqueFileName = "blog_\(sessionUser.uid)_\(timestamp).jpg"
 
-                // Use StorageService directly as requested
                 mediaUrl = try await storageService.upload(
                     data: data,
                     folder: "blogs",
-                    fileName: uniqueFileName
+                    fileName: uniqueFileName,
+                    resourceType: nil  // nil defaults to "image" in Cloudinary
                 )
                 mediaType = .IMAGE
+            } else if let videoData = selectedMediaData, selectedMediaType == .VIDEO {
+                // User selected a new video - upload it
+                let timestamp = Int(Date().timeIntervalSince1970)
+                let uniqueFileName = "blog_\(sessionUser.uid)_\(timestamp).mp4"
+
+                mediaUrl = try await storageService.upload(
+                    data: videoData,
+                    folder: "blogs",
+                    fileName: uniqueFileName,
+                    resourceType: "video"  // Specify video resource type for Cloudinary
+                )
+                mediaType = .VIDEO
             } else if isEditMode {
                 // Editing mode and no new image selected - preserve original media
                 mediaUrl = originalMediaUrl
@@ -203,7 +276,7 @@ class CreateBlogViewModel: ObservableObject {
                     content: content,
                     author: author,
                     mediaUrl: mediaUrl,
-                    mediaType: selectedMediaType,
+                    mediaType: mediaType,  // Use determined mediaType (was missing before)
                     categoryId: selectedCategory?.id
                 )
 
@@ -221,15 +294,21 @@ class CreateBlogViewModel: ObservableObject {
 
             return true
         } catch {
-            print("Error \(isEditMode ? "updating" : "creating") blog: \(error)")
-            errorMessage = "Error \(isEditMode ? "updating" : "creating") blog"
+            errorMessage = error.localizedDescription
             return false
         }
     }
 
     func clearMedia() {
+        selectedImage = nil
         selectedMediaItem = nil
         selectedMediaData = nil
         selectedMediaType = nil
+
+        // Also clear original media if in edit mode (user wants to remove the image)
+        if isEditMode {
+            originalMediaUrl = nil
+            originalMediaType = nil
+        }
     }
 }

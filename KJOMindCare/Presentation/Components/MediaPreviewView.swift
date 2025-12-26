@@ -41,8 +41,13 @@ struct MediaPreviewView: View {
                     AsyncImage(url: URL(string: secureUrl)) { phase in
                         switch phase {
                         case .empty:
-                            ProgressView()
-                                .frame(height: height ?? 200)
+                            ZStack {
+                                Color.gray.opacity(0.2)
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle())
+                            }
+                            .frame(height: height ?? 200)
+                            .cornerRadius(cornerRadius)
                         case .success(let image):
                             image
                                 .resizable()
@@ -58,16 +63,13 @@ struct MediaPreviewView: View {
                         }
                     }
                 case .VIDEO:
-
-                    ZStack {
-                        Rectangle()
-                            .fill(Color.gray.opacity(0.3))
-                            .frame(height: height ?? 200)
+                    // Use actual video player instead of placeholder
+                    let secureUrl = urlString.replacingOccurrences(of: "http://", with: "https://")
+                    if let videoURL = URL(string: secureUrl) {
+                        VideoPlayerView(videoURL: videoURL, autoPlay: false)
                             .cornerRadius(cornerRadius)
-
-                        Image(systemName: "play.circle.fill")
-                            .font(.system(size: 60))
-                            .foregroundColor(.white)
+                    } else {
+                        placeholderView
                     }
                 }
             }
