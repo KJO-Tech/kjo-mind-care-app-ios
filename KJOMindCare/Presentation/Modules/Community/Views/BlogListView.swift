@@ -29,10 +29,8 @@ struct BlogListView: View {
         .overlay(alignment: .bottomTrailing) {
             floatingButton
         }
-        .overlay {
-            if vm.showCategoryFilter {
-                CategoryFilterSheet(viewModel: vm)
-            }
+        .sheet(isPresented: $vm.showCategoryFilter) {
+            CategoryFilterSheet(viewModel: vm)
         }
     }
 }
@@ -92,56 +90,59 @@ extension BlogListView {
 
 extension BlogListView {
     var blogList: some View {
-        ScrollView {
-            LazyVStack(spacing: 16) {
-                ForEach(vm.filteredBlogs) { blog in
-                    Button {
-                        coordinator.showBlogDetail(blogId: blog.id)
-                    } label: {
-                        BlogCard(
-                            blog: blog,
-                            categoryName: vm.categories.first(where: { $0.id == blog.categoryId })?
-                                .getLocalizedName(
-                                    languageCode: Locale.current.language.languageCode?.identifier
-                                        ?? "en"),
-                            onLike: {
-                                vm.toggleLike(blog: blog)
-                            },
-                            onShare: {
-                                let shareText = "Check out this blog: \(blog.title)"
-                                let shareUrl = URL(
-                                    string:
-                                        "https://kjomindcare.netlify.app/app/community/post/\(blog.id)"
-                                )!
-                                let activityVC = UIActivityViewController(
-                                    activityItems: [shareText, shareUrl], applicationActivities: nil
-                                )
+        ScrollViewReader { proxy in
+            ScrollView {
+                LazyVStack(spacing: 16) {
+                    // Invisible anchor at the top for scrolling
+                    Color.clear
+                        .frame(height: 1)
+                        .id("topAnchor")
+                    
+                    ForEach(vm.filteredBlogs) { blog in
+                        Button {
+                            coordinator.showBlogDetail(blogId: blog.id)
+                        } label: {
+                            BlogCard(
+                                blog: blog,
+                                categoryName: vm.categories.first(where: { $0.id == blog.categoryId })?
+                                    .getLocalizedName(
+                                        languageCode: Locale.current.language.languageCode?.identifier
+                                            ?? "en"),
+                                onLike: {
+                                    vm.toggleLike(blog: blog)
+                                },
+                                onShare: {
+                                    let shareText = "Check out this blog: \(blog.title)"
+                                    let shareUrl = URL(
+                                        string:
+                                            "https://kjomindcare.netlify.app/app/community/post/\(blog.id)"
+                                    )!
+                                    let activityVC = UIActivityViewController(
+                                        activityItems: [shareText, shareUrl], applicationActivities: nil
+                                    )
 
-                                if let windowScene = UIApplication.shared.connectedScenes.first
-                                    as? UIWindowScene,
-                                    let rootVC = windowScene.windows.first?.rootViewController
-                                {
-                                    // Present sharing needs a VC or SwiftUI equivalent wrapper.
-                                    // For simplicity in pure SwiftUI without helper, we might use ShareLink in iOS 16+
-                                    // Since target is likely iOS 16+, let's check. If not, this VC logic is complex in SwiftUI view directly.
-                                    // Let's use a simpler approach if possible or just print for now as "Share implementation".
-                                    // Actually, UIActivityViewController presentation from View needs a wrapper.
-                                    // Let's use ShareLink if available (iOS 16+).
-                                    // Assuming iOS 16 based on "NavigationStack".
-                                    // But BlogCard is inside a Button, so ShareLink might not be tappable if not Borderless.
-                                    // Since I used BorderlessButtonStyle in BlogCard, it should work.
-                                    rootVC.present(activityVC, animated: true)
+                                    if let windowScene = UIApplication.shared.connectedScenes.first
+                                        as? UIWindowScene,
+                                        let rootVC = windowScene.windows.first?.rootViewController
+                                    {
+                                        rootVC.present(activityVC, animated: true)
+                                    }
                                 }
-                            }
-                        )
+                            )
+                        }
                     }
                 }
+                .padding(.horizontal)
+                .padding(.top, 10)
             }
-            .padding(.horizontal)
-            .padding(.top, 10)
-        }
-        .refreshable {
-            await vm.refresh()
+            .onChange(of: vm.selectedFilter) { _ in
+                withAnimation {
+                    proxy.scrollTo("topAnchor", anchor: .top)
+                }
+            }
+            .refreshable {
+                await vm.refresh()
+            }
         }
     }
 }

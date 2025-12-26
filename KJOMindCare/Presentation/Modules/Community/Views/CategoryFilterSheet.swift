@@ -2,98 +2,101 @@ import SwiftUI
 
 struct CategoryFilterSheet: View {
     @ObservedObject var viewModel: BlogListViewModel
-
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
-        ZStack {
-            Color.black.opacity(0.3)
-                .edgesIgnoringSafeArea(.all)
-                .onTapGesture {
-                    viewModel.cancelFilter()
-                }
-
+        NavigationView {
             VStack(spacing: 0) {
-                Spacer()
-
-                VStack(spacing: 0) {
-                    // Header
-                    Text("Filter by Category")
-                        .font(.theme.title3.bold())
-                        .foregroundColor(Color.theme.text)
-                        .padding(.top, 24)
-                        .padding(.bottom, 20)
-
-                    // Clear selection option
-                    CategoryRadioButton(
-                        category: nil,
-                        isSelected: viewModel.tempSelectedCategory == nil,
-                        isClearOption: true,
-                        action: {
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                viewModel.tempSelectedCategory = nil
-                            }
-                        }
-                    )
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 8)
-
-                    // Category options
-                    ForEach(viewModel.categories) { category in
-                        CategoryRadioButton(
-                            category: category,
-                            isSelected: viewModel.tempSelectedCategory?.id == category.id,
-                            action: {
-                                withAnimation(.easeInOut(duration: 0.2)) {
-                                    viewModel.tempSelectedCategory = category
-                                }
-                            }
-                        )
-                        .padding(.horizontal, 24)
-                        .padding(.vertical, 4)
-                    }
-
-                    // Buttons
-                    HStack(spacing: 16) {
-                        Button {
-                            viewModel.cancelFilter()
-                        } label: {
-                            Text("Cancel")
-                                .font(.theme.headline)
+                // All Categories option
+                Button {
+                    viewModel.tempSelectedCategory = nil
+                } label: {
+                    HStack {
+                        Text("All Categories")
+                            .foregroundColor(Color.theme.text)
+                        Spacer()
+                        if viewModel.tempSelectedCategory == nil {
+                            Image(systemName: "checkmark")
                                 .foregroundColor(Color.theme.primary)
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 14)
-                        }
-
-                        Button {
-                            viewModel.applyFilter()
-                        } label: {
-                            Text("Apply Filters")
-                                .font(.theme.headline)
-                                .foregroundColor(Color.theme.primaryContent)
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 14)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 25)
-                                        .fill(Color.theme.primary)
-                                )
                         }
                     }
-                    .padding(.horizontal, 24)
-                    .padding(.top, 24)
-                    .padding(.bottom, 32)
+                    .padding()
+                    .background(Color.theme.card)
+                    .cornerRadius(12)
                 }
-                .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(Color.theme.surface)
-                        .shadow(color: Color.theme.shadow.opacity(0.3), radius: 20, x: 0, y: -5)
-                )
-                .padding(.horizontal, 20)
+                .padding(.horizontal)
+                .padding(.top)
+                
+                // Categories list
+                ScrollView {
+                    VStack(spacing: 12) {
+                        ForEach(viewModel.categories) { category in
+                            Button {
+                                viewModel.tempSelectedCategory = category
+                            } label: {
+                                HStack {
+                                    Text(category.getLocalizedName(languageCode: Locale.current.language.languageCode?.identifier ?? "en"))
+                                        .foregroundColor(Color.theme.text)
+                                    Spacer()
+                                    if viewModel.tempSelectedCategory?.id == category.id {
+                                        Image(systemName: "checkmark")
+                                            .foregroundColor(Color.theme.primary)
+                                    }
+                                }
+                                .padding()
+                                .background(Color.theme.card)
+                                .cornerRadius(12)
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 8)
+                }
+                
+                // Action buttons
+                HStack(spacing: 12) {
+                    Button {
+                        viewModel.cancelFilter()
+                        dismiss()
+                    } label: {
+                        Text("Cancel")
+                            .font(.headline)
+                            .foregroundColor(Color.theme.text)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.theme.surface)
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Color.theme.textSecondary.opacity(0.3), lineWidth: 1)
+                            )
+                    }
+                    
+                    Button {
+                        viewModel.applyFilter()
+                        dismiss()
+                    } label: {
+                        Text("Apply")
+                            .font(.headline)
+                            .foregroundColor(Color.theme.primaryContent)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.theme.primary)
+                            )
+                    }
+                }
+                .padding()
+                .background(Color.theme.background)
             }
+            .background(Color.theme.background)
+            .navigationTitle("Filter by Category")
+            .navigationBarTitleDisplayMode(.inline)
         }
+        .presentationDetents([.medium, .large])
+        .presentationDragIndicator(.visible)
     }
-}
-
-#Preview {
-    let vm = DIContainer.shared.container.resolve(BlogListViewModel.self)!
-    CategoryFilterSheet(viewModel: vm)
-        .preferredColorScheme(.dark)
 }

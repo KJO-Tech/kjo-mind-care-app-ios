@@ -31,22 +31,9 @@ class BlogListViewModel: ObservableObject {
         self.getCategoriesUseCase = getCategoriesUseCase
 
         loadCategories()
-        setupSubscriptions()
 
         // Initial load
         loadBlogs()
-    }
-
-    // Listen to filter changes to reload
-    func setupSubscriptions() {
-        $selectedFilter
-            .dropFirst()  // Skip initial value
-            .removeDuplicates()
-            .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
-            .sink { [weak self] filter in
-                self?.loadBlogs(filter: filter)
-            }
-            .store(in: &cancellables)
     }
 
     func loadCategories() {
@@ -87,24 +74,36 @@ class BlogListViewModel: ObservableObject {
     var filteredBlogs: [Blog] {
         let userId = checkUserSessionUseCase.execute()?.uid ?? ""
 
-        // First, apply filter
-        var filtered: [Blog]
-        switch selectedFilter {
-        case .myBlogs:
-            filtered = allBlogs.filter { $0.author.uid == userId }
-        case .category(let categoryId):
-            filtered = allBlogs.filter { $0.categoryId == categoryId }
-        default:
-            filtered = allBlogs
+        // Start with all blogs
+        var filtered = allBlogs
+
+        // 1. Apply search text filter
+        if !searchText.trimmingCharacters(in: .whitespaces).isEmpty {
+            let searchLower = searchText.lowercased()
+            filtered = filtered.filter { blog in
+                blog.title.lowercased().contains(searchLower)
+                    || blog.content.lowercased().contains(searchLower)
+                    || blog.author.fullName.lowercased().contains(searchLower)
+            }
         }
 
-        // Then, apply sorting
+        // 2. Apply category filter if selected
+        if let categoryId = selectedCategory?.id {
+            filtered = filtered.filter { $0.categoryId == categoryId }
+        }
+
+        // 3. Apply tab filter (My Blogs)
+        if selectedFilter == .myBlogs {
+            filtered = filtered.filter { $0.author.uid == userId }
+        }
+
+        // 4. Apply sorting based on selected filter
         switch selectedFilter {
         case .popular:
             return filtered.sorted { $0.likes > $1.likes }
         case .latest:
             return filtered.sorted { $0.createdAt.seconds > $1.createdAt.seconds }
-        case .all:
+        case .all, .myBlogs:
             // Use database order (already sorted by createdAt desc)
             return filtered
         default:
