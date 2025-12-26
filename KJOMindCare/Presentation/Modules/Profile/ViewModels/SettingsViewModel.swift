@@ -63,6 +63,9 @@ class SettingsViewModel: ObservableObject {
             self.notificationsEnabled = settings.notificationsEnabled
             self.notificationHour = settings.notificationHour ?? Date()
             self.darkModeEnabled = settings.darkModeEnabled
+
+            // Sync with global theme manager
+            ThemeManager.shared.isDarkMode = settings.darkModeEnabled
         }
     }
 
@@ -132,6 +135,9 @@ class SettingsViewModel: ObservableObject {
         try? await updateLocalSettingsUC.execute(settings)
         self.internalSettings = settings
         self.darkModeEnabled = enabled
+
+        // Update global theme
+        ThemeManager.shared.isDarkMode = enabled
     }
 
     func signOut() {

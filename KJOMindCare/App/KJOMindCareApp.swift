@@ -15,6 +15,7 @@ struct KJOMindCareApp: App {
     let diContainer = DIContainer.shared
 
     @StateObject private var coordinator = AppCoordinator()
+    @StateObject private var themeManager = ThemeManager.shared
 
     var body: some Scene {
         WindowGroup {
@@ -65,6 +66,8 @@ struct KJOMindCareApp: App {
                 }
             }
             .environmentObject(coordinator)
+            .environmentObject(themeManager)
+            .preferredColorScheme(themeManager.colorScheme)
         }
     }
 }
