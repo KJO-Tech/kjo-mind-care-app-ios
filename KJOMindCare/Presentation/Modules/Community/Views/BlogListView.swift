@@ -11,7 +11,7 @@ struct BlogListView: View {
             if vm.selectedCategory != nil || vm.selectedFilter != .all {
                 HStack {
                     Spacer()
-                    Button("Clear Filters") {
+                    Button(String(localized: "community.filter.clearFilters")) {
                         vm.selectedFilter = .all
                         vm.clearFilter()
                     }
@@ -24,7 +24,7 @@ struct BlogListView: View {
             filterTabs
             blogList
         }
-        .navigationTitle("Community")
+        .navigationTitle(String(localized: "community.title"))
         .background(Color.background.edgesIgnoringSafeArea(.all))
         .onAppear {
             // Refresh when returning from other screens
@@ -62,7 +62,7 @@ extension BlogListView {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(Color.theme.textSecondary)
 
-                TextField("Search blogs...", text: $vm.searchText)
+                TextField(String(localized: "community.search.placeholder"), text: $vm.searchText)
                     .foregroundColor(Color.theme.text)
             }
             .padding(12)
@@ -90,7 +90,7 @@ extension BlogListView {
                     Button {
                         vm.selectedFilter = filter
                     } label: {
-                        Text(filter.title)
+                        Text(filter.localizedTitle)
                             .foregroundColor(
                                 vm.selectedFilter == filter
                                     ? Color.theme.primary : Color.theme.textSecondary)

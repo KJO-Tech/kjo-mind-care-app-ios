@@ -3,7 +3,7 @@ import SwiftUI
 struct CategoryFilterSheet: View {
     @ObservedObject var viewModel: BlogListViewModel
     @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
@@ -12,7 +12,7 @@ struct CategoryFilterSheet: View {
                     viewModel.tempSelectedCategory = nil
                 } label: {
                     HStack {
-                        Text("All Categories")
+                        Text(String(localized: "community.categoryFilter.allCategories"))
                             .foregroundColor(Color.theme.text)
                         Spacer()
                         if viewModel.tempSelectedCategory == nil {
@@ -26,7 +26,7 @@ struct CategoryFilterSheet: View {
                 }
                 .padding(.horizontal)
                 .padding(.top)
-                
+
                 // Categories list
                 ScrollView {
                     VStack(spacing: 12) {
@@ -35,8 +35,12 @@ struct CategoryFilterSheet: View {
                                 viewModel.tempSelectedCategory = category
                             } label: {
                                 HStack {
-                                    Text(category.getLocalizedName(languageCode: Locale.current.language.languageCode?.identifier ?? "en"))
-                                        .foregroundColor(Color.theme.text)
+                                    Text(
+                                        category.getLocalizedName(
+                                            languageCode: Locale.current.language.languageCode?
+                                                .identifier ?? "en")
+                                    )
+                                    .foregroundColor(Color.theme.text)
                                     Spacer()
                                     if viewModel.tempSelectedCategory?.id == category.id {
                                         Image(systemName: "checkmark")
@@ -52,14 +56,14 @@ struct CategoryFilterSheet: View {
                     .padding(.horizontal)
                     .padding(.top, 8)
                 }
-                
+
                 // Action buttons
                 HStack(spacing: 12) {
                     Button {
                         viewModel.cancelFilter()
                         dismiss()
                     } label: {
-                        Text("Cancel")
+                        Text(String(localized: "common.cancel"))
                             .font(.headline)
                             .foregroundColor(Color.theme.text)
                             .frame(maxWidth: .infinity)
@@ -73,12 +77,12 @@ struct CategoryFilterSheet: View {
                                     .stroke(Color.theme.textSecondary.opacity(0.3), lineWidth: 1)
                             )
                     }
-                    
+
                     Button {
                         viewModel.applyFilter()
                         dismiss()
                     } label: {
-                        Text("Apply")
+                        Text(String(localized: "community.categoryFilter.apply"))
                             .font(.headline)
                             .foregroundColor(Color.theme.primaryContent)
                             .frame(maxWidth: .infinity)
@@ -93,7 +97,7 @@ struct CategoryFilterSheet: View {
                 .background(Color.theme.background)
             }
             .background(Color.theme.background)
-            .navigationTitle("Filter by Category")
+            .navigationTitle(String(localized: "community.categoryFilter.title"))
             .navigationBarTitleDisplayMode(.inline)
         }
         .presentationDetents([.medium, .large])

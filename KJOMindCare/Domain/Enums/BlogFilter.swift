@@ -11,13 +11,18 @@ enum BlogFilter: Equatable, Hashable {
     static let tabs: [BlogFilter] = [.all, .latest, .popular, .myBlogs]
     
     // Helper for UI tabs handles title display
-    var title: String {
+    var localizedTitle: String {
         switch self {
-        case .all: return "All"
-        case .latest: return "Latest"
-        case .popular: return "Popular"
-        case .category: return "Category"
-        case .myBlogs: return "My Blogs"
+        case .all:
+            return String(localized: "community.filter.all")
+        case .latest:
+            return String(localized: "community.filter.latest")
+        case .popular:
+            return String(localized: "community.filter.popular")
+        case .myBlogs:
+            return String(localized: "community.filter.myBlogs")
+        case .category:
+            return "" // Not used in tabs
         }
     }
 }

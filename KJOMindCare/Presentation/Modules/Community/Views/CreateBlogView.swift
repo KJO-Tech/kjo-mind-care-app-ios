@@ -14,23 +14,25 @@ public struct CreateBlogView: View {
             VStack(spacing: 24) {
 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Title")
+                    Text(String(localized: "community.blog.title.label"))
                         .font(.theme.headline)
                         .foregroundColor(Color.theme.text)
 
-                    TextField("Blog title", text: $vm.title)
-                        .padding(12)
-                        .background(Color.theme.surface)
-                        .cornerRadius(12)
-                        .foregroundColor(Color.theme.text)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(
-                                    vm.titleError ? Color.theme.error : Color.clear, lineWidth: 2)
-                        )
+                    TextField(
+                        String(localized: "community.blog.title.placeholder"), text: $vm.title
+                    )
+                    .padding(12)
+                    .background(Color.theme.surface)
+                    .cornerRadius(12)
+                    .foregroundColor(Color.theme.text)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(
+                                vm.titleError ? Color.theme.error : Color.clear, lineWidth: 2)
+                    )
 
                     if vm.titleError {
-                        Text("El título no puede estar vacío")
+                        Text(String(localized: "community.blog.title.error"))
                             .font(.theme.caption)
                             .foregroundColor(Color.theme.error)
                     }
@@ -38,7 +40,7 @@ public struct CreateBlogView: View {
                 .padding(.horizontal)
 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Category")
+                    Text(String(localized: "community.blog.category.label"))
                         .font(.theme.headline)
                         .foregroundColor(Color.theme.text)
 
@@ -78,7 +80,7 @@ public struct CreateBlogView: View {
                 .padding(.horizontal)
 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Content")
+                    Text(String(localized: "community.blog.content.label"))
                         .font(.theme.headline)
                         .foregroundColor(Color.theme.text)
 
@@ -96,7 +98,7 @@ public struct CreateBlogView: View {
                         )
 
                     if vm.contentError {
-                        Text("El contenido no puede estar vacío")
+                        Text(String(localized: "community.blog.content.error"))
                             .font(.theme.caption)
                             .foregroundColor(Color.theme.error)
                     }
@@ -104,7 +106,7 @@ public struct CreateBlogView: View {
                 .padding(.horizontal)
 
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Image/Video (Optional)")
+                    Text(String(localized: "community.blog.media.label"))
                         .font(.theme.headline)
                         .foregroundColor(Color.theme.text)
                         .padding(.horizontal)
@@ -135,7 +137,7 @@ public struct CreateBlogView: View {
                             } label: {
                                 HStack {
                                     Image(systemName: "xmark.circle.fill")
-                                    Text("Clear Video")
+                                    Text(String(localized: "community.blog.media.clearVideo"))
                                 }
                                 .font(.theme.subheadline)
                                 .foregroundColor(Color.theme.text)
@@ -172,7 +174,7 @@ public struct CreateBlogView: View {
                             } label: {
                                 HStack {
                                     Image(systemName: "xmark.circle.fill")
-                                    Text("Clear Media")
+                                    Text(String(localized: "community.blog.media.clearMedia"))
                                 }
                                 .font(.theme.subheadline)
                                 .foregroundColor(Color.theme.text)
@@ -192,7 +194,7 @@ public struct CreateBlogView: View {
                     } label: {
                         HStack {
                             Image(systemName: "photo.badge.plus")
-                            Text("Select Media")
+                            Text(String(localized: "community.blog.media.select"))
                         }
                         .font(.theme.subheadline)
                         .foregroundColor(Color.theme.primaryContent)
@@ -226,15 +228,19 @@ public struct CreateBlogView: View {
                         }
                     }
                 }) {
-                    Text(vm.isEditMode ? "Update Blog" : "Publish Blog")
-                        .font(.theme.headline)
-                        .foregroundColor(Color.theme.primaryContent)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.theme.primary)
-                        )
+                    Text(
+                        vm.isEditMode
+                            ? String(localized: "community.blog.update")
+                            : String(localized: "community.blog.publish")
+                    )
+                    .font(.theme.headline)
+                    .foregroundColor(Color.theme.primaryContent)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.theme.primary)
+                    )
                 }
                 .padding(.horizontal)
                 .padding(.top, 10)
@@ -244,19 +250,19 @@ public struct CreateBlogView: View {
             .padding(.top)
         }
         .background(Color.theme.background.edgesIgnoringSafeArea(.all))
-        .navigationTitle(vm.isEditMode ? "Edit Blog" : "Create Blog")
+        .navigationTitle(vm.isEditMode 
+            ? String(localized: "community.blog.edit.title") 
+            : String(localized: "community.blog.create.title"))
         .navigationBarTitleDisplayMode(.inline)
         .preferredColorScheme(.dark)
-        .alert("¡Blog Enviado!", isPresented: $vm.showSuccessAlert) {
-            Button("OK") {
+        .alert(String(localized: "community.blog.success.title"), isPresented: $vm.showSuccessAlert) {
+            Button(String(localized: "common.ok")) {
                 coordinator.pop()
             }
         } message: {
-            Text(
-                "Tu blog ha sido enviado exitosamente. Está pendiente de aprobación por un administrador."
-            )
+            Text(String(localized: "community.blog.success.message"))
         }
-        .alert("Error", isPresented: .constant(vm.errorMessage != nil)) {
+        .alert(String(localized: "common.error"), isPresented: .constant(vm.errorMessage != nil)) {
             Button("OK") {
                 vm.errorMessage = nil
             }
