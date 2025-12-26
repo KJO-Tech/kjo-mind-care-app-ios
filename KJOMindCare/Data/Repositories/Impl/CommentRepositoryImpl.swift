@@ -26,7 +26,7 @@ class CommentRepositoryImpl: CommentRepository {
 
         let listener = firestore.collection("blogs").document(blogId)
             .collection("comments")
-            .order(by: "createdAt", descending: false)
+            .order(by: "createdAt", descending: true)
             .addSnapshotListener { snapshot, error in
                 if let error = error {
                     subject.send(completion: .failure(error))
@@ -40,7 +40,7 @@ class CommentRepositoryImpl: CommentRepository {
 
                 let comments = documents.compactMap { document -> Comment? in
                     var comment = try? document.data(as: Comment.self)
-                    if (comment != nil) {
+                    if comment != nil {
                         comment!.isMine = comment!.author.uid == currentUserId
                     }
                     return comment

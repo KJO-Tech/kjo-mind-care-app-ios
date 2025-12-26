@@ -34,6 +34,7 @@ class BlogDetailViewModel: ObservableObject {
     enum DeleteItem { case blog, comment }
     @Published var showDeleteDialog = false
     @Published var itemToDelete: DeleteItem?
+    @Published var commentToDelete: Comment?
 
     let blogId: String
     private let getBlogByIdUseCase: GetBlogByIdUseCase
@@ -178,14 +179,14 @@ class BlogDetailViewModel: ObservableObject {
         for var root in roots {
             if let id = root.id, let replies = repliesByParent[id] {
                 root.replies = replies.sorted(by: {
-                    $0.createdAt.dateValue() < $1.createdAt.dateValue()
+                    $0.createdAt.dateValue() > $1.createdAt.dateValue()
                 })
             }
             finalRoots.append(root)
         }
 
         self.comments = finalRoots.sorted(by: {
-            $0.createdAt.dateValue() < $1.createdAt.dateValue()
+            $0.createdAt.dateValue() > $1.createdAt.dateValue()
         })
     }
 
@@ -222,8 +223,12 @@ class BlogDetailViewModel: ObservableObject {
                 try await addCommentUseCase.execute(blogId: blogId, comment: comment)
 
             case .edit(let comment):
-                print("Edit not implemented yet")
-                break
+                try await updateCommentUseCase.execute(
+                    blogId: blogId,
+                    commentId: comment.id ?? "",
+                    content: commentText,
+                    currentUserId: user.uid
+                )
             }
 
             // Optimistic update for comment count
@@ -317,11 +322,37 @@ class BlogDetailViewModel: ObservableObject {
     }
 
     func deleteComment(_ comment: Comment) {
+        commentToDelete = comment
         itemToDelete = .comment
         showDeleteDialog = true
     }
 
     func confirmDeleteComment() {
-        // Call DeleteCommentUseCase
+        guard let comment = commentToDelete, let user = checkUserSessionUseCase.execute() else {
+            return
+        }
+
+        Task { @MainActor in
+            isLoading = true
+            do {
+                try await deleteCommentUseCase.execute(
+                    blogId: blogId,
+                    commentId: comment.id ?? "",
+                    currentUserId: user.uid
+                )
+                showDeleteDialog = false
+                itemToDelete = nil
+                commentToDelete = nil
+
+                // Optimistic update for comment count
+                blog?.comments = max(0, (blog?.comments ?? 0) - 1)
+
+                print("✅ Comment deleted successfully")
+            } catch {
+                errorMessage = "Error al eliminar el comentario"
+                print("❌ Error deleting comment: \(error)")
+            }
+            isLoading = false
+        }
     }
 }

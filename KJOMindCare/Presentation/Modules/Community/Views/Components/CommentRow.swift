@@ -89,9 +89,9 @@ struct CommentRow: View {
                             CommentRow(
                                 comment: reply,
                                 currentUserId: currentUserId,
-                                onReply: { onReply() },
-                                onEdit: { onEdit() },
-                                onDelete: { onDelete() }
+                                onReply: onReply,  // Reply to parent, not to reply
+                                onEdit: onEdit,  // Will be passed from BlogDetailView
+                                onDelete: onDelete  // Will be passed from BlogDetailView
                             )
                             .padding(.leading, 12)
                         }

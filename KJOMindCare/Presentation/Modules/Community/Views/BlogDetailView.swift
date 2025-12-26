@@ -250,12 +250,9 @@ struct BlogDetailView: View {
 
             LazyVStack(alignment: .leading, spacing: 16) {
                 ForEach(viewModel.comments) { comment in
-                    CommentRow(
+                    CommentRowWrapper(
                         comment: comment,
-                        currentUserId: viewModel.currentUserId,
-                        onReply: { viewModel.replyToComment(comment) },
-                        onEdit: { viewModel.editComment(comment) },
-                        onDelete: { viewModel.deleteComment(comment) }
+                        viewModel: viewModel
                     )
                     Divider().background(Color.gray.opacity(0.2))
                 }
@@ -346,5 +343,21 @@ struct BlogDetailView: View {
         {
             rootVC.present(activityVC, animated: true)
         }
+    }
+}
+
+// MARK: - Comment Row Wrapper
+private struct CommentRowWrapper: View {
+    let comment: Comment
+    @ObservedObject var viewModel: BlogDetailViewModel
+    
+    var body: some View {
+        CommentRow(
+            comment: comment,
+            currentUserId: viewModel.currentUserId,
+            onReply: { viewModel.replyToComment(comment) },
+            onEdit: { viewModel.editComment(comment) },
+            onDelete: { viewModel.deleteComment(comment) }
+        )
     }
 }
