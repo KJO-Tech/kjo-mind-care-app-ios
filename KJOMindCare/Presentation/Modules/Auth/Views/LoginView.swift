@@ -19,8 +19,6 @@ struct LoginView: View {
 
                 VStack(spacing: 20) {
 
-                    Spacer().frame(height: 10)
-
                     VStack(spacing: 10) {
                         ZStack {
                             RoundedRectangle(cornerRadius: 20)
@@ -122,7 +120,14 @@ struct LoginView: View {
 
                             Button(action: {
                                 Task {
+                                    viewModel.errorMessage = nil
                                     await viewModel.signInWithGoogle()
+
+                                    if viewModel.loggedUser != nil {
+                                        withAnimation {
+                                            coordinator.showMain()
+                                        }
+                                    }
                                 }
                             }) {
                                 HStack(spacing: 12) {
@@ -171,18 +176,19 @@ struct LoginView: View {
 
                 .blur(radius: viewModel.showForgotPasswordModal ? 3 : 0)
                 .disabled(viewModel.showForgotPasswordModal)
+            }
 
-                if viewModel.showForgotPasswordModal {
-                    ForgotPasswordModal(
-                        isActive: $viewModel.showForgotPasswordModal,
-                        email: $viewModel.recoveryEmail,
-                        onSend: {
-                            Task {
-                                await viewModel.sendPasswordReset()
-                            }
+            // Modal overlay - must be outside ScrollView to appear on top
+            if viewModel.showForgotPasswordModal {
+                ForgotPasswordModal(
+                    isActive: $viewModel.showForgotPasswordModal,
+                    email: $viewModel.recoveryEmail,
+                    onSend: {
+                        Task {
+                            await viewModel.sendPasswordReset()
                         }
-                    )
-                }
+                    }
+                )
             }
         }
     }

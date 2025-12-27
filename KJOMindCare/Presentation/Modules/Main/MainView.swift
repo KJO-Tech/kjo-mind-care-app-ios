@@ -8,18 +8,27 @@ struct MainView: View {
         case home, mood, community, profile
     }
 
+    @StateObject private var homeViewModel = DIContainer.shared.container.resolve(
+        HomeViewModel.self)!
+    @StateObject private var moodsViewModel = DIContainer.shared.container.resolve(
+        MoodsViewModel.self)!
+    @StateObject private var blogListViewModel = DIContainer.shared.container.resolve(
+        BlogListViewModel.self)!
+    @StateObject private var settingsViewModel = DIContainer.shared.container.resolve(
+        SettingsViewModel.self)!
+
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
                 switch selectedTab {
                 case .home:
-                    HomeView()
+                    HomeCoordinatorView(homeViewModel: homeViewModel)
                 case .mood:
-                    MoodsView()
+                    MoodsView(viewModel: moodsViewModel)
                 case .community:
-                    BlogListView(vm: BlogListViewModel())
+                    CommunityCoordinatorView(blogListViewModel: blogListViewModel)
                 case .profile:
-                    ProfileView()
+                    ProfileView(viewModel: settingsViewModel)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

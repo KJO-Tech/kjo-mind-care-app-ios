@@ -9,8 +9,13 @@ import Swinject
 
 final class PresentationAssembly: Assembly {
     func assemble(container: Container) {
+
         container.register(LoginViewModel.self) { r in
-            LoginViewModel(loginUseCase: r.resolve(LoginUseCase.self)!)
+            LoginViewModel(
+                loginUseCase: r.resolve(LoginUseCase.self)!,
+                getCurrentUserUseCase: r.resolve(GetCurrentUserUseCase.self)!,
+                loginWithGoogleUseCase: r.resolve(LoginWithGoogleUseCase.self)!
+            )
         }
 
         container.register(RegisterViewModel.self) { r in
@@ -60,6 +65,65 @@ final class PresentationAssembly: Assembly {
                 categoryId: categoryId,
                 getActivityCategoriesUseCase: r.resolve(GetActivityCategoriesUseCase.self)!,
                 getExercisesByCategoryUseCase: r.resolve(GetExercisesByCategoryUseCase.self)!
+            )
+        }
+
+        container.register(SettingsViewModel.self) { r in
+            SettingsViewModel(
+                signOutUseCase: r.resolve(SignOutUseCase.self)!,
+                getRemoteUserUC: r.resolve(GetUserProfileUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!,
+                saveRemoteUserUC: r.resolve(SaveUserRemoteUseCase.self)!,
+                updateLocalSettingsUC: r.resolve(UpdateUserSettingsUseCase.self)!,
+                settingsRepo: r.resolve(UserSettingsRepository.self)!
+            )
+        }
+
+        container.register(SubscriptionViewModel.self) {
+            (r, isEditMode: Bool, coordinator: AppCoordinator) in
+            SubscriptionViewModel(
+                getActivityCategoriesUseCase: r.resolve(GetActivityCategoriesUseCase.self)!,
+                getUserSubscriptionsUseCase: r.resolve(GetUserSubscriptionsUseCase.self)!,
+                updateUserSubscriptionsUseCase: r.resolve(UpdateUserSubscriptionsUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!,
+                coordinator: coordinator,
+                isEditMode: isEditMode
+            )
+        }
+
+        container.register(BlogListViewModel.self) { r in
+            BlogListViewModel(
+                getBlogPostsUseCase: r.resolve(GetBlogPostsUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!,
+                toggleLikeUseCase: r.resolve(ToggleLikeUseCase.self)!,
+                getCategoriesUseCase: r.resolve(GetCategoriesUseCase.self)!
+            )
+        }
+
+        container.register(CreateBlogViewModel.self) { r in
+            CreateBlogViewModel(
+                createBlogUseCase: r.resolve(CreateBlogUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!,
+                getUserProfileUseCase: r.resolve(GetUserProfileUseCase.self)!,
+                getCategoriesUseCase: r.resolve(GetCategoriesUseCase.self)!,
+                storageService: r.resolve(StorageService.self)!,
+                updateBlogUseCase: r.resolve(UpdateBlogUseCase.self)!
+            )
+        }
+
+        container.register(BlogDetailViewModel.self) { (r, blogId: String) in
+            BlogDetailViewModel(
+                blogId: blogId,
+                getBlogByIdUseCase: r.resolve(GetBlogByIdUseCase.self)!,
+                getCommentsForBlogUseCase: r.resolve(GetCommentsForBlogUseCase.self)!,
+                addCommentUseCase: r.resolve(AddCommentUseCase.self)!,
+                updateCommentUseCase: r.resolve(UpdateCommentUseCase.self)!,
+                deleteCommentUseCase: r.resolve(DeleteCommentUseCase.self)!,
+                checkUserSessionUseCase: r.resolve(CheckUserSessionUseCase.self)!,
+                getCategoryByIdUseCase: r.resolve(GetCategoryByIdUseCase.self)!,
+                getUserProfileUseCase: r.resolve(GetUserProfileUseCase.self)!,
+                toggleLikeUseCase: r.resolve(ToggleLikeUseCase.self)!,
+                updateBlogStatusUseCase: r.resolve(UpdateBlogStatusUseCase.self)!
             )
         }
 

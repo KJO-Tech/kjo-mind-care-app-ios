@@ -34,6 +34,24 @@ final class DomainAssembly: Assembly {
             )
         }
 
+        container.register(LoginWithGoogleUseCase.self) { r in
+            LoginWithGoogleUseCase(
+                repository: r.resolve(AuthRepository.self)!
+            )
+        }
+
+        container.register(GetCurrentUserUseCase.self) { r in
+            GetCurrentUserUseCase(
+                repository: r.resolve(AuthRepository.self)!
+            )
+        }
+
+        container.register(SignOutUseCase.self) { r in
+            SignOutUseCase(
+                repository: r.resolve(AuthRepository.self)!
+            )
+        }
+
         // Blog Use Cases
         container.register(GetBlogPostsUseCase.self) { r in
             GetBlogPostsUseCase(
@@ -139,6 +157,12 @@ final class DomainAssembly: Assembly {
             )
         }
 
+        container.register(UpdateUserSubscriptionsUseCase.self) { r in
+            UpdateUserSubscriptionsUseCase(
+                repository: r.resolve(ActivitySubscriptionRepository.self)!
+            )
+        }
+
         container.register(GetTodayAssignedExercisesUseCase.self) { r in
             GetTodayAssignedExercisesUseCase(
                 repository: r.resolve(ActivitySubscriptionRepository.self)!
@@ -223,6 +247,17 @@ final class DomainAssembly: Assembly {
         }
         container.register(GetMoodStatisticsUseCase.self) { r in
             GetMoodStatisticsUseCase(repository: r.resolve(MoodEntryRepository.self)!)
+        }
+
+        container.register(SaveUserRemoteUseCase.self) { r in
+            SaveUserRemoteUseCase(
+                storageService: r.resolve(StorageService.self)!,
+                firestoreService: r.resolve(FireStoreService.self)!
+            )
+        }
+        container.register(UpdateUserSettingsUseCase.self) { r in
+            UpdateUserSettingsUseCase(
+                repo: r.resolve(UserSettingsRepository.self)!)
         }
     }
 }

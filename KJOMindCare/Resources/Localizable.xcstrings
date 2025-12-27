@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "es-419",
   "strings" : {
+    "" : {
+
+    },
     "¿No tienes una cuenta?" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -32,13 +35,7 @@
     "%lld min" : {
 
     },
-    "3" : {
-
-    },
-    "5" : {
-
-    },
-    "12" : {
+    "•" : {
 
     },
     "Add a note (optional)" : {
@@ -57,6 +54,9 @@
           }
         }
       }
+    },
+    "Add comment" : {
+
     },
     "auth.login.appName" : {
       "localizations" : {
@@ -576,13 +576,10 @@
         }
       }
     },
-    "Bio" : {
+    "Blog not found" : {
 
     },
-    "Blog" : {
-
-    },
-    "Blogs" : {
+    "Cancel" : {
 
     },
     "Cancelar" : {
@@ -605,7 +602,10 @@
     "Check your subscriptions if you want daily exercises." : {
 
     },
-    "Choose Your Plan" : {
+    "Clear Filter" : {
+
+    },
+    "Comments (%lld)" : {
 
     },
     "common.cancel" : {
@@ -620,6 +620,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancelar"
+          }
+        }
+      }
+    },
+    "common.error" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
           }
         }
       }
@@ -640,8 +656,606 @@
         }
       }
     },
-    "Community Blog" : {
-
+    "common.ok" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "common.save_changes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Changes"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar Cambios"
+          }
+        }
+      }
+    },
+    "community.blog.category.label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categoría"
+          }
+        }
+      }
+    },
+    "community.blog.category.placeholder" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Category"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleccionar Categoría"
+          }
+        }
+      }
+    },
+    "community.blog.comments.add" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add comment"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agregar comentario"
+          }
+        }
+      }
+    },
+    "community.blog.comments.save" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar"
+          }
+        }
+      }
+    },
+    "community.blog.comments.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comments (%lld)"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comentarios (%lld)"
+          }
+        }
+      }
+    },
+    "community.blog.content.error" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Content cannot be empty"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El contenido no puede estar vacío"
+          }
+        }
+      }
+    },
+    "community.blog.content.label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Content"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contenido"
+          }
+        }
+      }
+    },
+    "community.blog.create.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create Blog"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crear Blog"
+          }
+        }
+      }
+    },
+    "community.blog.delete.message" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete this blog? This action cannot be undone."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Estás seguro de que quieres eliminar este blog? Esta acción no se puede deshacer."
+          }
+        }
+      }
+    },
+    "community.blog.delete.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Blog"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar Blog"
+          }
+        }
+      }
+    },
+    "community.blog.edit.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Blog"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar Blog"
+          }
+        }
+      }
+    },
+    "community.blog.error.create" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error creating blog. Please try again."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error al crear el blog. Por favor, intenta de nuevo."
+          }
+        }
+      }
+    },
+    "community.blog.error.update" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error updating blog. Please try again."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error al actualizar el blog. Por favor, intenta de nuevo."
+          }
+        }
+      }
+    },
+    "community.blog.media.clearMedia" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear Media"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Borrar Multimedia"
+          }
+        }
+      }
+    },
+    "community.blog.media.clearVideo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear Video"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Borrar Video"
+          }
+        }
+      }
+    },
+    "community.blog.media.label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Image/Video (Optional)"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imagen/Video (Opcional)"
+          }
+        }
+      }
+    },
+    "community.blog.media.select" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Media"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleccionar Multimedia"
+          }
+        }
+      }
+    },
+    "community.blog.notFound" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No details found for this blog."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se encontraron detalles para este blog."
+          }
+        }
+      }
+    },
+    "community.blog.publish" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Publish Blog"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Publicar Blog"
+          }
+        }
+      }
+    },
+    "community.blog.success.message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your blog has been submitted successfully. It is pending administrator approval."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu blog ha sido enviado exitosamente. Está pendiente de aprobación por un administrador."
+          }
+        }
+      }
+    },
+    "community.blog.success.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blog Submitted!"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Blog Enviado!"
+          }
+        }
+      }
+    },
+    "community.blog.title.error" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Title cannot be empty"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El título no puede estar vacío"
+          }
+        }
+      }
+    },
+    "community.blog.title.label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Title"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Título"
+          }
+        }
+      }
+    },
+    "community.blog.title.placeholder" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blog title"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Título del blog"
+          }
+        }
+      }
+    },
+    "community.blog.update" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update Blog"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualizar Blog"
+          }
+        }
+      }
+    },
+    "community.categoryFilter.allCategories" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Categories"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todas las Categorías"
+          }
+        }
+      }
+    },
+    "community.categoryFilter.apply" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aplicar"
+          }
+        }
+      }
+    },
+    "community.categoryFilter.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter by Category"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtrar por Categoría"
+          }
+        }
+      }
+    },
+    "community.filter.all" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todos"
+          }
+        }
+      }
+    },
+    "community.filter.clearFilters" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear Filters"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limpiar Filtros"
+          }
+        }
+      }
+    },
+    "community.filter.latest" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latest"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recientes"
+          }
+        }
+      }
+    },
+    "community.filter.myBlogs" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My Blogs"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mis Blogs"
+          }
+        }
+      }
+    },
+    "community.filter.popular" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Popular"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Populares"
+          }
+        }
+      }
+    },
+    "community.search.placeholder" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search blogs..."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar blogs..."
+          }
+        }
+      }
+    },
+    "community.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Community"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comunidad"
+          }
+        }
+      }
     },
     "Complete Exercise" : {
 
@@ -650,9 +1264,6 @@
 
     },
     "Content type not supported yet." : {
-
-    },
-    "Continue" : {
 
     },
     "Contraseña" : {
@@ -666,17 +1277,19 @@
         }
       }
     },
-    "Create Blog" : {
-
-    },
     "Day" : {
 
     },
-    "Edit Profile" : {
+    "Delete" : {
+
+    },
+    "Delete Blog" : {
+
+    },
+    "Edit Blog" : {
 
     },
     "Email" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -687,15 +1300,6 @@
       }
     },
     "Enviar" : {
-
-    },
-    "Error loading categories" : {
-
-    },
-    "Error loading category" : {
-
-    },
-    "Error loading exercise" : {
 
     },
     "Error loading history" : {
@@ -716,6 +1320,9 @@
           }
         }
       }
+    },
+    "Error resolving SubscriptionViewModel" : {
+
     },
     "Error: %@" : {
 
@@ -739,6 +1346,9 @@
           }
         }
       }
+    },
+    "Hour" : {
+
     },
     "How are you feeling today? What's on your mind?" : {
       "extractionState" : "stale",
@@ -831,16 +1441,16 @@
     "Invalid Video URL" : {
 
     },
-    "John Doe" : {
-
-    },
-    "john.doe@example.com" : {
-
-    },
     "KJO Mind Care" : {
 
     },
     "Loading activities..." : {
+
+    },
+    "Loading blog..." : {
+
+    },
+    "Loading..." : {
 
     },
     "Log Mood" : {
@@ -858,12 +1468,6 @@
           }
         }
       }
-    },
-    "Logout" : {
-
-    },
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." : {
-
     },
     "Mood Distribution" : {
       "extractionState" : "stale",
@@ -1123,16 +1727,13 @@
         }
       }
     },
-    "Moods" : {
-
-    },
-    "Name" : {
-
-    },
     "No activities for today" : {
 
     },
     "No categories found." : {
+
+    },
+    "No details found for this blog." : {
 
     },
     "No moods available" : {
@@ -1151,7 +1752,7 @@
         }
       }
     },
-    "Notifications" : {
+    "Nombre Completo" : {
 
     },
     "O" : {
@@ -1165,17 +1766,205 @@
         }
       }
     },
-    "Personal Information" : {
+    "OK" : {
 
     },
-    "Privacy Policy" : {
-
+    "profile.dark_mode" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dark Mode"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo Oscuro"
+          }
+        }
+      }
     },
-    "Profile" : {
-
+    "profile.edit_profile" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Profile"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar Perfil"
+          }
+        }
+      }
     },
-    "Publish Blog" : {
-
+    "profile.edit_subscriptions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Subscriptions"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar Suscripciones"
+          }
+        }
+      }
+    },
+    "profile.edit.tap_to_change" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to change photo"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toca para cambiar foto"
+          }
+        }
+      }
+    },
+    "profile.logout" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logout"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerrar Sesión"
+          }
+        }
+      }
+    },
+    "profile.notifications" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificaciones"
+          }
+        }
+      }
+    },
+    "profile.privacy_policy" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy Policy"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Política de Privacidad"
+          }
+        }
+      }
+    },
+    "profile.settings.header" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes"
+          }
+        }
+      }
+    },
+    "profile.stats.blogs" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blogs"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blogs"
+          }
+        }
+      }
+    },
+    "profile.stats.moods" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moods"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estados"
+          }
+        }
+      }
+    },
+    "profile.stats.streak" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Streak"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Racha"
+          }
+        }
+      }
+    },
+    "profile.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profile"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perfil"
+          }
+        }
+      }
     },
     "Record Mood" : {
       "extractionState" : "stale",
@@ -1225,7 +2014,32 @@
       }
     },
     "Save" : {
+
+    },
+    "See all" : {
+
+    },
+    "Seleccionar imagen" : {
+
+    },
+    "subscription.continue" : {
       "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuar"
+          }
+        }
+      }
+    },
+    "subscription.save" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1241,26 +2055,53 @@
         }
       }
     },
-    "Save Changes" : {
-
+    "subscription.skip" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Omitir"
+          }
+        }
+      }
     },
-    "Search blogs..." : {
-
+    "subscription.subtitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select the categories that interest you to receive daily exercises"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecciona las categorías que te interesen para recibir ejercicios diarios"
+          }
+        }
+      }
     },
-    "See all" : {
-
-    },
-    "Select categories you are interested in." : {
-
-    },
-    "Settings" : {
-
-    },
-    "Skip" : {
-
-    },
-    "Streak" : {
-
+    "subscription.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose your interests"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige tus intereses"
+          }
+        }
+      }
     },
     "Timeframe" : {
       "localizations" : {
@@ -1277,9 +2118,6 @@
           }
         }
       }
-    },
-    "Title" : {
-
     },
     "Today's Activities" : {
 

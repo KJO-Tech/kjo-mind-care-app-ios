@@ -5,8 +5,8 @@
 //  Created by Yisus on 16/11/25.
 //
 
-import SwiftUI
 import FirebaseCore
+import SwiftUI
 
 @main
 struct KJOMindCareApp: App {
@@ -15,6 +15,7 @@ struct KJOMindCareApp: App {
     let diContainer = DIContainer.shared
 
     @StateObject private var coordinator = AppCoordinator()
+    @StateObject private var themeManager = ThemeManager.shared
 
     var body: some Scene {
         WindowGroup {
@@ -27,12 +28,18 @@ struct KJOMindCareApp: App {
                     case .welcome:
                         WelcomeView()
                     case .subscription:
-                        SubscriptionView()
+                        let subVM = DIContainer.shared.container.resolve(
+                            SubscriptionViewModel.self, arguments: false, coordinator)!
+                        SubscriptionView(viewModel: subVM)
                     case .main:
                         MainView()
-                    case .login, .register:
-                        // These are typically pushed, but if we land here as root (unlikely with current logic), show empty or fallback
-                        EmptyView()
+                    case .login:
+                        let loginVM = DIContainer.shared.container.resolve(LoginViewModel.self)!
+                        LoginView(viewModel: loginVM)
+                    case .register:
+                        let registerVM = DIContainer.shared.container.resolve(
+                            RegisterViewModel.self)!
+                        RegisterView(viewModel: registerVM)
                     }
                 }
                 .navigationDestination(for: AppRoute.self) { route in
@@ -46,16 +53,21 @@ struct KJOMindCareApp: App {
                         let loginVM = DIContainer.shared.container.resolve(LoginViewModel.self)!
                         LoginView(viewModel: loginVM)
                     case .register:
-                        let registerVM = DIContainer.shared.container.resolve(RegisterViewModel.self)!
+                        let registerVM = DIContainer.shared.container.resolve(
+                            RegisterViewModel.self)!
                         RegisterView(viewModel: registerVM)
                     case .subscription:
-                        SubscriptionView()
+                        let subVM = DIContainer.shared.container.resolve(
+                            SubscriptionViewModel.self, arguments: false, coordinator)!
+                        SubscriptionView(viewModel: subVM)
                     case .main:
                         MainView()
                     }
                 }
             }
             .environmentObject(coordinator)
+            .environmentObject(themeManager)
+            .preferredColorScheme(themeManager.colorScheme)
         }
     }
 }
