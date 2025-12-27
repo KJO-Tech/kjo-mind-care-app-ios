@@ -4,28 +4,11 @@ import YouTubePlayerKit
 
 struct ExerciseDetailView: View {
     @StateObject var viewModel: ExerciseDetailViewModel
-    let onBack: () -> Void
+    var onBack: (() -> Void)? = nil
+    var onComplete: (() -> Void)? = nil
 
     var body: some View {
         VStack(spacing: 0) {
-            // Header with Back Button
-            HStack {
-                Button(action: onBack) {
-                    Image(systemName: "arrow.left")
-                        .font(.system(size: 20, weight: .semibold))
-                        .foregroundColor(Color.theme.text)
-                        .padding(12)
-                        .background(Color.theme.background)
-                        .clipShape(Circle())
-                        .shadow(color: Color.theme.shadow.opacity(0.1), radius: 4, x: 0, y: 2)
-                }
-                .padding(.leading, 16)
-                Spacer()
-            }
-            .padding(.top, 16)
-            .padding(.bottom, 8)
-            .background(Color.theme.background)
-
             if viewModel.isLoading {
                 ProgressView()
                     .frame(maxHeight: .infinity)
@@ -34,9 +17,9 @@ struct ExerciseDetailView: View {
                     VStack(alignment: .leading, spacing: 24) {
                         // Title and Description
                         VStack(alignment: .leading, spacing: 8) {
-                            Text(exercise.getTitle())
-                                .font(.theme.title)
-                                .foregroundColor(Color.theme.text)
+                             Text(exercise.getTitle())
+                                 .font(.theme.title)
+                                 .foregroundColor(Color.theme.text)
 
                             Text(exercise.getDescription())
                                 .font(.theme.body)
@@ -157,10 +140,16 @@ struct ExerciseDetailView: View {
             }
         }
         .background(Color.theme.background)
+//        .navigationTitle(viewModel.exercise?.getTitle() ?? "Exercise")
+        .navigationBarTitleDisplayMode(.inline)
         .overlay(alignment: .bottom) {
             // Floating Complete Button
             Button(action: {
                 viewModel.completeExercise()
+                // Call onComplete callback after a short delay to allow UI to update
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    onComplete?()
+                }
             }) {
                 HStack {
                     Text(viewModel.isCompleted ? "Completed" : "Complete Exercise")
@@ -184,7 +173,6 @@ struct ExerciseDetailView: View {
             .disabled(viewModel.isCompleted)
             .padding(24)
         }
-        .navigationBarHidden(true)
         .onAppear {
             viewModel.onViewAppear()
         }

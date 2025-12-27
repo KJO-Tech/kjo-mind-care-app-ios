@@ -149,4 +149,38 @@ class HomeViewModel: ObservableObject {
             selectedMoodId = id
         }
     }
+
+    func refresh() async {
+        guard let user = checkUserSessionUseCase.execute() else {
+            return
+        }
+
+        await MainActor.run {
+            self.isLoading = true
+        }
+
+        // Use Combine publisher with continuation
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            getTodayAssignedExercisesUseCase.execute(userId: user.id)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] (resource: Resource<[AssignedExerciseDetail]>) in
+                    guard let self = self else {
+                        continuation.resume()
+                        return
+                    }
+
+                    switch resource {
+                    case .success(let assignments):
+                        self.dailyAssignments = assignments
+                    case .error(let message):
+                        self.errorMessage = message
+                    case .loading:
+                        break
+                    }
+                    self.isLoading = false
+                    continuation.resume()
+                }
+                .store(in: &self.cancellables)
+        }
+    }
 }

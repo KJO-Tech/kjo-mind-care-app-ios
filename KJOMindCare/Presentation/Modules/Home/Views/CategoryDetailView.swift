@@ -2,7 +2,7 @@ import SwiftUI
 
 struct CategoryDetailView: View {
     @StateObject var viewModel: CategoryDetailViewModel
-    let onBack: () -> Void
+    var onBack: (() -> Void)? = nil
     let onExerciseSelected: (String) -> Void  // Pass ID
 
     // Grid layout: 2 columns
@@ -13,24 +13,6 @@ struct CategoryDetailView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Header
-            HStack {
-                Button(action: onBack) {
-                    Image(systemName: "arrow.left")
-                        .font(.system(size: 20, weight: .semibold))
-                        .foregroundColor(Color.theme.text)
-                }
-                .padding(.leading, 16)
-
-                Text(viewModel.category?.getName() ?? "Category")
-                    .font(.theme.title3)
-                    .foregroundColor(Color.theme.text)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.trailing, 36)
-            }
-            .padding(.vertical, 16)
-            .background(Color.theme.background)  // or surface
-
             if viewModel.isLoading {
                 ProgressView()
                     .frame(maxHeight: .infinity)
@@ -48,7 +30,8 @@ struct CategoryDetailView: View {
             }
         }
         .background(Color.theme.background)
-        .navigationBarHidden(true)
+        .navigationTitle(viewModel.category?.getName() ?? "Category")
+        .navigationBarTitleDisplayMode(.large)
         .onAppear {
             viewModel.onViewAppear()
         }

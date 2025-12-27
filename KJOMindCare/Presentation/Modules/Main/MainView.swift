@@ -22,7 +22,7 @@ struct MainView: View {
             ZStack {
                 switch selectedTab {
                 case .home:
-                    HomeView(viewModel: homeViewModel)
+                    HomeCoordinatorView(homeViewModel: homeViewModel)
                 case .mood:
                     MoodsView(viewModel: moodsViewModel)
                 case .community:

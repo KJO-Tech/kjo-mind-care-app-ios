@@ -31,4 +31,10 @@ public class HomeCoordinator: Coordinator {
     public func showRecordMood(moodId: String?) {
         path.append(HomeRoute.recordMood(moodId))
     }
+
+    public func pop() {
+        if !path.isEmpty {
+            path.removeLast()
+        }
+    }
 }

@@ -13,6 +13,7 @@ struct RecordMoodView: View {
         RecordMoodViewModel.self)!
 
     var selectedMoodId: String?  // Pre-selected mood ID
+    var onComplete: (() -> Void)? = nil
 
     let columns = [
         GridItem(.flexible()),
@@ -137,6 +138,10 @@ extension RecordMoodView {
         .onChange(of: viewModel.isSaved) { isSaved in
             if isSaved {
                 presentationMode.wrappedValue.dismiss()
+                // Call onComplete callback after dismissing
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    onComplete?()
+                }
             }
         }
             

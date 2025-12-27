@@ -3,7 +3,7 @@ import SwiftUI
 struct CategoryListView: View {
     @StateObject var viewModel: CategoryListViewModel
     var onCategorySelected: (String) -> Void
-    var onBack: () -> Void
+    var onBack: (() -> Void)? = nil
 
     let columns = [
         GridItem(.flexible()),
@@ -12,23 +12,6 @@ struct CategoryListView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            // Header
-            HStack {
-                Button(action: onBack) {
-                    Image(systemName: "chevron.left")
-                        .font(.title2)
-                        .foregroundColor(Color.theme.text)
-                }
-
-                Text("Categories")
-                    .font(Font.theme.title2)
-                    .foregroundColor(Color.theme.text)
-                    .padding(.leading, 8)
-
-                Spacer()
-            }
-            .padding()
-
             if viewModel.isLoading {
                 Spacer()
                 ProgressView()
@@ -68,7 +51,8 @@ struct CategoryListView: View {
             }
         }
         .background(Color.theme.background.ignoresSafeArea())
-        .navigationBarHidden(true)
+        .navigationTitle("Categories")
+        .navigationBarTitleDisplayMode(.large)
         .onAppear {
             viewModel.onViewAppear()
         }
