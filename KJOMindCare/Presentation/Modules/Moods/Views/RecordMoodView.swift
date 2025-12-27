@@ -144,8 +144,7 @@ extension RecordMoodView {
                 }
             }
         }
-            
-        
+
     }
 }
 
@@ -174,12 +173,12 @@ struct MoodCardItem: View {
             .frame(width: 50, height: 50)
             .shadow(radius: isSelected ? 5 : 0)
 
-            Text(mood.name["es"] ?? mood.name["en"] ?? "")
+            Text(mood.getName())
                 .font(Font.theme.headline)
                 .foregroundColor(Color.theme.text)
                 .multilineTextAlignment(.center)
 
-            Text(mood.description["es"] ?? mood.description["en"] ?? "")
+            Text(mood.getDescription())
                 .font(Font.theme.caption2)
                 .foregroundColor(Color.theme.textSecondary)
                 .multilineTextAlignment(.center)

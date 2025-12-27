@@ -2,10 +2,10 @@ import SwiftUI
 
 struct CommentRow: View {
     let comment: Comment
-    let currentUserId: String  // Changed from isMyComment to allow recursive calculation
-    let onReply: () -> Void
-    let onEdit: () -> Void
-    let onDelete: () -> Void
+    let currentUserId: String
+    let onReply: (Comment) -> Void  // Pass the comment to reply to
+    let onEdit: (Comment) -> Void  // Pass the comment to edit
+    let onDelete: (Comment) -> Void  // Pass the comment to delete
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -49,7 +49,7 @@ struct CommentRow: View {
                 HStack(spacing: 16) {
                     if comment.isMine {
                         Button {
-                            onEdit()
+                            onEdit(comment)  // Pass current comment
                         } label: {
                             Image(systemName: "pencil")
                                 .foregroundColor(.purple)
@@ -57,7 +57,7 @@ struct CommentRow: View {
                         }
 
                         Button {
-                            onDelete()
+                            onDelete(comment)  // Pass current comment
                         } label: {
                             Image(systemName: "trash")
                                 .foregroundColor(.red)
@@ -66,7 +66,7 @@ struct CommentRow: View {
                     }
 
                     Button {
-                        onReply()
+                        onReply(comment)  // Pass current comment
                     } label: {
                         Image(systemName: "arrowshape.turn.up.left.fill")
                             .foregroundColor(.gray)
@@ -75,7 +75,7 @@ struct CommentRow: View {
                 }
             }
 
-            // Replies
+            // Replies - recursively render with proper callbacks
             if !comment.replies.isEmpty {
                 VStack(alignment: .leading, spacing: 12) {
                     ForEach(comment.replies) { reply in
@@ -86,12 +86,13 @@ struct CommentRow: View {
                                 .frame(width: 2)
                                 .padding(.leading, 18)
 
+                            // Recursive call - each reply gets proper callbacks
                             CommentRow(
                                 comment: reply,
                                 currentUserId: currentUserId,
-                                onReply: onReply,  // Reply to parent, not to reply
-                                onEdit: onEdit,  // Will be passed from BlogDetailView
-                                onDelete: onDelete  // Will be passed from BlogDetailView
+                                onReply: onReply,  // Same callback function
+                                onEdit: onEdit,  // Same callback function
+                                onDelete: onDelete  // Same callback function
                             )
                             .padding(.leading, 12)
                         }
@@ -108,9 +109,9 @@ struct CommentRow: View {
         CommentRow(
             comment: Comment(),
             currentUserId: "test-user-id",
-            onReply: {},
-            onEdit: {},
-            onDelete: {}
+            onReply: { _ in },
+            onEdit: { _ in },
+            onDelete: { _ in }
         )
         .padding()
     }

@@ -139,43 +139,37 @@ class BlogDetailViewModel: ObservableObject {
 
     // Sub-function to keep logic clean
     private func processComments(_ extractedComments: [Comment]) {
-        // Threading logic: Separate parents and replies
+        // Build a map of all comment IDs for quick lookup
         var commentMap = [String: Comment]()
-        var rootComments = [Comment]()
-
-        // First pass: Index all comments
         for comment in extractedComments {
             if let id = comment.id {
                 commentMap[id] = comment
             }
         }
 
-        // Second pass: Associate replies
-        for comment in extractedComments {
-            if let parentId = comment.parentCommentId, !parentId.isEmpty {
-                if var parent = commentMap[parentId] {
-                    parent.replies.append(comment)
-                    commentMap[parentId] = parent
-                }
-            } else {
-                rootComments.append(comment)
-            }
-        }
-
-        // Third pass: Reconstruct root list using map values?
-        // Actually, we need to sort replies.
-
-        var finalRoots = [Comment]()
+        // Group comments by parentId (replies)
         let repliesByParent = Dictionary(
             grouping: extractedComments.filter {
                 $0.parentCommentId != nil && !$0.parentCommentId!.isEmpty
             }
         ) { $0.parentCommentId! }
 
+        // Identify root comments:
+        // 1. Comments with no parentId or empty parentId
+        // 2. Comments with a parentId that doesn't exist (orphaned comments)
         let roots = extractedComments.filter {
-            $0.parentCommentId == nil || $0.parentCommentId!.isEmpty
+            if $0.parentCommentId == nil || $0.parentCommentId!.isEmpty {
+                return true  // Normal root comment
+            }
+            // Check if parent exists
+            if let parentId = $0.parentCommentId {
+                return commentMap[parentId] == nil  // Orphaned comment - parent doesn't exist
+            }
+            return false
         }
 
+        // Build the tree with replies
+        var finalRoots = [Comment]()
         for var root in roots {
             if let id = root.id, let replies = repliesByParent[id] {
                 root.replies = replies.sorted(by: {

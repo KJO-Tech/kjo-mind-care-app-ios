@@ -363,9 +363,9 @@ private struct CommentRowWrapper: View {
         CommentRow(
             comment: comment,
             currentUserId: viewModel.currentUserId,
-            onReply: { viewModel.replyToComment(comment) },
-            onEdit: { viewModel.editComment(comment) },
-            onDelete: { viewModel.deleteComment(comment) }
+            onReply: { comment in viewModel.replyToComment(comment) },
+            onEdit: { comment in viewModel.editComment(comment) },
+            onDelete: { comment in viewModel.deleteComment(comment) }
         )
     }
 }
