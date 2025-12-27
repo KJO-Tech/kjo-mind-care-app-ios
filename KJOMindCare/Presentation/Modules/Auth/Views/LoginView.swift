@@ -122,7 +122,7 @@ struct LoginView: View {
                                 Task {
                                     viewModel.errorMessage = nil
                                     await viewModel.signInWithGoogle()
-                                    
+
                                     if viewModel.loggedUser != nil {
                                         withAnimation {
                                             coordinator.showMain()
@@ -176,18 +176,19 @@ struct LoginView: View {
 
                 .blur(radius: viewModel.showForgotPasswordModal ? 3 : 0)
                 .disabled(viewModel.showForgotPasswordModal)
+            }
 
-                if viewModel.showForgotPasswordModal {
-                    ForgotPasswordModal(
-                        isActive: $viewModel.showForgotPasswordModal,
-                        email: $viewModel.recoveryEmail,
-                        onSend: {
-                            Task {
-                                await viewModel.sendPasswordReset()
-                            }
+            // Modal overlay - must be outside ScrollView to appear on top
+            if viewModel.showForgotPasswordModal {
+                ForgotPasswordModal(
+                    isActive: $viewModel.showForgotPasswordModal,
+                    email: $viewModel.recoveryEmail,
+                    onSend: {
+                        Task {
+                            await viewModel.sendPasswordReset()
                         }
-                    )
-                }
+                    }
+                )
             }
         }
     }
