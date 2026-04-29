@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>GIDClientID</key>
+	<string>$(GOOGLE_CLIENT_ID)</string>
+	<key>CloudinaryCloudName</key>
+	<string>$(CLOUDINARY_CLOUD_NAME)</string>
+	<key>CloudinaryUploadPreset</key>
+	<string>$(CLOUDINARY_UPLOAD_PRESET)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>$(GOOGLE_REVERSED_CLIENT_ID)</string>
+			</array>
+		</dict>
+	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Righteous-Regular.ttf</string>
+		<string>Poppins-Bold.ttf</string>
+		<string>Poppins-Medium.ttf</string>
+		<string>Poppins-Regular.ttf</string>
+		<string>Poppins-SemiBold.ttf</string>
+		<string>Inter-Bold.ttf</string>
+		<string>Inter-Medium.ttf</string>
+		<string>Inter-Regular.ttf</string>
+		<string>Inter-SemiBold.ttf</string>
+	</array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>Primary</string>
+	</dict>
+	<key>CLOUDINARY_CLOUD_NAME</key>
+	<string>YOUR_CLOUD_NAME_HERE</string>
+	<key>CLOUDINARY_API_KEY</key>
+	<string>YOUR_API_KEY_HERE</string>
+	<key>CLOUDINARY_API_SECRET</key>
+	<string>YOUR_API_SECRET_HERE</string>
+</dict>
+</plist>
